@@ -36,5 +36,7 @@
     "eslint-plugin-import": "^1.12.0",
     "jenkins-mocha": "^2.6.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "joi": "^9.0.4"
+  }
 }
