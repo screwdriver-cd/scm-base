@@ -1,6 +1,6 @@
 {
   "name": "screwdriver-scm-base",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Base class for defining the behavior between screwdriver and source control management systems",
   "main": "index.js",
   "scripts": {
@@ -34,9 +34,11 @@
     "eslint": "^3.2.2",
     "eslint-config-screwdriver": "^2.0.0",
     "eslint-plugin-import": "^1.12.0",
-    "jenkins-mocha": "^2.6.0"
+    "jenkins-mocha": "^2.6.0",
+    "mockery": "^1.7.0"
   },
   "dependencies": {
-    "joi": "^9.0.4"
+    "joi": "^9.0.4",
+    "screwdriver-data-schema": "^9.0.1"
   }
 }

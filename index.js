@@ -1,6 +1,7 @@
 'use strict';
 /* eslint-disable no-underscore-dangle */
 const Joi = require('joi');
+const dataSchema = require('screwdriver-data-schema');
 
 class ScmBase {
     /**
@@ -36,16 +37,11 @@ class ScmBase {
      * @method getPermissions
      * @param  {Object}   config            Configuration
      * @param  {String}   config.scmUrl     The scmUrl to get permissions on
-     * @param  {String}   config.user       The user to get pemissions for
      * @param  {String}   config.token      The token used to authenticate to the SCM
      * @return {Promise}
      */
     getPermissions(config) {
-        const result = Joi.validate(config, {
-            scmUrl: Joi.string().required(),
-            user: Joi.string().required(),
-            token: Joi.string().required()
-        });
+        const result = Joi.validate(config, dataSchema.plugins.scm.getPermissions);
 
         if (result.error) {
             return new Promise((resolve, reject) => {
@@ -71,10 +67,7 @@ class ScmBase {
      * @return {Promise}
      */
     getCommitSha(config) {
-        const result = Joi.validate(config, {
-            scmUrl: Joi.string().required(),
-            token: Joi.string().required()
-        });
+        const result = Joi.validate(config, dataSchema.plugins.scm.getCommitSha);
 
         if (result.error) {
             return new Promise((resolve, reject) => {
@@ -102,12 +95,7 @@ class ScmBase {
      * @return {Promise}
      */
     updateCommitStatus(config) {
-        const result = Joi.validate(config, {
-            scmUrl: Joi.string().required(),
-            sha: Joi.string().required(),
-            buildStatus: Joi.string().required(),
-            token: Joi.string().required()
-        });
+        const result = Joi.validate(config, dataSchema.plugins.scm.updateCommitStatus);
 
         if (result.error) {
             return new Promise((resolve, reject) => {

@@ -1,12 +1,43 @@
 'use strict';
 /* eslint-disable no-underscore-dangle */
 const assert = require('chai').assert;
+const mockery = require('mockery');
+const Joi = require('joi');
 
 describe('index test', () => {
     let instance;
     let ScmBase;
+    let schemaMock;
+
+    before(() => {
+        mockery.enable({
+            useCleanCache: true,
+            warnOnUnregistered: false
+        });
+    });
 
     beforeEach(() => {
+        schemaMock = {
+            plugins: {
+                scm: {
+                    getPermissions: Joi.object().keys({
+                        scmUrl: Joi.string().required(),
+                        token: Joi.string().required()
+                    }).required(),
+                    getCommitSha: Joi.object().keys({
+                        scmUrl: Joi.string().required(),
+                        token: Joi.string().required()
+                    }).required(),
+                    updateCommitStatus: Joi.object().keys({
+                        scmUrl: Joi.string().required(),
+                        token: Joi.string().required(),
+                        buildStatus: Joi.string().required(),
+                        sha: Joi.string().required()
+                    }).required()
+                }
+            }
+        };
+        mockery.registerMock('screwdriver-data-schema', schemaMock);
         /* eslint-disable global-require */
         ScmBase = require('../index');
         /* eslint-enable global-require */
@@ -16,6 +47,12 @@ describe('index test', () => {
 
     afterEach(() => {
         instance = null;
+        mockery.deregisterAll();
+        mockery.resetCache();
+    });
+
+    after(() => {
+        mockery.disable();
     });
 
     it('can create an scm base class', () => {
@@ -49,7 +86,6 @@ describe('index test', () => {
         it('returns not implemented', () => {
             const config = {
                 scmUrl: 'foo',
-                user: 'bar',
                 token: 'token'
             };
 
