@@ -33,6 +33,11 @@ describe('index test', () => {
                         token: Joi.string().required(),
                         buildStatus: Joi.string().required(),
                         sha: Joi.string().required()
+                    }).required(),
+                    getFile: Joi.object().keys({
+                        scmUrl: Joi.string().required(),
+                        token: Joi.string().required(),
+                        path: Joi.string().required()
                     }).required()
                 }
             }
@@ -75,10 +80,10 @@ describe('index test', () => {
     describe('getPermissons', () => {
         it('returns error when invalid config object', () => instance.getPermissions({})
             .then(() => {
-                assert(false, 'you will never get dis');
+                assert.fail('you will never get dis');
             })
             .catch(err => {
-                assert.isOk(err, 'Error should be returned');
+                assert.instanceOf(err, Error);
                 assert.equal(err.name, 'ValidationError');
             })
         );
@@ -91,10 +96,10 @@ describe('index test', () => {
 
             instance.getPermissions(config)
               .then(() => {
-                  assert(false, 'you will never get dis');
+                  assert.fail('you will never get dis');
               })
               .catch(err => {
-                  assert.isOk(err, 'Error should be returned');
+                  assert.instanceOf(err, Error);
                   assert.equal(err.message, 'not implemented');
               });
         });
@@ -103,10 +108,10 @@ describe('index test', () => {
     describe('getCommitSha', () => {
         it('returns error when invalid config object', () => instance.getCommitSha({})
             .then(() => {
-                assert(false, 'you will never get dis');
+                assert.fail('you will never get dis');
             })
             .catch(err => {
-                assert.isOk(err, 'Error should be returned');
+                assert.instanceOf(err, Error);
                 assert.equal(err.name, 'ValidationError');
             })
         );
@@ -119,10 +124,10 @@ describe('index test', () => {
 
             instance.getCommitSha(config)
               .then(() => {
-                  assert(false, 'you will never get dis');
+                  assert.fail('you will never get dis');
               })
               .catch(err => {
-                  assert.isOk(err, 'Error should be returned');
+                  assert.instanceOf(err, Error);
                   assert.equal(err.message, 'not implemented');
               });
         });
@@ -131,10 +136,10 @@ describe('index test', () => {
     describe('updateCommitStatus', () => {
         it('returns error when invalid config object', () => instance.updateCommitStatus({})
             .then(() => {
-                assert(false, 'you will never get dis');
+                assert.fail('you will never get dis');
             })
             .catch(err => {
-                assert.isOk(err, 'Error should be returned');
+                assert.instanceOf(err, Error);
                 assert.equal(err.name, 'ValidationError');
             })
         );
@@ -149,10 +154,39 @@ describe('index test', () => {
 
             instance.updateCommitStatus(config)
               .then(() => {
-                  assert(false, 'you will never get dis');
+                  assert.fail('you will never get dis');
               })
               .catch(err => {
-                  assert.isOk(err, 'Error should be returned');
+                  assert.instanceOf(err, Error);
+                  assert.equal(err.message, 'not implemented');
+              });
+        });
+    });
+
+    describe('getFile', () => {
+        it('returns error when invalid config object', () => instance.getFile({})
+            .then(() => {
+                assert.fail('you will never get dis');
+            })
+            .catch(err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            })
+        );
+
+        it('returns not implemented', () => {
+            const config = {
+                scmUrl: 'foo',
+                path: 'testFile',
+                token: 'token'
+            };
+
+            instance.getFile(config)
+              .then(() => {
+                  assert.fail('you will never get dis');
+              })
+              .catch(err => {
+                  assert.instanceOf(err, Error);
                   assert.equal(err.message, 'not implemented');
               });
         });

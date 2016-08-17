@@ -44,18 +44,14 @@ class ScmBase {
         const result = Joi.validate(config, dataSchema.plugins.scm.getPermissions);
 
         if (result.error) {
-            return new Promise((resolve, reject) => {
-                process.nextTick(() => reject(result.error));
-            });
+            return Promise.reject(result.error);
         }
 
         return this._getPermissions(config);
     }
 
     _getPermissions() {
-        return new Promise((resolve, reject) => {
-            process.nextTick(() => reject('not implemented'));
-        });
+        return Promise.reject('Not implemented');
     }
 
     /**
@@ -70,18 +66,14 @@ class ScmBase {
         const result = Joi.validate(config, dataSchema.plugins.scm.getCommitSha);
 
         if (result.error) {
-            return new Promise((resolve, reject) => {
-                process.nextTick(() => reject(result.error));
-            });
+            return Promise.reject(result.error);
         }
 
         return this._getCommitSha(config);
     }
 
     _getCommitSha() {
-        return new Promise((resolve, reject) => {
-            process.nextTick(() => reject('not implemented'));
-        });
+        return Promise.reject('Not implemented');
     }
 
     /**
@@ -98,18 +90,37 @@ class ScmBase {
         const result = Joi.validate(config, dataSchema.plugins.scm.updateCommitStatus);
 
         if (result.error) {
-            return new Promise((resolve, reject) => {
-                process.nextTick(() => reject(result.error));
-            });
+            return Promise.reject(result.error);
         }
 
         return this._updateCommitStatus(config);
     }
 
     _updateCommitStatus() {
-        return new Promise((resolve, reject) => {
-            process.nextTick(() => reject('not implemented'));
-        });
+        return Promise.reject('Not implemented');
+    }
+
+    /**
+    * Fetch content of a file from an scm repo
+    * @method getFile
+    * @param  {Object}   config              Configuration
+    * @param  {String}   config.scmUrl       The scmUrl to get permissions on
+    * @param  {String}   config.path         The file in the repo to fetch
+    * @param  {String}   config.token        The token used to authenticate to the SCM
+    * @return {Promise}
+    */
+    getFile(config) {
+        const result = Joi.validate(config, dataSchema.plugins.scm.getFile);
+
+        if (result.error) {
+            return Promise.reject(result.error);
+        }
+
+        return this._getFile(config);
+    }
+
+    _getFile() {
+        return Promise.reject('Not implemented');
     }
 }
 
