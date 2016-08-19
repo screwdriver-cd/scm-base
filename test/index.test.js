@@ -163,6 +163,12 @@ describe('index test', () => {
         });
     });
 
+    describe('stats', () => {
+        it('returns empty object', () => {
+            assert.deepEqual(instance.stats(), {});
+        });
+    });
+
     describe('getFile', () => {
         it('returns error when invalid config object', () => instance.getFile({})
             .then(() => {

@@ -122,6 +122,15 @@ class ScmBase {
     _getFile() {
         return Promise.reject('Not implemented');
     }
+
+    /**
+     * Return statistics on the executor
+     * @method stats
+     * @return {Object} object           Hash containing metrics for the executor
+     */
+    stats() {
+        return {};
+    }
 }
 
 module.exports = ScmBase;
