@@ -9,6 +9,126 @@
 npm install screwdriver-scm-base
 ```
 
+## Interface
+This is a promise based interface for interacting with a source control management system
+
+### configure
+The `configure` function takes in an object and resets the configuration values
+
+### formatScmUrl
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| scmUrl        | String | Scm Url to format |
+
+#### Expected Outcome
+A formatted scm url to be used as a unique key. This function is synchronous.
+
+### getPermissions
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config        | Object | Configuration Object |
+| config.scmUrl | String | The scmUrl to get permissions on |
+| config.token | String | The github token to check permissions on |
+
+#### Expected Outcome
+Permissions for a given token on a repository in the form of:
+```
+{
+    admin: true,
+    push: true,
+    pull: true
+}
+```
+
+#### Expected Promise response
+1. Resolve with a permissions object for the repository
+2. Reject if not able to get permissions
+
+### getCommitSha
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config        | Object | Configuration Object |
+| config.scmUrl | String | The scmUrl to get permissions on |
+| config.token | String | The github token to check permissions on |
+
+#### Expected Outcome
+The commit sha for a given branch on a repository.
+
+#### Expected Promise response
+1. Resolve with a commit sha string for the given `scmUrl`
+2. Reject if not able to get a sha
+
+### updateCommitStatus
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmUrl | String | true | The scmUrl to get permissions on |
+| config.token | String | true | The github token to check permissions on |
+| config.sha | String | true | The github sha to update a status for |
+| config.buildStatus | String | true | The screwdriver build status to translate into github commit status |
+| config.url | String | false | The target url for setting up details |
+
+#### Expected Outcome
+Update the commit status for a given repository and sha.
+
+#### Expected Promise Response
+1. Resolve when the commit status was updated
+2. Reject if the commit status fails to update
+
+### getFile
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmUrl | String | true | The scmUrl to get permissions on |
+| config.token | String | true |The github token to check permissions on |
+| config.path | String | true | The path to the file on github to read |
+| config.ref | String | false | The reference to the github repo, could be a branch or sha |
+
+#### Expected Outcome
+The contents of the file at `path` in the repository
+
+#### Expected Promise Response
+1. Resolve with the contents of `path`
+2. Reject if the `path` cannot be downloaded, decoded, or is not a file
+
+## Extending
+To make use of the validation functions, the functions to override are:
+1. `formatScmUrl` 
+2. `_getPermissions`
+3. `_getCommitSha`
+4. `_updateCommitStatus`
+5. `_getFile`
+6. `stats` 
+
+```js
+class MyScm extends ScmBase {
+    // Implement the interface
+    _getFile(config) {
+        // do stuff here to lookup scmUrl
+        return Promise.resolve('these are contents that are gotten')
+    }
+}
+
+const scm = new MyScm({});
+scm.getFile({
+    scmUrl: 'git@github.com:repo/foo.git#master',
+    path: 'screwdriver.yaml',
+    token: 'abcdefg'
+}).then(data => {
+    // do something...
+});
+```
+
 ## Testing
 
 ```bash
