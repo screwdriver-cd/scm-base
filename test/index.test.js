@@ -197,4 +197,11 @@ describe('index test', () => {
               });
         });
     });
+
+    describe('getId', () => {
+        it('throws an error', () => {
+            assert.throws(() =>
+                instance.getId('git@github.com:foo/bar.git'), 'getId not implemented');
+        });
+    });
 });

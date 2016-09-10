@@ -131,6 +131,17 @@ class ScmBase {
     stats() {
         return {};
     }
+
+    /**
+     * Return a unique identifier for the scmUrl
+     * @method getId
+     * @param {Object}    config        Configuration
+     * @param {String}    config.scmUrl The scmUrl to generate ID
+     * @param {String}    config.token  The token used to authenticate to the SCM
+     */
+    getId() {
+        throw new Error('getId not implemented');
+    }
 }
 
 module.exports = ScmBase;
