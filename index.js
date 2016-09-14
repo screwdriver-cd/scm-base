@@ -134,13 +134,32 @@ class ScmBase {
 
     /**
      * Return a unique identifier for the scmUrl
-     * @method getId
-     * @param {Object}    config        Configuration
-     * @param {String}    config.scmUrl The scmUrl to generate ID
-     * @param {String}    config.token  The token used to authenticate to the SCM
+     * @method getRepoId
+     * @param  {Object}    config        Configuration
+     * @param  {String}    config.scmUrl The scmUrl to generate ID
+     * @param  {String}    config.token  The token used to authenticate to the SCM
+     * @return {Promise}
      */
-    getId() {
-        throw new Error('getId not implemented');
+    getRepoId(config) {
+        const result = Joi.validate(config, dataSchema.plugins.scm.getRepoId);
+
+        if (result.error) {
+            return Promise.reject(result.error);
+        }
+
+        return this._getRepoId().then((repo) => {
+            const outputResult = Joi.validate(repo, dataSchema.core.scm.repo);
+
+            if (outputResult.error) {
+                return Promise.reject(outputResult.error);
+            }
+
+            return Promise.resolve(repo);
+        });
+    }
+
+    _getRepoId() {
+        return Promise.reject('Not implemented');
     }
 }
 
