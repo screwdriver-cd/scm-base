@@ -3,6 +3,23 @@
 const Joi = require('joi');
 const dataSchema = require('screwdriver-data-schema');
 
+/**
+ * Validate the config using the schema
+ * @method  validate
+ * @param  {Object}    config       Configuration
+ * @param  {Object}    schema       Joi object used for validation
+ * @return {Promise}
+ */
+function validate(config, schema) {
+    const result = Joi.validate(config, schema);
+
+    if (result.error) {
+        return Promise.reject(result.error);
+    }
+
+    return Promise.resolve(config);
+}
+
 class ScmBase {
     /**
      * Constructor for Scm
@@ -41,13 +58,8 @@ class ScmBase {
      * @return {Promise}
      */
     getPermissions(config) {
-        const result = Joi.validate(config, dataSchema.plugins.scm.getPermissions);
-
-        if (result.error) {
-            return Promise.reject(result.error);
-        }
-
-        return this._getPermissions(config);
+        return validate(config, dataSchema.plugins.scm.getPermissions)
+            .then(validConfig => this._getPermissions(validConfig));
     }
 
     _getPermissions() {
@@ -63,13 +75,8 @@ class ScmBase {
      * @return {Promise}
      */
     getCommitSha(config) {
-        const result = Joi.validate(config, dataSchema.plugins.scm.getCommitSha);
-
-        if (result.error) {
-            return Promise.reject(result.error);
-        }
-
-        return this._getCommitSha(config);
+        return validate(config, dataSchema.plugins.scm.getCommitSha)
+            .then(validConfig => this._getCommitSha(validConfig));
     }
 
     _getCommitSha() {
@@ -78,7 +85,7 @@ class ScmBase {
 
     /**
      * Update the commit status for a given repo and sha
-     * @method get
+     * @method updateCommitStatus
      * @param  {Object}   config              Configuration
      * @param  {String}   config.scmUrl       The scmUrl to get permissions on
      * @param  {String}   config.sha          The sha to apply the status to
@@ -87,13 +94,8 @@ class ScmBase {
      * @return {Promise}
      */
     updateCommitStatus(config) {
-        const result = Joi.validate(config, dataSchema.plugins.scm.updateCommitStatus);
-
-        if (result.error) {
-            return Promise.reject(result.error);
-        }
-
-        return this._updateCommitStatus(config);
+        return validate(config, dataSchema.plugins.scm.updateCommitStatus)
+            .then(validConfig => this._updateCommitStatus(validConfig));
     }
 
     _updateCommitStatus() {
@@ -110,13 +112,8 @@ class ScmBase {
     * @return {Promise}
     */
     getFile(config) {
-        const result = Joi.validate(config, dataSchema.plugins.scm.getFile);
-
-        if (result.error) {
-            return Promise.reject(result.error);
-        }
-
-        return this._getFile(config);
+        return validate(config, dataSchema.plugins.scm.getFile)
+            .then(validConfig => this._getFile(validConfig));
     }
 
     _getFile() {
@@ -130,6 +127,24 @@ class ScmBase {
      */
     stats() {
         return {};
+    }
+
+    /**
+     * Return a unique identifier for the scmUrl
+     * @method getRepoId
+     * @param  {Object}    config        Configuration
+     * @param  {String}    config.scmUrl The scmUrl to generate ID
+     * @param  {String}    config.token  The token used to authenticate to the SCM
+     * @return {Promise}
+     */
+    getRepoId(config) {
+        return validate(config, dataSchema.plugins.scm.getRepoId)
+            .then(validConfig => this._getRepoId(validConfig))
+            .then(repo => validate(repo, dataSchema.core.scm.repo));
+    }
+
+    _getRepoId() {
+        return Promise.reject('Not implemented');
     }
 }
 

@@ -38,6 +38,19 @@ describe('index test', () => {
                         scmUrl: Joi.string().required(),
                         token: Joi.string().required(),
                         path: Joi.string().required()
+                    }).required(),
+                    getRepoId: Joi.object().keys({
+                        scmUrl: Joi.string().required(),
+                        token: Joi.string().required()
+                    }).required()
+                }
+            },
+            core: {
+                scm: {
+                    repo: Joi.object().keys({
+                        id: Joi.string().required(),
+                        name: Joi.string().required(),
+                        url: Joi.string().required()
                     }).required()
                 }
             }
@@ -195,6 +208,54 @@ describe('index test', () => {
                   assert.instanceOf(err, Error);
                   assert.equal(err.message, 'not implemented');
               });
+        });
+    });
+
+    describe('getRepoId', () => {
+        it('returns error when invalid config object', () => instance.getRepoId({})
+            .then(() => {
+                assert.fail('you will never get dis');
+            })
+            .catch(err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            })
+        );
+
+        it('returns error when invalid output', () => {
+            const config = {
+                scmUrl: 'foo',
+                token: 'token'
+            };
+
+            instance._getRepoId = () => Promise.resolve({
+                invalid: 'object'
+            });
+
+            instance.getRepoId(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch(err => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () => {
+            const config = {
+                scmUrl: 'foo',
+                token: 'token'
+            };
+
+            instance.getRepoId(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch(err => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.message, 'Not implemented');
+                });
         });
     });
 });
