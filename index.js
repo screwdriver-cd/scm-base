@@ -1,4 +1,5 @@
 'use strict';
+
 /* eslint-disable no-underscore-dangle */
 const Joi = require('joi');
 const dataSchema = require('screwdriver-data-schema');
@@ -41,19 +42,100 @@ class ScmBase {
     }
 
     /**
-     * Format the scmUrl for the specific source control
-     * @method formatScmUrl
-     * @param {String}    scmUrl        Scm Url to format properly
+     * Parse the url for a repo for the specific source control
+     * @method parseurl
+     * @param  {Object}    config
+     * @param  {String}    config.checkoutUrl       Url to parse
+     * @param  {String}    config.token             The token used to authenticate to the SCM
+     * @return {Promise}
      */
-    formatScmUrl() {
-        throw new Error('formatScmUrl not implemented');
+    parseUrl(config) {
+        return validate(config, dataSchema.plugins.scm.parseUrl)
+            .then(validUrl => this._parseUrl(validUrl))
+            .then(uri => validate(uri, dataSchema.models.pipeline.base.scmUri));
+    }
+
+    _parseUrl() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
+     * Parse the webhook for the specific source control
+     * @method parseHook
+     * @param  {Object}     headers     The request headers associated with the webhook payload
+     * @param  {Object}     payload     The webhook payload received from the SCM service
+     * @return {Object}                 A key-map of data related to the received payload
+     */
+    parseHook(headers, payload) {
+        const result = this._parseHook(headers, payload);
+
+        return validate(result, dataSchema.core.scm.hook);
+    }
+
+    _parseHook() {
+        throw new Error('Not implemented');
+    }
+
+    /**
+     * Decorate the url for the specific source control
+     * @method decorateUrl
+     * @param  {Object}    config
+     * @param  {String}    config.scmUri       SCM uri to decorate
+     * @param  {String}    config.token        The token used to authenticate to the SCM
+     * @return {Promise}
+     */
+    decorateUrl(config) {
+        return validate(config, dataSchema.plugins.scm.decorateUrl)
+            .then(validUrl => this._decorateUrl(validUrl))
+            .then(decoratedUrl => validate(decoratedUrl, dataSchema.core.scm.repo));
+    }
+
+    _decorateUrl() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
+     * Decorate the commit for the specific source control
+     * @method decorateCommit
+     * @param  {Object}    config
+     * @param  {String}    config.sha           Commit sha to decorate
+     * @param  {String}    config.scmUri        SCM uri
+     * @param  {String}    config.token         The token used to authenticate to the SCM
+     * @return {Promise}
+     */
+    decorateCommit(config) {
+        return validate(config, dataSchema.plugins.scm.decorateCommit)
+            .then(validCommit => this._decorateCommit(validCommit))
+            .then(decoratedCommit => validate(decoratedCommit, dataSchema.core.scm.commit));
+    }
+
+    _decorateCommit() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
+     * Decorate the author for the specific source control
+     * @method decorateAuthor
+     * @param  {Object}    config
+     * @param  {String}    config.username  Author to decorate
+     * @param  {String}    config.token     The token used to authenticate to the SCM
+     * @return {Promise}
+     */
+    decorateAuthor(config) {
+        return validate(config, dataSchema.plugins.scm.decorateAuthor)
+            .then(validAuthor => this._decorateAuthor(validAuthor))
+            .then(decoratedAuthor => validate(decoratedAuthor, dataSchema.core.scm.user));
+    }
+
+    _decorateAuthor() {
+        return Promise.reject('Not implemented');
     }
 
     /**
      * Get a users permissions on a repository
      * @method getPermissions
      * @param  {Object}   config            Configuration
-     * @param  {String}   config.scmUrl     The scmUrl to get permissions on
+     * @param  {String}   config.scmUri     The scmUri to get permissions on
      * @param  {String}   config.token      The token used to authenticate to the SCM
      * @return {Promise}
      */
@@ -70,7 +152,7 @@ class ScmBase {
      * Get a commit sha for a specific repo#branch
      * @method getCommitSha
      * @param  {Object}   config            Configuration
-     * @param  {String}   config.scmUrl     The scmUrl to get commit sha of
+     * @param  {String}   config.scmUri     The scmUri to get commit sha of
      * @param  {String}   config.token      The token used to authenticate to the SCM
      * @return {Promise}
      */
@@ -87,7 +169,7 @@ class ScmBase {
      * Update the commit status for a given repo and sha
      * @method updateCommitStatus
      * @param  {Object}   config              Configuration
-     * @param  {String}   config.scmUrl       The scmUrl to get permissions on
+     * @param  {String}   config.scmUri       The scmUri to get permissions on
      * @param  {String}   config.sha          The sha to apply the status to
      * @param  {String}   config.buildStatus  The build status used for figuring out the commit status to set
      * @param  {String}   config.token        The token used to authenticate to the SCM
@@ -108,7 +190,7 @@ class ScmBase {
     * Fetch content of a file from an scm repo
     * @method getFile
     * @param  {Object}   config              Configuration
-    * @param  {String}   config.scmUrl       The scmUrl to get permissions on
+    * @param  {String}   config.scmUri       The scmUri to get permissions on
     * @param  {String}   config.path         The file in the repo to fetch
     * @param  {String}   config.token        The token used to authenticate to the SCM
     * @return {Promise}
@@ -129,24 +211,6 @@ class ScmBase {
      */
     stats() {
         return {};
-    }
-
-    /**
-     * Return a unique identifier for the scmUrl
-     * @method getRepoId
-     * @param  {Object}    config        Configuration
-     * @param  {String}    config.scmUrl The scmUrl to generate ID
-     * @param  {String}    config.token  The token used to authenticate to the SCM
-     * @return {Promise}
-     */
-    getRepoId(config) {
-        return validate(config, dataSchema.plugins.scm.getRepoId)
-            .then(validConfig => this._getRepoId(validConfig))
-            .then(repo => validate(repo, dataSchema.core.scm.repo));
-    }
-
-    _getRepoId() {
-        return Promise.reject('Not implemented');
     }
 }
 
