@@ -52,7 +52,7 @@ class ScmBase {
     parseUrl(config) {
         return validate(config, dataSchema.plugins.scm.parseUrl)
             .then(validUrl => this._parseUrl(validUrl))
-            .then(uri => validate(uri, dataSchema.models.pipeline.base.scmUri));
+            .then(uri => validate(uri, Joi.reach(dataSchema.models.pipeline.base, 'scmUri')));
     }
 
     _parseUrl() {
