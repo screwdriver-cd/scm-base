@@ -64,7 +64,7 @@ class ScmBase {
      * @method parseHook
      * @param  {Object}     headers     The request headers associated with the webhook payload
      * @param  {Object}     payload     The webhook payload received from the SCM service
-     * @return {Object}                 A key-map of data related to the received payload
+     * @return {Promise}
      */
     parseHook(headers, payload) {
         const result = this._parseHook(headers, payload);
@@ -72,6 +72,7 @@ class ScmBase {
         return validate(result, dataSchema.core.scm.hook);
     }
 
+    // Should return a key-map of data related to the received payload; not a promise
     _parseHook() {
         throw new Error('Not implemented');
     }
