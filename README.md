@@ -54,6 +54,10 @@ A key-map of data related to the received payload in the form of:
 }
 ```
 
+#### Expected Promise response
+1. Resolve with a parsed hook object
+2. Reject if not able to parse hook
+
 ### decorateUrl
 Required parameters:
 
