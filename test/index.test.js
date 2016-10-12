@@ -9,6 +9,12 @@ describe('index test', () => {
     let instance;
     let ScmBase;
     let schemaMock;
+    const MODEL = {
+        scmUri: Joi
+            .string().regex(/^([^:]+):([\w-]+):(.+)$/)
+            .description('Unique identifier for the application')
+            .example('github.com:123456:master')
+    };
 
     before(() => {
         mockery.enable({
@@ -91,9 +97,7 @@ describe('index test', () => {
             },
             models: {
                 pipeline: {
-                    base: Joi.object().keys({
-                        scmUri: Joi.string().required()
-                    }).required()
+                    base: Joi.object(MODEL)
                 }
             }
         };
