@@ -67,7 +67,13 @@ class ScmBase {
      * @return {Promise}
      */
     parseHook(headers, payload) {
-        const result = this._parseHook(headers, payload);
+        let result;
+
+        try {
+            result = this._parseHook(headers, payload);
+        } catch (err) {
+            return Promise.reject(err);
+        }
 
         return validate(result, dataSchema.core.scm.hook);
     }

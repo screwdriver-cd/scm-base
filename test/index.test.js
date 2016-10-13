@@ -198,9 +198,14 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => {
-            assert.throws(() => instance.parseHook(headers, payload), 'Not implemented');
-        });
+        it('returns not implemented', () =>
+            instance.parseHook(headers, payload)
+            .then(() => {
+                assert.fail('This should not fail the test');
+            }, (err) => {
+                assert.strictEqual(err.message, 'Not implemented');
+            })
+        );
     });
 
     describe('decorateUrl', () => {
