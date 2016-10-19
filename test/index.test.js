@@ -3,18 +3,10 @@
 /* eslint-disable no-underscore-dangle */
 const assert = require('chai').assert;
 const mockery = require('mockery');
-const Joi = require('joi');
 
 describe('index test', () => {
     let instance;
     let ScmBase;
-    let schemaMock;
-    const MODEL = {
-        scmUri: Joi
-            .string().regex(/^([^:]+):([\w-]+):(.+)$/)
-            .description('Unique identifier for the application')
-            .example('github.com:123456:master')
-    };
 
     before(() => {
         mockery.enable({
@@ -24,84 +16,6 @@ describe('index test', () => {
     });
 
     beforeEach(() => {
-        schemaMock = {
-            plugins: {
-                scm: {
-                    getPermissions: Joi.object().keys({
-                        scmUri: Joi.string().required(),
-                        token: Joi.string().required()
-                    }).required(),
-                    getCommitSha: Joi.object().keys({
-                        scmUri: Joi.string().required(),
-                        token: Joi.string().required()
-                    }).required(),
-                    updateCommitStatus: Joi.object().keys({
-                        scmUri: Joi.string().required(),
-                        token: Joi.string().required(),
-                        buildStatus: Joi.string().required(),
-                        sha: Joi.string().required()
-                    }).required(),
-                    getFile: Joi.object().keys({
-                        scmUri: Joi.string().required(),
-                        token: Joi.string().required(),
-                        path: Joi.string().required()
-                    }).required(),
-                    parseUrl: Joi.object().keys({
-                        checkoutUrl: Joi.string().required(),
-                        token: Joi.string().required()
-                    }).required(),
-                    decorateUrl: Joi.object().keys({
-                        scmUri: Joi.string().required(),
-                        token: Joi.string().required()
-                    }).required(),
-                    decorateCommit: Joi.object().keys({
-                        sha: Joi.string().required(),
-                        scmUri: Joi.string().required(),
-                        token: Joi.string().required()
-                    }).required(),
-                    decorateAuthor: Joi.object().keys({
-                        username: Joi.string().required(),
-                        token: Joi.string().required()
-                    }).required()
-                }
-            },
-            core: {
-                scm: {
-                    repo: Joi.object().keys({
-                        name: Joi.string().required(),
-                        branch: Joi.string().required(),
-                        url: Joi.string().required()
-                    }).required(),
-                    commit: Joi.object().keys({
-                        username: Joi.string().required(),
-                        message: Joi.string().required(),
-                        url: Joi.string().required()
-                    }).required(),
-                    user: Joi.object().keys({
-                        name: Joi.string().required(),
-                        username: Joi.string().required(),
-                        avatar: Joi.string().required(),
-                        url: Joi.string().required()
-                    }).required(),
-                    hook: Joi.object().keys({
-                        type: Joi.string().required(),
-                        action: Joi.string().required(),
-                        prNum: Joi.number().optional(),
-                        checkoutUrl: Joi.string().required(),
-                        branch: Joi.string().required(),
-                        prRef: Joi.string().optional(),
-                        sha: Joi.string().required(),
-                        username: Joi.string().required()
-                    }).required()
-                }
-            },
-            models: {
-                pipeline: {
-                    base: Joi.object(MODEL)
-                }
-            }
-        };
-        mockery.registerMock('screwdriver-data-schema', schemaMock);
         /* eslint-disable global-require */
         ScmBase = require('../index');
         /* eslint-enable global-require */
@@ -132,7 +46,7 @@ describe('index test', () => {
 
     describe('parseUrl', () => {
         const config = {
-            checkoutUrl: 'foo',
+            checkoutUrl: 'git@github.com:screwdriver-cd/scm-base.git',
             token: 'bar'
         };
 
@@ -157,7 +71,7 @@ describe('index test', () => {
                 })
                 .catch((err) => {
                     assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'Error');
+                    assert.equal(err.name, 'ValidationError');
                 });
         });
 
@@ -210,7 +124,7 @@ describe('index test', () => {
 
     describe('decorateUrl', () => {
         const config = {
-            scmUri: 'foo',
+            scmUri: 'github.com:repoId:branch',
             token: 'token'
         };
 
@@ -251,8 +165,8 @@ describe('index test', () => {
 
     describe('decorateCommit', () => {
         const config = {
-            sha: '123abc',
-            scmUri: 'foo',
+            sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
+            scmUri: 'github.com:repoId:branch',
             token: 'token'
         };
 
@@ -334,7 +248,7 @@ describe('index test', () => {
 
     describe('getPermissons', () => {
         const config = {
-            scmUri: 'foo',
+            scmUri: 'github.com:repoId:branch',
             token: 'token'
         };
 
@@ -375,7 +289,7 @@ describe('index test', () => {
 
     describe('getCommitSha', () => {
         const config = {
-            scmUri: 'foo',
+            scmUri: 'github.com:repoId:branch',
             token: 'token'
         };
 
@@ -416,9 +330,9 @@ describe('index test', () => {
 
     describe('updateCommitStatus', () => {
         const config = {
-            scmUri: 'foo',
-            sha: 'sha1',
-            buildStatus: 'stating',
+            scmUri: 'github.com:repoId:branch',
+            sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
+            buildStatus: 'SUCCESS',
             token: 'token'
         };
 
@@ -465,7 +379,7 @@ describe('index test', () => {
 
     describe('getFile', () => {
         const config = {
-            scmUri: 'foo',
+            scmUri: 'github.com:repoId:branch',
             path: 'testFile',
             token: 'token'
         };

@@ -181,7 +181,7 @@ class ScmBase {
      * @param  {String}   config.buildStatus  The build status used for figuring out the commit status to set
      * @param  {String}   config.token        The token used to authenticate to the SCM
      * @param  {String}   [config.jobName]    Optional name of the job that finished
-     * @param  {String}   [config.url]        Optional target url
+     * @param  {String}   config.url          Target url
      * @return {Promise}
      */
     updateCommitStatus(config) {
