@@ -333,7 +333,8 @@ describe('index test', () => {
             scmUri: 'github.com:repoId:branch',
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             buildStatus: 'SUCCESS',
-            token: 'token'
+            token: 'token',
+            url: 'https://foo.bar'
         };
 
         it('returns error when invalid config object', () => instance.updateCommitStatus({})
