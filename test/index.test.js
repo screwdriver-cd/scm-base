@@ -410,22 +410,6 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented with valid prRef input', () => {
-            const prConfig = {
-                ref: 'git@github.com:screwdriver-cd-test/functional-git.git#pull/453/merge',
-                path: 'testFile',
-                token: 'token'
-            };
-
-            return instance.getFile(prConfig)
-                .then(() => {
-                    assert.fail('you will never get dis');
-                })
-                .catch((err) => {
-                    assert.equal(err, 'Not implemented');
-                });
-        });
-
         it('returns not implemented', () => instance.getFile(config)
                 .then(() => {
                     assert.fail('you will never get dis');

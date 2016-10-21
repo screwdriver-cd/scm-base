@@ -197,18 +197,12 @@ class ScmBase {
     * Fetch content of a file from an scm repo
     * @method getFile
     * @param  {Object}   config              Configuration
+    * @param  {String}   config.scmUri       The scmUri to get permissions on
     * @param  {String}   config.path         The file in the repo to fetch
-    * @param  {String}   [config.ref]        The reference to the SCM, either branch or sha
-    * @param  {String}   [config.scmUri]     The scmUri to get permissions on
     * @param  {String}   config.token        The token used to authenticate to the SCM
     * @return {Promise}
     */
     getFile(config) {
-        if (config.ref) {
-            return validate(config, dataSchema.plugins.scm.getFileRef)
-                .then(validConfig => this._getFile(validConfig));
-        }
-
         return validate(config, dataSchema.plugins.scm.getFile)
             .then(validConfig => this._getFile(validConfig));
     }
