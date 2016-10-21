@@ -198,10 +198,11 @@ The parameters required are:
 | Parameter        | Type  | Required | Description |
 | :-------------   | :---- | :------- | :-------------|
 | config        | Object | true | Configuration Object |
-| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+| config.scmUri | String | false | The scm uri (ex: `github.com:1234:branchName`) |
 | config.token | String | true | Access token for scm |
 | config.path | String | true | The path to the file on scm to read |
 | config.ref | String | false | The reference to the scm repo, could be a branch or sha |
+Note: either `ref` or `scmUri` is required.
 
 #### Expected Outcome
 The contents of the file at `path` in the repository
