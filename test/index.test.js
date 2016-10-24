@@ -419,4 +419,28 @@ describe('index test', () => {
                 })
         );
     });
+
+    describe('getBellConfiguration', () => {
+        it('returns data from underlying method', () => {
+            instance._getBellConfiguration = () => Promise.resolve({
+                real: 'config'
+            });
+
+            return instance.getBellConfiguration()
+                .then((output) => {
+                    assert.deepEqual(output, {
+                        real: 'config'
+                    });
+                });
+        });
+
+        it('returns not implemented', () => instance.getBellConfiguration()
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
 });
