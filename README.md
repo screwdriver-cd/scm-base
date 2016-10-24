@@ -268,8 +268,8 @@ Code licensed under the BSD 3-Clause license. See LICENSE file for terms.
 [license-image]: https://img.shields.io/npm/l/screwdriver-scm-base.svg
 [issues-image]: https://img.shields.io/github/issues/screwdriver-cd/scm-base.svg
 [issues-url]: https://github.com/screwdriver-cd/scm-base/issues
-[status-image]: https://cd.screwdriver.cd/pipelines/5c780cf3059eadfed0c60c0dd0194146105ae46c/badge
-[status-url]: https://cd.screwdriver.cd/pipelines/5c780cf3059eadfed0c60c0dd0194146105ae46c
+[status-image]: https://cd.screwdriver.cd/pipelines/d4411e1a5ab81278499dd2a478eb355cf1f2dbda/badge
+[status-url]: https://cd.screwdriver.cd/pipelines/d4411e1a5ab81278499dd2a478eb355cf1f2dbda
 [daviddm-image]: https://david-dm.org/screwdriver-cd/scm-base.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/screwdriver-cd/scm-base
 [bell]: https://www.npmjs.com/package/bell
