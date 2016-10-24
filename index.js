@@ -212,6 +212,19 @@ class ScmBase {
     }
 
     /**
+     * Return a valid Bell configuration (for OAuth)
+     * @method getBellConfiguration
+     * @return {Promise}
+     */
+    getBellConfiguration() {
+        return this._getBellConfiguration();
+    }
+
+    _getBellConfiguration() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
      * Return statistics on the executor
      * @method stats
      * @return {Object} object           Hash containing metrics for the executor

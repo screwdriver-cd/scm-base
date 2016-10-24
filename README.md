@@ -210,6 +210,14 @@ The contents of the file at `path` in the repository
 1. Resolve with the contents of `path`
 2. Reject if the `path` cannot be downloaded, decoded, or is not a file
 
+### getBellConfiguration
+
+#### Expected Outcome
+A configuration that can be passed to the [bell][bell] OAuth module to authenticate users.
+
+#### Expected Promise Response
+1. Resolve with a valid [bell][bell] configuration
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 
@@ -222,6 +230,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getCommitSha`
 1. `_updateCommitStatus`
 1. `_getFile`
+1. `_getBellConfiguration`
 1. `stats` 
 
 ```js
@@ -263,3 +272,4 @@ Code licensed under the BSD 3-Clause license. See LICENSE file for terms.
 [status-url]: https://cd.screwdriver.cd/pipelines/5c780cf3059eadfed0c60c0dd0194146105ae46c
 [daviddm-image]: https://david-dm.org/screwdriver-cd/scm-base.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/screwdriver-cd/scm-base
+[bell]: https://www.npmjs.com/package/bell
