@@ -44,6 +44,7 @@ A key-map of data related to the received payload in the form of:
 ```js
 {
     type: 'pr',         // can be 'pr' or 'repo'
+    hookId: '81e6bd80-9a2c-11e6-939d-beaa5d9adaf3', // webhook event uuid
     action: 'opened',   // can be 'opened', 'closed', or 'synchronized' for type 'pr'; 'push' for type 'repo'
     username: 'batman',
     checkoutUrl: 'https://batman@bitbucket.org/batman/test.git',
