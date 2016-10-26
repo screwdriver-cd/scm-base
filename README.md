@@ -219,6 +219,21 @@ A configuration that can be passed to the [bell][bell] OAuth module to authentic
 #### Expected Promise Response
 1. Resolve with a valid [bell][bell] configuration
 
+### getWebhookStrategy
+
+#### Expected Outcome
+A hapi webhook auth strategy object that can be passed to the hapi server.
+If no auth strategy needed, the function should return **null**.
+```js
+{
+    plugin: {}, // auth plugin interface
+    scheme: 'name_of_the_auth_scheme',
+    options:  { // options to pass in the auth strategy
+        secret: 'signing_secret'
+    }
+}
+```
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 
@@ -232,6 +247,7 @@ To make use of the validation functions, the functions to override are:
 1. `_updateCommitStatus`
 1. `_getFile`
 1. `_getBellConfiguration`
+1. `_getWebhookStrategy`
 1. `stats` 
 
 ```js

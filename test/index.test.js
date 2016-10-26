@@ -443,4 +443,26 @@ describe('index test', () => {
                 })
         );
     });
+
+    describe('getWebhookStrategy', () => {
+        it('returns data from underlying method', () => {
+            instance._getWebhookStrategy = () => {
+                const result = { scheme: 'githubwebhook' };
+
+                return result;
+            };
+
+            assert.deepEqual(instance.getWebhookStrategy(), {
+                scheme: 'githubwebhook'
+            });
+        });
+
+        it('returns not implemented', () => {
+            try {
+                instance.getWebhookStrategy();
+            } catch (err) {
+                assert.equal(err.message, 'Not implemented');
+            }
+        });
+    });
 });

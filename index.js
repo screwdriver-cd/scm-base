@@ -225,6 +225,20 @@ class ScmBase {
     }
 
     /**
+     * Return a hapi auth strategy object for the webhook
+     * Return null if no webhook auth strategy is required
+     * @method getWebhookStrategy
+     * @return {Object}
+     */
+    getWebhookStrategy() {
+        return this._getWebhookStrategy();
+    }
+
+    _getWebhookStrategy() {
+        throw new Error('Not implemented');
+    }
+
+    /**
      * Return statistics on the executor
      * @method stats
      * @return {Object} object           Hash containing metrics for the executor
