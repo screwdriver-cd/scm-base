@@ -93,22 +93,16 @@ describe('index test', () => {
             moreStuff: 'bar'
         };
 
-        it('returns error when invalid output', () => {
-            instance._parseHook = () => {
-                const result = {
-                    invalid: 'object'
-                };
+        it('returns data from underlying method', () => {
+            instance._parseHook = () => Promise.resolve({
+                type: 'pr'
+            });
 
-                return result;
-            };
-
-            instance.parseHook(headers, payload)
-                .then(() => {
-                    assert.fail('you will never get dis');
-                })
-                .catch((err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
+            return instance.parseHook()
+                .then((output) => {
+                    assert.deepEqual(output, {
+                        type: 'pr'
+                    });
                 });
         });
 
@@ -117,7 +111,7 @@ describe('index test', () => {
             .then(() => {
                 assert.fail('This should not fail the test');
             }, (err) => {
-                assert.strictEqual(err.message, 'Not implemented');
+                assert.equal(err, 'Not implemented');
             })
         );
     });

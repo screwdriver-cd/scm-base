@@ -67,20 +67,11 @@ class ScmBase {
      * @return {Promise}
      */
     parseHook(headers, payload) {
-        let result;
-
-        try {
-            result = this._parseHook(headers, payload);
-        } catch (err) {
-            return Promise.reject(err);
-        }
-
-        return validate(result, dataSchema.core.scm.hook);
+        return this._parseHook(headers, payload);
     }
 
-    // Should return a key-map of data related to the received payload; not a promise
     _parseHook() {
-        throw new Error('Not implemented');
+        return Promise.reject('Not implemented');
     }
 
     /**
