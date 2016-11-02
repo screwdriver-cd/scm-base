@@ -45,11 +45,11 @@ A key-map of data related to the received payload in the form of:
 {
     type: 'pr',         // can be 'pr' or 'repo'
     hookId: '81e6bd80-9a2c-11e6-939d-beaa5d9adaf3', // webhook event uuid
-    action: 'opened',   // can be 'opened', 'closed', or 'synchronized' for type 'pr'; 'push' for type 'repo'
-    username: 'batman',
+    action: 'opened',   // can be 'opened', 'reopened', 'closed', or 'synchronized' for type 'pr'; 'push' for type 'repo'
+    username: 'robin',  // should be the actor/creator of the webhook event (not necessarily the author)
     checkoutUrl: 'https://batman@bitbucket.org/batman/test.git',
     branch: 'mynewbranch',
-    sha: '40171b678527',
+    sha: '9ff49b2d1437567cad2b5fed7a0706472131e927',
     prNum: 3,
     prRef: 'refs/pull-requests/3/from'
 }
@@ -88,8 +88,8 @@ Required parameters:
 | Parameter        | Type  |  Description |
 | :-------------   | :---- | :-------------|
 | config        | Object | Configuration Object |
-| config.sha     | String | Commit sha to decorate |
 | config.scmUri        | String | Scm uri (ex: `github.com:1234:branchName`) |
+| config.sha     | String | Commit sha to decorate |
 | config.token | String | Access token for scm |
 
 #### Expected Outcome
@@ -117,8 +117,8 @@ Required parameters:
 | Parameter        | Type  |  Description |
 | :-------------   | :---- | :-------------|
 | config        | Object | Configuration Object |
-| config.username     | String | Author to decorate |
 | config.token | String | Access token for scm |
+| config.username     | String | Author to decorate |
 
 #### Expected Outcome
 Decorated author in the form of:
@@ -180,10 +180,11 @@ The parameters required are:
 | Parameter        | Type  | Required | Description |
 | :-------------   | :---- | :------- | :-------------|
 | config        | Object | true | Configuration Object |
-| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
-| config.token | String | true | Access token for scm |
-| config.sha | String | true | The scm sha to update a status for |
 | config.buildStatus | String | true | The screwdriver build status to translate into scm commit status |
+| config.jobName | String | false | Optional name of the job that finished |
+| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+| config.sha | String | true | The scm sha to update a status for |
+| config.token | String | true | Access token for scm |
 | config.url | String | false | The target url for setting up details |
 
 #### Expected Outcome
@@ -199,10 +200,10 @@ The parameters required are:
 | Parameter        | Type  | Required | Description |
 | :-------------   | :---- | :------- | :-------------|
 | config        | Object | true | Configuration Object |
-| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
-| config.token | String | true | Access token for scm |
 | config.path | String | true | The path to the file on scm to read |
 | config.ref | String | false | The reference to the scm repo, could be a branch or sha |
+| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+| config.token | String | true | Access token for scm |
 
 #### Expected Outcome
 The contents of the file at `path` in the repository
