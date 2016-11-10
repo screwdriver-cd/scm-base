@@ -75,6 +75,29 @@ class ScmBase {
     }
 
     /**
+     * Checkout the source code from a repository; resolves as an object with checkout commands
+     * @method getCheckoutCommand
+     * @param  {Object}    config
+     * @param  {String}    config.branch        Pipeline branch
+     * @param  {String}    config.host          Scm host to checkout source code from
+     * @param  {String}    config.org           Scm org name
+     * @param  {String}    config.repo          Scm repo name
+     * @param  {String}    config.sha           Commit sha
+     * @param  {String}    [config.prRef]       PR reference (can be a PR branch or reference)
+     * @return {Promise}
+     */
+    getCheckoutCommand(config) {
+        return validate(config, dataSchema.plugins.scm.getCheckoutCommand)
+            .then(validCheckout => this._getCheckoutCommand(validCheckout))
+            .then(checkoutCommand => validate(checkoutCommand,
+                dataSchema.models.build.getStep));
+    }
+
+    _getCheckoutCommand() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
      * Decorate the url for the specific source control
      * @method decorateUrl
      * @param  {Object}    config
