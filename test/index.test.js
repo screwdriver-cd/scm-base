@@ -116,6 +116,50 @@ describe('index test', () => {
         );
     });
 
+    describe('getCheckoutCommand', () => {
+        const config = {
+            branch: 'branch',
+            host: 'github.com',
+            org: 'screwdriver-cd',
+            repo: 'guide',
+            sha: '12345'
+        };
+
+        it('returns error when invalid config object', () => instance.getCheckoutCommand({})
+            .then(() => {
+                assert.fail('you will never get dis');
+            })
+            .catch((err) => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._getCheckoutCommand = () => Promise.resolve({
+                invalid: 'object'
+            });
+
+            return instance.getCheckoutCommand(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () => instance.getCheckoutCommand(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
+
     describe('decorateUrl', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',

@@ -51,13 +51,39 @@ A key-map of data related to the received payload in the form of:
     branch: 'mynewbranch',
     sha: '9ff49b2d1437567cad2b5fed7a0706472131e927',
     prNum: 3,
-    prRef: 'refs/pull-requests/3/from'
+    prRef: 'pull/3/merge'
 }
 ```
 
 #### Expected Promise response
 1. Resolve with a parsed hook object
 2. Reject if not able to parse hook
+
+### getCheckoutCommand
+Required parameters:
+
+| Parameter        | Type  | Required |  Description |
+| :-------------   | :---- | :--------| :---- |
+| config        | Object | Yes | Configuration Object |
+| config.branch | String | Yes | Pipeline branch |
+| config.host | String | Yes | Scm host (ex: github.com) |
+| config.org | String | Yes | Scm org (ex: screwdriver-cd) |
+| config.prRef | String | No | PR branch or reference |
+| config.repo | String | Yes | Scm repo (ex: guide) |
+| config.sha | String | Yes | Scm sha |
+
+#### Expected Outcome
+Checkout command in the form of:
+```js
+{
+    name: 'checkout-code',
+    command: 'git clone https://github.com/screwdriver-cd/guide'
+}
+```
+
+#### Expected Promise response
+1. Resolve with a checkout command object for the repository
+2. Reject if not able to get checkout command
 
 ### decorateUrl
 Required parameters:
@@ -179,13 +205,13 @@ The parameters required are:
 
 | Parameter        | Type  | Required | Description |
 | :-------------   | :---- | :------- | :-------------|
-| config        | Object | true | Configuration Object |
-| config.buildStatus | String | true | The screwdriver build status to translate into scm commit status |
-| config.jobName | String | false | Optional name of the job that finished |
-| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
-| config.sha | String | true | The scm sha to update a status for |
-| config.token | String | true | Access token for scm |
-| config.url | String | false | The target url for setting up details |
+| config        | Object | Yes | Configuration Object |
+| config.buildStatus | String | Yes | The screwdriver build status to translate into scm commit status |
+| config.jobName | String | No | Optional name of the job that finished |
+| config.scmUri | String | Yes | The scm uri (ex: `github.com:1234:branchName`) |
+| config.sha | String | Yes | The scm sha to update a status for |
+| config.token | String | Yes | Access token for scm |
+| config.url | String | No | The target url for setting up details |
 
 #### Expected Outcome
 Update the commit status for a given repository and sha.
@@ -225,6 +251,7 @@ To make use of the validation functions, the functions to override are:
 
 1. `_parseUrl`
 1. `_parseHook`
+1. `_getCheckoutCommand`
 1. `_decorateUrl`
 1. `_decorateCommit`
 1. `_decorateAuthor`
