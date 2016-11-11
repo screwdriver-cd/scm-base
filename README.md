@@ -76,7 +76,7 @@ Required parameters:
 Checkout command in the form of:
 ```js
 {
-    name: 'checkout-code',
+    name: 'sd-checkout-code', // must be 'sd-checkout-code' exactly
     command: 'git clone https://github.com/screwdriver-cd/guide'
 }
 ```

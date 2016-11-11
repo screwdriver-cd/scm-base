@@ -90,7 +90,7 @@ class ScmBase {
         return validate(config, dataSchema.plugins.scm.getCheckoutCommand)
             .then(validCheckout => this._getCheckoutCommand(validCheckout))
             .then(checkoutCommand => validate(checkoutCommand,
-                dataSchema.models.build.getStep));
+                dataSchema.core.scm.command));
     }
 
     _getCheckoutCommand() {
