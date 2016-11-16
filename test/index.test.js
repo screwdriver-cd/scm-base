@@ -160,6 +160,63 @@ describe('index test', () => {
         );
     });
 
+    describe('getSetupCommand', () => {
+        let config;
+
+        beforeEach(() => {
+            config = {
+                pipeline: {
+                    scmUri: 'github.com:12344567:branch',
+                    scmRepo: { name: 'screwdriver-cd/guide' }
+                },
+                job: {},
+                build: {
+                    sha: '12345'
+                }
+            };
+        });
+
+        it('returns a command', () => {
+            instance._getCheckoutCommand = (o) => {
+                assert.deepEqual(o, {
+                    branch: 'branch',
+                    host: 'github.com',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    sha: '12345'
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+
+            return instance.getSetupCommand(config)
+                .then((command) => {
+                    assert.equal(command, 'stuff');
+                });
+        });
+
+        it('returns a command for pr', () => {
+            instance._getCheckoutCommand = (o) => {
+                assert.deepEqual(o, {
+                    branch: 'branch',
+                    host: 'github.com',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    sha: '12345',
+                    prRef: 'abcd'
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+            config.build.prRef = 'abcd';
+
+            return instance.getSetupCommand(config)
+                .then((command) => {
+                    assert.equal(command, 'stuff');
+                });
+        });
+    });
+
     describe('decorateUrl', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',

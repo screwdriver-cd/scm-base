@@ -98,6 +98,32 @@ class ScmBase {
     }
 
     /**
+     * Gives the commands needed for setup before the build starts
+     * @method getSetupCommand
+     * @param  {Object}         o           Information about the environment for setup
+     * @param  {PipelineModel}  o.pipeline  Pipeline model for the build
+     * @param  {Object}         o.build     Build configuration for the build (before creation)
+     * @return {Promise}
+     */
+    getSetupCommand(o) {
+        const [host, , branch] = o.pipeline.scmUri.split(':');
+        const [org, repo] = o.pipeline.scmRepo.name.split('/');
+        const checkoutConfig = {
+            branch,
+            host,
+            org,
+            repo,
+            sha: o.build.sha
+        };
+
+        if (o.build.prRef) {
+            checkoutConfig.prRef = o.build.prRef;
+        }
+
+        return this.getCheckoutCommand(checkoutConfig).then(c => c.command);
+    }
+
+    /**
      * Decorate the url for the specific source control
      * @method decorateUrl
      * @param  {Object}    config
