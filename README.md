@@ -85,6 +85,17 @@ Checkout command in the form of:
 1. Resolve with a checkout command object for the repository
 2. Reject if not able to get checkout command
 
+### getSetupCommand
+Internally calls getCheckoutCommand to get just the checkout command for a build, given a pipeline model and build configuration.
+
+Required Parameters:
+
+| Parameter        | Type  | Required |  Description |
+| :-------------   | :---- | :--------| :---- |
+| config        | Object | Yes | Configuration Object |
+| config.pipeline | PipelineModel | Yes | Pipeline model |
+| config.build | Object | Yes | build config with sha and possibly prRef |
+
 ### decorateUrl
 Required parameters:
 
