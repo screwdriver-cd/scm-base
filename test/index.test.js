@@ -2,18 +2,10 @@
 
 /* eslint-disable no-underscore-dangle */
 const assert = require('chai').assert;
-const mockery = require('mockery');
 
 describe('index test', () => {
     let instance;
     let ScmBase;
-
-    before(() => {
-        mockery.enable({
-            useCleanCache: true,
-            warnOnUnregistered: false
-        });
-    });
 
     beforeEach(() => {
         /* eslint-disable global-require */
@@ -25,12 +17,6 @@ describe('index test', () => {
 
     afterEach(() => {
         instance = null;
-        mockery.deregisterAll();
-        mockery.resetCache();
-    });
-
-    after(() => {
-        mockery.disable();
     });
 
     it('can create an scm base class', () => {
@@ -50,14 +36,15 @@ describe('index test', () => {
             token: 'bar'
         };
 
-        it('returns error when invalid config object', () => instance.parseUrl({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.parseUrl({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -75,7 +62,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.parseUrl(config)
+        it('returns not implemented', () =>
+            instance.parseUrl(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -108,11 +96,11 @@ describe('index test', () => {
 
         it('returns not implemented', () =>
             instance.parseHook(headers, payload)
-            .then(() => {
-                assert.fail('This should not fail the test');
-            }, (err) => {
-                assert.equal(err, 'Not implemented');
-            })
+                .then(() => {
+                    assert.fail('This should not fail the test');
+                }, (err) => {
+                    assert.equal(err, 'Not implemented');
+                })
         );
     });
 
@@ -125,14 +113,15 @@ describe('index test', () => {
             sha: '12345'
         };
 
-        it('returns error when invalid config object', () => instance.getCheckoutCommand({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.getCheckoutCommand({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -150,7 +139,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.getCheckoutCommand(config)
+        it('returns not implemented', () =>
+            instance.getCheckoutCommand(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -223,14 +213,15 @@ describe('index test', () => {
             token: 'token'
         };
 
-        it('returns error when invalid config object', () => instance.decorateUrl({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.decorateUrl({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -248,7 +239,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.decorateUrl(config)
+        it('returns not implemented', () =>
+            instance.decorateUrl(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -265,14 +257,15 @@ describe('index test', () => {
             token: 'token'
         };
 
-        it('returns error when invalid config object', () => instance.decorateCommit({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.decorateCommit({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -290,7 +283,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.decorateCommit(config)
+        it('returns not implemented', () =>
+            instance.decorateCommit(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -306,14 +300,15 @@ describe('index test', () => {
             token: 'token'
         };
 
-        it('returns error when invalid config object', () => instance.decorateAuthor({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.decorateAuthor({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -331,7 +326,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.decorateAuthor(config)
+        it('returns not implemented', () =>
+            instance.decorateAuthor(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -347,14 +343,15 @@ describe('index test', () => {
             token: 'token'
         };
 
-        it('returns error when invalid config object', () => instance.getPermissions({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.getPermissions({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -372,7 +369,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.getPermissions(config)
+        it('returns not implemented', () =>
+            instance.getPermissions(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -388,14 +386,15 @@ describe('index test', () => {
             token: 'token'
         };
 
-        it('returns error when invalid config object', () => instance.getCommitSha({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.getCommitSha({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -413,7 +412,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.getCommitSha(config)
+        it('returns not implemented', () =>
+            instance.getCommitSha(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -432,14 +432,15 @@ describe('index test', () => {
             url: 'https://foo.bar'
         };
 
-        it('returns error when invalid config object', () => instance.updateCommitStatus({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.updateCommitStatus({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -457,7 +458,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.updateCommitStatus(config)
+        it('returns not implemented', () =>
+            instance.updateCommitStatus(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -480,14 +482,15 @@ describe('index test', () => {
             token: 'token'
         };
 
-        it('returns error when invalid config object', () => instance.getFile({})
-            .then(() => {
-                assert.fail('you will never get dis');
-            })
-            .catch((err) => {
-                assert.instanceOf(err, Error);
-                assert.equal(err.name, 'ValidationError');
-            })
+        it('returns error when invalid config object', () =>
+            instance.getFile({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
         );
 
         it('returns error when invalid output', () => {
@@ -505,7 +508,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.getFile(config)
+        it('returns not implemented', () =>
+            instance.getFile(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -529,7 +533,8 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () => instance.getBellConfiguration()
+        it('returns not implemented', () =>
+            instance.getBellConfiguration()
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
