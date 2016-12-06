@@ -36,7 +36,7 @@
     "jenkins-mocha": "^3.0.4"
   },
   "dependencies": {
-    "joi": "^9.1.1",
+    "joi": "^10.0.5",
     "screwdriver-data-schema": "^15.4.0"
   }
 }
