@@ -543,4 +543,41 @@ describe('index test', () => {
                 })
         );
     });
+
+    describe('addWebhook', () => {
+        const config = {
+            scmUri: 'github.com:20161206:branch',
+            token: 'token',
+            url: 'https://bob.by/ford'
+        };
+
+        it('returns data from underlying method', () => {
+            const expectedOutput = 'whenYourOpponentIsProgrammedToLose';
+
+            instance._addWebhook = () => Promise.resolve(expectedOutput);
+
+            return instance.addWebhook({
+                scmUri: 'github.com:20161206:branch',
+                token: 'token',
+                url: 'https://bob.by/ford'
+            }).then((result) => {
+                assert.strictEqual(result, expectedOutput);
+            });
+        });
+
+        it('rejects when given an invalid config object', () =>
+            instance.addWebhook({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('rejects when not implemented', () =>
+            instance.addWebhook(config)
+               .then(assert.fail, (err) => {
+                   assert.strictEqual(err, 'Not implemented');
+               })
+        );
+    });
 });
