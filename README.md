@@ -15,6 +15,25 @@ This is a promise based interface for interacting with a source control manageme
 ### configure
 The `configure` function takes in an object and resets the configuration values
 
+### addWebhook
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config            | Object | Configuration Object |
+| config.scmUri     | String | SCM URI to add the webhook to (e.g., "github.com:8888:branchName" |
+| config.token      | String | Access token for SCM |
+| config.webhookUrl | String | The URL to use for webhook notifications |
+
+#### Expected Outcome
+
+Update the repository with the desired webhook configuration.
+
+#### Expected Promise response
+
+1. Resolves when the webhook is correctly attached to the repository
+1. Rejects when the repository was unable to be updated with the webhook configuration
+
 ### parseUrl
 Required parameters:
 
@@ -260,6 +279,7 @@ A configuration that can be passed to the [bell][bell] OAuth module to authentic
 ## Extending
 To make use of the validation functions, the functions to override are:
 
+1. `_addWebhook`
 1. `_parseUrl`
 1. `_parseHook`
 1. `_getCheckoutCommand`

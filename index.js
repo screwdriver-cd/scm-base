@@ -42,6 +42,27 @@ class ScmBase {
     }
 
     /**
+     * Adds the Screwdriver webhook to the SCM repository
+     *
+     * If the repository already has the desired webhook, it will instead update the webhook to
+     * ensure it has all the up-to-date information and settings (e.g., events)
+     * @method addWebhook
+     * @param  {Object}     config
+     * @param  {String}     config.scmUri      SCM URI to add the webhook to
+     * @param  {String}     config.token       Service token to authenticate with the SCM service
+     * @param  {String}     config.webhookUrl  The URL to use for the webhook notifications
+     * @return {Promise}                       Resolves when operation completed without failure
+     */
+    addWebhook(config) {
+        return validate(config, dataSchema.plugins.scm.addWebhook)
+            .then(this._addWebhook);
+    }
+
+    _addWebhook() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
      * Parse the url for a repo for the specific source control
      * @method parseurl
      * @param  {Object}    config
