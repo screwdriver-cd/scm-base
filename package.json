@@ -40,10 +40,10 @@
     "chai": "^3.5.0",
     "eslint": "^3.2.2",
     "eslint-config-screwdriver": "^2.0.5",
-    "jenkins-mocha": "^3.0.4"
+    "jenkins-mocha": "^4.0.0"
   },
   "dependencies": {
     "joi": "^10.0.5",
-    "screwdriver-data-schema": "^15.6.0"
+    "screwdriver-data-schema": "^16.0.2"
   }
 }
