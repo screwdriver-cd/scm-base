@@ -55,7 +55,7 @@ class ScmBase {
      */
     addWebhook(config) {
         return validate(config, dataSchema.plugins.scm.addWebhook)
-            .then(this._addWebhook);
+            .then(() => this._addWebhook(config));
     }
 
     _addWebhook() {

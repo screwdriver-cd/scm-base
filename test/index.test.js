@@ -548,7 +548,7 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:20161206:branch',
             token: 'token',
-            url: 'https://bob.by/ford'
+            webhookUrl: 'https://bob.by/ford'
         };
 
         it('returns data from underlying method', () => {
@@ -559,7 +559,7 @@ describe('index test', () => {
             return instance.addWebhook({
                 scmUri: 'github.com:20161206:branch',
                 token: 'token',
-                url: 'https://bob.by/ford'
+                webhookUrl: 'https://bob.by/ford'
             }).then((result) => {
                 assert.strictEqual(result, expectedOutput);
             });
