@@ -273,6 +273,31 @@ class ScmBase {
     }
 
     /**
+    * Get list of objects which consists of opened PR names and its ref
+    * @method getOpenedPRs
+    * @param  {Object}   config              Configuration
+    * @param  {String}   config.scmUri       The scmUri to get opened PRs
+    * @param  {String}   config.token        The token used to authenticate to the SCM
+    * @return {Promise}
+    */
+    getOpenedPRs(config) {
+        return validate(config, dataSchema.plugins.scm.getCommitSha)       // includes scmUri and token
+            .then(validConfig => this._getOpenedPRs(validConfig))
+            .then(jobList =>
+                validate(jobList, Joi.array().items(
+                    Joi.object().keys({
+                        name: Joi.reach(dataSchema.models.job.base, 'name').required(),
+                        ref: Joi.string().required()
+                    })
+                ))
+        );
+    }
+
+    _getOpenedPRs() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
      * Return a valid Bell configuration (for OAuth)
      * @method getBellConfiguration
      * @return {Promise}

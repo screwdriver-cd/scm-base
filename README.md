@@ -276,6 +276,31 @@ A configuration that can be passed to the [bell][bell] OAuth module to authentic
 #### Expected Promise Response
 1. Resolve with a valid [bell][bell] configuration
 
+### getOpenedPRs
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+| config.token | String | true | Access token for scm |
+
+#### Expected Outcome
+The list of objects consist of PR names and refs (either a branch or a sha) for the pipeline. For example:
+```
+[{
+  name: 'PR-5',
+  ref: '73675432e1288f67332af3ecd0155cf455af1492'
+}, {
+  name: 'PR-6',
+  ref: 'dfbbc032fa331a95ee5107d1f16e9ff5f7c9d2fa'
+}]
+```
+#### Expected Promise Response
+1. Resolve with the list of objects consists of PR names and refs
+2. Reject if the input or output is not valid
+
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 

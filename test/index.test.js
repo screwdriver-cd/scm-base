@@ -519,6 +519,48 @@ describe('index test', () => {
         );
     });
 
+    describe('getOpenedPRs', () => {
+        const config = {
+            scmUri: 'github.com:repoId:branch',
+            token: 'token'
+        };
+
+        it('returns error when invalid input', () =>
+            instance.getOpenedPRs({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._getOpenedPRs = () => Promise.resolve({
+                invalid: 'stuff'
+            });
+
+            return instance.getOpenedPRs(config)
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.getOpenedPRs(config)
+                .then(assert.fail, (err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+
+        it('returns job list when no errors', () => {
+            instance._getOpenedPRs = () => Promise.resolve([{ name: 'PR-1', ref: 'pull/1/merge' }]);
+
+            return instance.getOpenedPRs(config).then(
+                jobs => assert.deepEqual(jobs, [{ name: 'PR-1', ref: 'pull/1/merge' }]),
+                assert.fail);
+        });
+    });
+
     describe('getBellConfiguration', () => {
         it('returns data from underlying method', () => {
             instance._getBellConfiguration = () => Promise.resolve({
