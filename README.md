@@ -315,6 +315,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getCommitSha`
 1. `_updateCommitStatus`
 1. `_getFile`
+1. `_getOpenedPRs`
 1. `_getBellConfiguration`
 1. `stats` 
 
