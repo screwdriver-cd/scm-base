@@ -300,7 +300,6 @@ The list of objects consist of PR names and refs (either a branch or a sha) for 
 1. Resolve with the list of objects consists of PR names and refs
 2. Reject if the input or output is not valid
 
-
 ## Extending
 To make use of the validation functions, the functions to override are:
 
