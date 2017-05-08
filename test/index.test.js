@@ -622,4 +622,32 @@ describe('index test', () => {
                })
         );
     });
+
+    describe('getPrInfo', () => {
+        const config = {
+            scmUri: 'github.com:repoId:branch',
+            token: 'token',
+            prNum: 123
+        };
+
+        it('returns error when invalid input', () =>
+            instance.getPrInfo({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._getPrInfo = () => Promise.resolve({
+                invalid: 'stuff'
+            });
+
+            return instance.getPrInfo(config)
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+    });
 });

@@ -217,11 +217,12 @@ class ScmBase {
     }
 
     /**
-     * Get a commit sha for a specific repo#branch
+     * Get a commit sha for a specific repo#branch or pull request
      * @method getCommitSha
      * @param  {Object}   config            Configuration
      * @param  {String}   config.scmUri     The scmUri to get commit sha of
      * @param  {String}   config.token      The token used to authenticate to the SCM
+     * @param  {Integer}  [config.prNum]    The PR number used to fetch the sha
      * @return {Promise}
      */
     getCommitSha(config) {
@@ -307,6 +308,30 @@ class ScmBase {
     }
 
     _getBellConfiguration() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
+     * Resolve a pull request object based on the config
+     * @method getPrRef
+     * @param  {Object}   config            Configuration
+     * @param  {String}   config.scmUri     The scmUri to get PR info of
+     * @param  {String}   config.token      The token used to authenticate to the SCM
+     * @param  {Integer}  config.prNum      The PR number used to fetch the PR
+     * @return {Promise}
+     */
+    getPrInfo(config) {
+        return validate(config, dataSchema.plugins.scm.getCommitSha)       // includes scmUri and token
+             .then(validConfig => this._getPrInfo(validConfig))
+             .then(pr => validate(pr, Joi.object().keys({
+                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
+                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
+                 ref: Joi.string().required()
+             }))
+         );
+    }
+
+    _getPrInfo() {
         return Promise.reject('Not implemented');
     }
 
