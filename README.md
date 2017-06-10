@@ -242,6 +242,7 @@ The parameters required are:
 | config.sha | String | Yes | The scm sha to update a status for |
 | config.token | String | Yes | Access token for scm |
 | config.url | String | No | The target url for setting up details |
+| config.pipelineId | Number | No | The pipeline id |
 
 #### Expected Outcome
 Update the commit status for a given repository and sha.

@@ -244,6 +244,7 @@ class ScmBase {
      * @param  {String}   config.token        The token used to authenticate to the SCM
      * @param  {String}   [config.jobName]    Optional name of the job that finished
      * @param  {String}   config.url          Target url
+     * @param  {Number}   [config.pipelineId] Pipeline ID
      * @return {Promise}
      */
     updateCommitStatus(config) {
