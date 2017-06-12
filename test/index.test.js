@@ -429,7 +429,8 @@ describe('index test', () => {
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             buildStatus: 'SUCCESS',
             token: 'token',
-            url: 'https://foo.bar'
+            url: 'https://foo.bar',
+            pipelineId: 123
         };
 
         it('returns error when invalid config object', () =>
@@ -649,5 +650,15 @@ describe('index test', () => {
                     assert.equal(err.name, 'ValidationError');
                 });
         });
+
+        it('returns not implemented', () =>
+            instance.getPrInfo(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
     });
 });
