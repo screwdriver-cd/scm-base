@@ -69,6 +69,7 @@ A key-map of data related to the received payload in the form of:
     checkoutUrl: 'https://batman@bitbucket.org/batman/test.git',
     branch: 'mynewbranch',
     sha: '9ff49b2d1437567cad2b5fed7a0706472131e927',
+    lastCommitMessage: 'This is the last commit message', // get a message of the last one from commits object
     prNum: 3,
     prRef: 'pull/3/merge'
 }
