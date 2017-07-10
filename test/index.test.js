@@ -661,4 +661,64 @@ describe('index test', () => {
                 })
         );
     });
+
+    describe('getScmContext', () => {
+        it('returns error when invalid output', () => {
+            instance._getScmContext = () => Promise.resolve({
+                invalid: 'stuff'
+            });
+
+            return instance.getScmContext()
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.getScmContext()
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
+
+    describe('canHandleUrl', () => {
+        const config = {
+            scmUri: 'github.com:repoId:branch'
+        };
+
+        it('returns error when invalid input', () =>
+            instance.canHandleUrl({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._canHandleUrl = () => Promise.resolve({
+                invalid: 'stuff'
+            });
+
+            return instance.canHandleUrl(config)
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.canHandleUrl(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
 });

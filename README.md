@@ -302,6 +302,48 @@ The list of objects consist of PR names and refs (either a branch or a sha) for 
 1. Resolve with the list of objects consists of PR names and refs
 2. Reject if the input or output is not valid
 
+### getPrInfo
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+| config.token | String | true | Access token for scm |
+| config.prNum | Integer | true | The PR number used to fetch the PR |
+
+#### Expected Outcome
+The object consists of PR name, sha and ref for the pipeline.
+
+#### Expected Promise Response
+1. Resolve with the object consists of PR name, sha and ref
+2. Reject if the input or output is not valid
+
+### getScmContext
+No parameters are required.
+
+#### Expected Outcome
+The name of scm context (e.g. github.com, my-gitlab)
+
+#### Expected Promise Response
+1. Resolve with the name of scm context
+2. Reject if the input or output is not valid
+
+### canHandleUrl
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+
+#### Expected Outcome
+The uri of parameter is available or not.
+
+#### Expected Promise Response
+1. Resolve with the uri of parameter is available or not.
+2. Reject if the input or output is not valid
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 
@@ -318,7 +360,10 @@ To make use of the validation functions, the functions to override are:
 1. `_getFile`
 1. `_getOpenedPRs`
 1. `_getBellConfiguration`
+1. `_getPrInfo`
 1. `stats` 
+1. `_getScmContext` 
+1. `_canHandleUrl` 
 
 ```js
 class MyScm extends ScmBase {

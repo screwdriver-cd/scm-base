@@ -344,6 +344,35 @@ class ScmBase {
     stats() {
         return {};
     }
+
+    /**
+     * Get a name of scm context (e.g. github.com)
+     * @method getScmContext
+     * @return {Promise}
+     */
+    getScmContext() {
+        return this._getScmContext()
+             .then(scmContext => validate(scmContext, Joi.string().required()));
+    }
+
+    _getScmContext() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
+     * Determine a scm module can handle a specified scm url
+     * @method canHandleUrl
+     * @return {Promise}
+     */
+    canHandleUrl(config) {
+        return validate(config, dataSchema.plugins.scm.canHandleUrl)
+             .then(validConfig => this._canHandleUrl(validConfig))
+             .then(canHandle => validate(canHandle, Joi.bool().required()));
+    }
+
+    _canHandleUrl() {
+        return Promise.reject('Not implemented');
+    }
 }
 
 module.exports = ScmBase;
