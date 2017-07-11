@@ -320,7 +320,12 @@ The object consists of PR name, sha and ref for the pipeline.
 2. Reject if the input or output is not valid
 
 ### getScmContext
-No parameters are required.
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmUrl | String | true | The scm url |
 
 #### Expected Outcome
 The name of scm context (e.g. github.com, my-gitlab)
@@ -335,13 +340,28 @@ The parameters required are:
 | Parameter        | Type  | Required | Description |
 | :-------------   | :---- | :------- | :-------------|
 | config        | Object | true | Configuration Object |
-| config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
+| config.scmUrl | String | true | The scm url |
 
 #### Expected Outcome
-The uri of parameter is available or not.
+The url of parameter is available or not.
 
 #### Expected Promise Response
-1. Resolve with the uri of parameter is available or not.
+1. Resolve with the url of parameter is available or not.
+2. Reject if the input or output is not valid
+
+### getDisplayName
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | true | Configuration Object |
+| config.scmContext | String | true | The scm context (e.g. github.com, my-gitlab)|
+
+#### Expected Outcome
+The display name of provided scm context
+
+#### Expected Promise Response
+1. Resolve with the display name of provides scm context
 2. Reject if the input or output is not valid
 
 ## Extending
@@ -364,6 +384,7 @@ To make use of the validation functions, the functions to override are:
 1. `stats` 
 1. `_getScmContext` 
 1. `_canHandleUrl` 
+1. `_getDisplayName` 
 
 ```js
 class MyScm extends ScmBase {

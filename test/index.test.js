@@ -663,12 +663,24 @@ describe('index test', () => {
     });
 
     describe('getScmContext', () => {
+        const config = {
+            scmUrl: 'https://github.com/screwdriver-cd/screwdriver/tree/master'
+        };
+
+        it('returns error when invalid input', () =>
+            instance.getScmContext({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
         it('returns error when invalid output', () => {
             instance._getScmContext = () => Promise.resolve({
                 invalid: 'stuff'
             });
 
-            return instance.getScmContext()
+            return instance.getScmContext(config)
                 .then(assert.fail, (err) => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
@@ -676,7 +688,7 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.getScmContext()
+            instance.getScmContext(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -688,7 +700,7 @@ describe('index test', () => {
 
     describe('canHandleUrl', () => {
         const config = {
-            scmUri: 'github.com:repoId:branch'
+            scmUrl: 'https://github.com/screwdriver-cd/screwdriver/tree/master'
         };
 
         it('returns error when invalid input', () =>
@@ -713,6 +725,42 @@ describe('index test', () => {
 
         it('returns not implemented', () =>
             instance.canHandleUrl(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
+
+    describe('getDisplayName', () => {
+        const config = {
+            scmContext: 'github.com'
+        };
+
+        it('returns error when invalid input', () =>
+            instance.getDisplayName({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._getDisplayName = () => Promise.resolve({
+                invalid: 'stuff'
+            });
+
+            return instance.getDisplayName(config)
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.getDisplayName(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
