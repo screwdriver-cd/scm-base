@@ -346,17 +346,14 @@ class ScmBase {
     }
 
     /**
-     * Get a name of scm context (e.g. github.com)
+     * Get an array of scm context (e.g. [github.com, mygitlab_gitlab])
      * @method getScmContext
-     * @param  {Object}   config            Configuration
-     * @param  {String}   config.scmUrl     The scmUrl to get scm context
      * @return {Promise}
      */
-    getScmContext(config) {
-        return validate(config, dataSchema.plugins.scm.getScmContext)
-             .then(validConfig => this._getScmContext(validConfig))
-             .then(scmContext => validate(scmContext,
-                Joi.reach(dataSchema.models.pipeline.base, 'scmContext').required()));
+    getScmContext() {
+        return this._getScmContext().then(scmContext => validate(scmContext,
+            Joi.array().items(Joi.reach(dataSchema.models.pipeline.base, 'scmContext')
+                .required())));
     }
 
     _getScmContext() {
@@ -364,37 +361,27 @@ class ScmBase {
     }
 
     /**
-     * Determine a scm module can handle a specified scm url
-     * @method canHandleUrl
-     * @param  {Object}   config            Configuration
-     * @param  {String}   config.scmUrl     The scmUrl to determine to handle or not to handle
+     * Determine a scm module can handle the received webhook
+     * @method canHandleWebhook
+     * @param  {Object}     headers     The request headers associated with the webhook payload
+     * @param  {Object}     payload     The webhook payload received from the SCM service
      * @return {Promise}
      */
-    canHandleUrl(config) {
-        return validate(config, dataSchema.plugins.scm.canHandleUrl)
-             .then(validConfig => this._canHandleUrl(validConfig))
-             .then(canHandle => validate(canHandle, Joi.bool().required()));
+    canHandleWebhook(headers, payload) {
+        return this._canHandleWebhook(headers, payload);
     }
 
-    _canHandleUrl() {
+    _canHandleWebhook() {
         return Promise.reject('Not implemented');
     }
 
     /**
      * Get a name of scm context to display
      * @method getDisplayName
-     * @param  {Object}   config                Configuration
-     * @param  {String}   config.scmContext     The using scmContext
-     * @return {Promise}
+     * @return {String}
      */
-    getDisplayName(config) {
-        return validate(config, dataSchema.plugins.scm.getDisplayName)
-             .then(validConfig => this._getDisplayName(validConfig))
-             .then(displayName => validate(displayName, Joi.string().required()));
-    }
-
-    _getDisplayName() {
-        return Promise.reject('Not implemented');
+    getDisplayName() {
+        return this.config.displayName || '';
     }
 }
 

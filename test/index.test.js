@@ -663,24 +663,12 @@ describe('index test', () => {
     });
 
     describe('getScmContext', () => {
-        const config = {
-            scmUrl: 'https://github.com/screwdriver-cd/screwdriver/tree/master'
-        };
-
-        it('returns error when invalid input', () =>
-            instance.getScmContext({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
-
         it('returns error when invalid output', () => {
-            instance._getScmContext = () => Promise.resolve({
-                invalid: 'stuff'
-            });
+            instance._getScmContext = () => Promise.resolve([
+                { invalid: 'stuff' }
+            ]);
 
-            return instance.getScmContext(config)
+            return instance.getScmContext()
                 .then(assert.fail, (err) => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
@@ -688,7 +676,7 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.getScmContext(config)
+            instance.getScmContext()
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -698,33 +686,29 @@ describe('index test', () => {
         );
     });
 
-    describe('canHandleUrl', () => {
-        const config = {
-            scmUrl: 'https://github.com/screwdriver-cd/screwdriver/tree/master'
+    describe('canHandleWebhook', () => {
+        const headers = {
+            stuff: 'foo'
+        };
+        const payload = {
+            moreStuff: 'bar'
         };
 
-        it('returns error when invalid input', () =>
-            instance.canHandleUrl({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
-
-        it('returns error when invalid output', () => {
-            instance._canHandleUrl = () => Promise.resolve({
-                invalid: 'stuff'
+        it('returns data from underlying method', () => {
+            instance._canHandleWebhook = () => Promise.resolve({
+                type: 'pr'
             });
 
-            return instance.canHandleUrl(config)
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
+            return instance.canHandleWebhook()
+                .then((output) => {
+                    assert.deepEqual(output, {
+                        type: 'pr'
+                    });
                 });
         });
 
         it('returns not implemented', () =>
-            instance.canHandleUrl(config)
+            instance.canHandleWebhook(headers, payload)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -736,37 +720,20 @@ describe('index test', () => {
 
     describe('getDisplayName', () => {
         const config = {
-            scmContext: 'github.com'
+            displayName: 'github.com'
         };
 
-        it('returns error when invalid input', () =>
-            instance.getDisplayName({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
-
-        it('returns error when invalid output', () => {
-            instance._getDisplayName = () => Promise.resolve({
-                invalid: 'stuff'
-            });
-
-            return instance.getDisplayName(config)
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                });
+        beforeEach(() => {
+            instance.configure(config);
         });
 
-        it('returns not implemented', () =>
-            instance.getDisplayName(config)
-                .then(() => {
-                    assert.fail('you will never get dis');
-                })
-                .catch((err) => {
-                    assert.equal(err, 'Not implemented');
-                })
-        );
+        it('returns empty display name if no configuration', () => {
+            instance.configure({});
+            assert.equal(instance.getDisplayName(), '');
+        });
+
+        it('returns valid display name', () => {
+            assert.equal(instance.getDisplayName(), 'github.com');
+        });
     });
 });

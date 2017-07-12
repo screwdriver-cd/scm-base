@@ -320,48 +320,38 @@ The object consists of PR name, sha and ref for the pipeline.
 2. Reject if the input or output is not valid
 
 ### getScmContext
-The parameters required are:
-
-| Parameter        | Type  | Required | Description |
-| :-------------   | :---- | :------- | :-------------|
-| config        | Object | true | Configuration Object |
-| config.scmUrl | String | true | The scm url |
+No parameters are required.
 
 #### Expected Outcome
-The name of scm context (e.g. github.com, my-gitlab)
+The array of scm context name (e.g. [github.com, my-gitlab])
 
 #### Expected Promise Response
-1. Resolve with the name of scm context
+1. Resolve with the array of scm context name
 2. Reject if the input or output is not valid
 
-### canHandleUrl
+### canHandleWebhook
 The parameters required are:
 
-| Parameter        | Type  | Required | Description |
-| :-------------   | :---- | :------- | :-------------|
-| config        | Object | true | Configuration Object |
-| config.scmUrl | String | true | The scm url |
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| headers        | Object | The request headers associated with the webhook payload |
+| payload        | Object | The webhook payload received from the SCM service |
 
 #### Expected Outcome
-The url of parameter is available or not.
+The received webhook is available or not as boolean.
 
 #### Expected Promise Response
-1. Resolve with the url of parameter is available or not.
+1. Resolve with the received webhook is available or not.
 2. Reject if the input or output is not valid
 
 ### getDisplayName
-The parameters required are:
-
-| Parameter        | Type  | Required | Description |
-| :-------------   | :---- | :------- | :-------------|
-| config        | Object | true | Configuration Object |
-| config.scmContext | String | true | The scm context (e.g. github.com, my-gitlab)|
+No parameters are required.
 
 #### Expected Outcome
-The display name of provided scm context
+The display name of scm context
 
 #### Expected Promise Response
-1. Resolve with the display name of provides scm context
+1. Resolve with the display name of scm context
 2. Reject if the input or output is not valid
 
 ## Extending
@@ -383,8 +373,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getPrInfo`
 1. `stats` 
 1. `_getScmContext` 
-1. `_canHandleUrl` 
-1. `_getDisplayName` 
+1. `_canHandleWebhook` 
 
 ```js
 class MyScm extends ScmBase {
