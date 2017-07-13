@@ -662,13 +662,13 @@ describe('index test', () => {
         );
     });
 
-    describe('getScmContext', () => {
+    describe('getScmContexts', () => {
         it('returns error when invalid output', () => {
-            instance._getScmContext = () => Promise.resolve([
+            instance._getScmContexts = () => Promise.resolve([
                 { invalid: 'stuff' }
             ]);
 
-            return instance.getScmContext()
+            return instance.getScmContexts()
                 .then(assert.fail, (err) => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
@@ -676,7 +676,7 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.getScmContext()
+            instance.getScmContexts()
                 .then(() => {
                     assert.fail('you will never get dis');
                 })

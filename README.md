@@ -319,7 +319,7 @@ The object consists of PR name, sha and ref for the pipeline.
 1. Resolve with the object consists of PR name, sha and ref
 2. Reject if the input or output is not valid
 
-### getScmContext
+### getScmContexts
 No parameters are required.
 
 #### Expected Outcome
@@ -372,7 +372,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getBellConfiguration`
 1. `_getPrInfo`
 1. `stats` 
-1. `_getScmContext` 
+1. `_getScmContexts` 
 1. `_canHandleWebhook` 
 
 ```js
