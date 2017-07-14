@@ -663,27 +663,13 @@ describe('index test', () => {
     });
 
     describe('getScmContexts', () => {
-        it('returns error when invalid output', () => {
-            instance._getScmContexts = () => Promise.resolve([
-                { invalid: 'stuff' }
-            ]);
-
-            return instance.getScmContexts()
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                });
+        it('returns not implemented', () => {
+            try {
+                instance.getScmContexts();
+            } catch (err) {
+                assert.equal(err.message, 'Not implemented');
+            }
         });
-
-        it('returns not implemented', () =>
-            instance.getScmContexts()
-                .then(() => {
-                    assert.fail('you will never get dis');
-                })
-                .catch((err) => {
-                    assert.equal(err, 'Not implemented');
-                })
-        );
     });
 
     describe('canHandleWebhook', () => {

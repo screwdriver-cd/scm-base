@@ -348,16 +348,14 @@ class ScmBase {
     /**
      * Get an array of scm context (e.g. [github.com, mygitlab_gitlab])
      * @method getScmContexts
-     * @return {Promise}
+     * @return {Array}
      */
     getScmContexts() {
-        return this._getScmContexts().then(scmContexts => validate(scmContexts,
-            Joi.array().items(Joi.reach(dataSchema.models.pipeline.base, 'scmContext')
-                .required())));
+        return this._getScmContexts();
     }
 
     _getScmContexts() {
-        return Promise.reject('Not implemented');
+        throw new Error('Not implemented');
     }
 
     /**

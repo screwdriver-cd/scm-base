@@ -325,9 +325,8 @@ No parameters are required.
 #### Expected Outcome
 The array of scm context name (e.g. [github.com, my-gitlab])
 
-#### Expected Promise Response
-1. Resolve with the array of scm context name
-2. Reject if the input or output is not valid
+#### Expected Response
+1. The array of scm context name
 
 ### canHandleWebhook
 The parameters required are:
@@ -350,9 +349,8 @@ No parameters are required.
 #### Expected Outcome
 The display name of scm context
 
-#### Expected Promise Response
-1. Resolve with the display name of scm context
-2. Reject if the input or output is not valid
+#### Expected Response
+1. The display name of scm context
 
 ## Extending
 To make use of the validation functions, the functions to override are:
