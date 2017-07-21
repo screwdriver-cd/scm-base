@@ -343,8 +343,12 @@ The received webhook is available or not as boolean.
 1. Resolve with the received webhook is available or not.
 2. Reject if the input or output is not valid
 
-### getDisplayName
-No parameters are required.
+### getDisplayName (overriding needs only the case of `scm-router`)
+The parameters required are:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| scmContext        | String | The name of scm context |
 
 #### Expected Outcome
 The display name of scm context
@@ -372,6 +376,7 @@ To make use of the validation functions, the functions to override are:
 1. `stats` 
 1. `_getScmContexts` 
 1. `_canHandleWebhook` 
+1. `getDisplayName` (overriding needs only the case of `scm-router`) 
 
 ```js
 class MyScm extends ScmBase {
