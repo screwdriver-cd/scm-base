@@ -663,6 +663,16 @@ describe('index test', () => {
     });
 
     describe('getScmContexts', () => {
+        it('returns error when invalid output', () => {
+            instance._getScmContexts = () => 'invalid';
+
+            return instance.getScmContexts()
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
         it('returns not implemented', () => {
             try {
                 instance.getScmContexts();

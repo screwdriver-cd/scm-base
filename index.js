@@ -351,7 +351,9 @@ class ScmBase {
      * @return {Array}
      */
     getScmContexts() {
-        return this._getScmContexts();
+        return validate(this._getScmContexts(), Joi.array().items(
+                Joi.reach(dataSchema.models.pipeline.base, 'scmContext').required()
+            ));
     }
 
     _getScmContexts() {
