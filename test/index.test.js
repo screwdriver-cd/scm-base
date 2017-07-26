@@ -157,7 +157,8 @@ describe('index test', () => {
             config = {
                 pipeline: {
                     scmUri: 'github.com:12344567:branch',
-                    scmRepo: { name: 'screwdriver-cd/guide' }
+                    scmRepo: { name: 'screwdriver-cd/guide' },
+                    scmContext: 'github.com'
                 },
                 job: {},
                 build: {
@@ -173,7 +174,8 @@ describe('index test', () => {
                     host: 'github.com',
                     org: 'screwdriver-cd',
                     repo: 'guide',
-                    sha: '12345'
+                    sha: '12345',
+                    scmContext: 'github.com'
                 });
 
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
@@ -193,7 +195,8 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
-                    prRef: 'abcd'
+                    prRef: 'abcd',
+                    scmContext: 'github.com'
                 });
 
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });

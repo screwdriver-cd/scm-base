@@ -134,7 +134,8 @@ class ScmBase {
             host,
             org,
             repo,
-            sha: o.build.sha
+            sha: o.build.sha,
+            scmContext: o.pipeline.scmContext
         };
 
         if (o.build.prRef) {
