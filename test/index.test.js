@@ -33,7 +33,8 @@ describe('index test', () => {
     describe('parseUrl', () => {
         const config = {
             checkoutUrl: 'git@github.com:screwdriver-cd/scm-base.git',
-            token: 'bar'
+            token: 'bar',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -110,7 +111,8 @@ describe('index test', () => {
             host: 'github.com',
             org: 'screwdriver-cd',
             repo: 'guide',
-            sha: '12345'
+            sha: '12345',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -213,7 +215,8 @@ describe('index test', () => {
     describe('decorateUrl', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -257,7 +260,8 @@ describe('index test', () => {
         const config = {
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -300,7 +304,8 @@ describe('index test', () => {
     describe('decorateAuthor', () => {
         const config = {
             username: 'd2lam',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -343,7 +348,8 @@ describe('index test', () => {
     describe('getPermissons', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -386,7 +392,8 @@ describe('index test', () => {
     describe('getCommitSha', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -433,7 +440,8 @@ describe('index test', () => {
             buildStatus: 'SUCCESS',
             token: 'token',
             url: 'https://foo.bar',
-            pipelineId: 123
+            pipelineId: 123,
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -483,7 +491,8 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
             path: 'testFile',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -594,7 +603,8 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:20161206:branch',
             token: 'token',
-            webhookUrl: 'https://bob.by/ford'
+            webhookUrl: 'https://bob.by/ford',
+            scmContext: 'github.com'
         };
 
         it('returns data from underlying method', () => {
@@ -631,7 +641,8 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
             token: 'token',
-            prNum: 123
+            prNum: 123,
+            scmContext: 'github.com'
         };
 
         it('returns error when invalid input', () =>

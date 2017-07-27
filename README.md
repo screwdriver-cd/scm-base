@@ -24,6 +24,7 @@ Required parameters:
 | config.scmUri     | String | SCM URI to add the webhook to (e.g., "github.com:8888:branchName" |
 | config.token      | String | Access token for SCM |
 | config.webhookUrl | String | The URL to use for webhook notifications |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 
@@ -42,6 +43,7 @@ Required parameters:
 | config             | Object | Configuration Object |
 | config.checkoutUrl | String | Checkout url for a repo to parse |
 | config.token  | String | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 An scmUri (ex: `github.com:1234:branchName`, where 1234 is a repo ID number), which will be a unique identifier for the repo and branch in Screwdriver.
@@ -91,6 +93,7 @@ Required parameters:
 | config.prRef | String | No | PR branch or reference |
 | config.repo | String | Yes | Scm repo (ex: guide) |
 | config.sha | String | Yes | Scm sha |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 Checkout command in the form of:
@@ -124,6 +127,7 @@ Required parameters:
 | config        | Object | Configuration Object |
 | config.scmUri | String | Scm uri (ex: `github.com:1234:branchName`) |
 | config.token  | String | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 Decorated url in the form of:
@@ -148,6 +152,7 @@ Required parameters:
 | config.scmUri        | String | Scm uri (ex: `github.com:1234:branchName`) |
 | config.sha     | String | Commit sha to decorate |
 | config.token | String | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 Decorated commit in the form of:
@@ -176,6 +181,7 @@ Required parameters:
 | config        | Object | Configuration Object |
 | config.token | String | Access token for scm |
 | config.username     | String | Author to decorate |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 Decorated author in the form of:
@@ -200,6 +206,7 @@ Required parameters:
 | config        | Object | Configuration Object |
 | config.scmUri | String | The scm uri to get permissions on (ex: `github.com:1234:branchName`) |
 | config.token | String | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 Permissions for a given token on a repository in the form of:
@@ -223,6 +230,7 @@ Required parameters:
 | config        | Object | Configuration Object |
 | config.scmUri | String | The scm uri (ex: `github.com:1234:branchName`) |
 | config.token | String | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 The commit sha for a given branch on a repository.
@@ -244,6 +252,7 @@ The parameters required are:
 | config.token | String | Yes | Access token for scm |
 | config.url | String | No | The target url for setting up details |
 | config.pipelineId | Number | No | The pipeline id |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 Update the commit status for a given repository and sha.
@@ -262,6 +271,7 @@ The parameters required are:
 | config.ref | String | false | The reference to the scm repo, could be a branch or sha |
 | config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
 | config.token | String | true | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 The contents of the file at `path` in the repository
@@ -286,6 +296,7 @@ The parameters required are:
 | config        | Object | true | Configuration Object |
 | config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
 | config.token | String | true | Access token for scm |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 The list of objects consist of PR names and refs (either a branch or a sha) for the pipeline. For example:
@@ -311,6 +322,7 @@ The parameters required are:
 | config.scmUri | String | true | The scm uri (ex: `github.com:1234:branchName`) |
 | config.token | String | true | Access token for scm |
 | config.prNum | Integer | true | The PR number used to fetch the PR |
+| config.scmContext | String | The name of scm context |
 
 #### Expected Outcome
 The object consists of PR name, sha and ref for the pipeline.
