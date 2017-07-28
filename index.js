@@ -7,18 +7,19 @@ const dataSchema = require('screwdriver-data-schema');
 /**
  * Validate the config using the schema
  * @method  validate
- * @param  {Object}    config       Configuration
- * @param  {Object}    schema       Joi object used for validation
- * @return {Promise}
+ * @param  {Object}    config           Configuration
+ * @param  {Object}    schema           Joi object used for validation
+ * @param  {Boolean}   notPromise       If true, return Object
+ * @return {Promise|Object}
  */
-function validate(config, schema) {
+function validate(config, schema, notPromise) {
     const result = Joi.validate(config, schema);
 
     if (result.error) {
-        return Promise.reject(result.error);
+        return notPromise ? result.error : Promise.reject(result.error);
     }
 
-    return Promise.resolve(config);
+    return notPromise ? config : Promise.resolve(config);
 }
 
 class ScmBase {
@@ -366,7 +367,7 @@ class ScmBase {
     getScmContexts() {
         return validate(this._getScmContexts(), Joi.array().items(
                 Joi.reach(dataSchema.models.pipeline.base, 'scmContext').required()
-            ));
+            ), true);
     }
 
     _getScmContexts() {

@@ -680,11 +680,10 @@ describe('index test', () => {
         it('returns error when invalid output', () => {
             instance._getScmContexts = () => 'invalid';
 
-            return instance.getScmContexts()
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                });
+            const result = instance.getScmContexts();
+
+            assert.instanceOf(result, Error);
+            assert.equal(result.name, 'ValidationError');
         });
 
         it('returns not implemented', () => {
