@@ -326,7 +326,7 @@ class ScmBase {
 
     /**
      * Resolve a pull request object based on the config
-     * @method getPrRef
+     * @method getPrInfo
      * @param  {Object}   config                Configuration
      * @param  {String}   config.scmUri         The scmUri to get PR info of
      * @param  {String}   config.token          The token used to authenticate to the SCM
