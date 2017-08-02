@@ -14,11 +14,7 @@ const dataSchema = require('screwdriver-data-schema');
 function validate(config, schema) {
     const result = Joi.validate(config, schema);
 
-    if (result.error) {
-        return Promise.reject(result.error);
-    }
-
-    return Promise.resolve(config);
+    return result.error ? Promise.reject(result.error) : Promise.resolve(config);
 }
 
 class ScmBase {
@@ -359,14 +355,17 @@ class ScmBase {
     }
 
     /**
-     * Get an array of scm context (e.g. [github.com, mygitlab_gitlab])
+     * Get an array of scm context (e.g. [github:github.com, gitlab:mygitlab])
      * @method getScmContexts
      * @return {Array}
      */
     getScmContexts() {
-        return validate(this._getScmContexts(), Joi.array().items(
-                Joi.reach(dataSchema.models.pipeline.base, 'scmContext').required()
-            ));
+        const result = this._getScmContexts();
+        const validateResult = Joi.validate(result, Joi.array().items(
+            Joi.reach(dataSchema.models.pipeline.base, 'scmContext').required()
+        ));
+
+        return validateResult.error || result;
     }
 
     _getScmContexts() {

@@ -335,7 +335,7 @@ The object consists of PR name, sha and ref for the pipeline.
 No parameters are required.
 
 #### Expected Outcome
-The array of scm context name (e.g. [github.com, my-gitlab])
+The array of scm context name (e.g. [github:github.com, gitlab:my-gitlab])
 
 #### Expected Response
 1. The array of scm context name
