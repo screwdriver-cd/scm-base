@@ -33,7 +33,8 @@ describe('index test', () => {
     describe('parseUrl', () => {
         const config = {
             checkoutUrl: 'git@github.com:screwdriver-cd/scm-base.git',
-            token: 'bar'
+            token: 'bar',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -110,7 +111,8 @@ describe('index test', () => {
             host: 'github.com',
             org: 'screwdriver-cd',
             repo: 'guide',
-            sha: '12345'
+            sha: '12345',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -157,7 +159,8 @@ describe('index test', () => {
             config = {
                 pipeline: {
                     scmUri: 'github.com:12344567:branch',
-                    scmRepo: { name: 'screwdriver-cd/guide' }
+                    scmRepo: { name: 'screwdriver-cd/guide' },
+                    scmContext: 'github:github.com'
                 },
                 job: {},
                 build: {
@@ -173,7 +176,8 @@ describe('index test', () => {
                     host: 'github.com',
                     org: 'screwdriver-cd',
                     repo: 'guide',
-                    sha: '12345'
+                    sha: '12345',
+                    scmContext: 'github:github.com'
                 });
 
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
@@ -193,7 +197,8 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
-                    prRef: 'abcd'
+                    prRef: 'abcd',
+                    scmContext: 'github:github.com'
                 });
 
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
@@ -210,7 +215,8 @@ describe('index test', () => {
     describe('decorateUrl', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -254,7 +260,8 @@ describe('index test', () => {
         const config = {
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -297,7 +304,8 @@ describe('index test', () => {
     describe('decorateAuthor', () => {
         const config = {
             username: 'd2lam',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -340,7 +348,8 @@ describe('index test', () => {
     describe('getPermissons', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -383,7 +392,8 @@ describe('index test', () => {
     describe('getCommitSha', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -430,7 +440,8 @@ describe('index test', () => {
             buildStatus: 'SUCCESS',
             token: 'token',
             url: 'https://foo.bar',
-            pipelineId: 123
+            pipelineId: 123,
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -480,7 +491,8 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
             path: 'testFile',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
@@ -523,7 +535,8 @@ describe('index test', () => {
     describe('getOpenedPRs', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token'
+            token: 'token',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid input', () =>
@@ -591,7 +604,8 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:20161206:branch',
             token: 'token',
-            webhookUrl: 'https://bob.by/ford'
+            webhookUrl: 'https://bob.by/ford',
+            scmContext: 'github:github.com'
         };
 
         it('returns data from underlying method', () => {
@@ -602,7 +616,8 @@ describe('index test', () => {
             return instance.addWebhook({
                 scmUri: 'github.com:20161206:branch',
                 token: 'token',
-                webhookUrl: 'https://bob.by/ford'
+                webhookUrl: 'https://bob.by/ford',
+                scmContext: 'github:github.com'
             }).then((result) => {
                 assert.strictEqual(result, expectedOutput);
             });
@@ -628,7 +643,8 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
             token: 'token',
-            prNum: 123
+            prNum: 123,
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid input', () =>
@@ -660,5 +676,75 @@ describe('index test', () => {
                     assert.equal(err, 'Not implemented');
                 })
         );
+    });
+
+    describe('getScmContexts', () => {
+        it('returns error when invalid output', () => {
+            instance._getScmContexts = () => 'invalid';
+
+            const result = instance.getScmContexts();
+
+            assert.instanceOf(result, Error);
+            assert.equal(result.name, 'ValidationError');
+        });
+
+        it('returns not implemented', () => {
+            try {
+                instance.getScmContexts();
+            } catch (err) {
+                assert.equal(err.message, 'Not implemented');
+            }
+        });
+    });
+
+    describe('canHandleWebhook', () => {
+        const headers = {
+            stuff: 'foo'
+        };
+        const payload = {
+            moreStuff: 'bar'
+        };
+
+        it('returns data from underlying method', () => {
+            instance._canHandleWebhook = () => Promise.resolve({
+                type: 'pr'
+            });
+
+            return instance.canHandleWebhook()
+                .then((output) => {
+                    assert.deepEqual(output, {
+                        type: 'pr'
+                    });
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.canHandleWebhook(headers, payload)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
+
+    describe('getDisplayName', () => {
+        const config = {
+            displayName: 'github.com'
+        };
+
+        beforeEach(() => {
+            instance.configure(config);
+        });
+
+        it('returns empty display name if no configuration', () => {
+            instance.configure({});
+            assert.equal(instance.getDisplayName(), '');
+        });
+
+        it('returns valid display name', () => {
+            assert.equal(instance.getDisplayName(), 'github.com');
+        });
     });
 });
