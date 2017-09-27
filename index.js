@@ -56,7 +56,7 @@ class ScmBase {
     }
 
     _addWebhook() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -75,7 +75,7 @@ class ScmBase {
     }
 
     _parseUrl() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -90,7 +90,7 @@ class ScmBase {
     }
 
     _parseHook() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -114,7 +114,7 @@ class ScmBase {
     }
 
     _getCheckoutCommand() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -160,7 +160,7 @@ class ScmBase {
     }
 
     _decorateUrl() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -180,7 +180,7 @@ class ScmBase {
     }
 
     _decorateCommit() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -199,7 +199,7 @@ class ScmBase {
     }
 
     _decorateAuthor() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -217,7 +217,7 @@ class ScmBase {
     }
 
     _getPermissions() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -236,7 +236,7 @@ class ScmBase {
     }
 
     _getCommitSha() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -259,7 +259,7 @@ class ScmBase {
     }
 
     _updateCommitStatus() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -278,7 +278,7 @@ class ScmBase {
     }
 
     _getFile() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -304,7 +304,7 @@ class ScmBase {
     }
 
     _getOpenedPRs() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -317,7 +317,7 @@ class ScmBase {
     }
 
     _getBellConfiguration() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -342,7 +342,7 @@ class ScmBase {
     }
 
     _getPrInfo() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -384,7 +384,7 @@ class ScmBase {
     }
 
     _canHandleWebhook() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
