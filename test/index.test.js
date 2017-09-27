@@ -69,7 +69,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -100,7 +100,7 @@ describe('index test', () => {
                 .then(() => {
                     assert.fail('This should not fail the test');
                 }, (err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -147,7 +147,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -251,7 +251,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -296,7 +296,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -340,7 +340,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -384,7 +384,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -428,7 +428,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -476,7 +476,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -527,7 +527,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -562,7 +562,7 @@ describe('index test', () => {
         it('returns not implemented', () =>
             instance.getOpenedPRs(config)
                 .then(assert.fail, (err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
 
@@ -595,7 +595,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -634,7 +634,7 @@ describe('index test', () => {
         it('rejects when not implemented', () =>
             instance.addWebhook(config)
                .then(assert.fail, (err) => {
-                   assert.strictEqual(err, 'Not implemented');
+                   assert.strictEqual(err.message, 'Not implemented');
                })
         );
     });
@@ -673,7 +673,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
@@ -724,7 +724,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err, 'Not implemented');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
