@@ -83,10 +83,11 @@ class ScmBase {
      * @method parseHook
      * @param  {Object}     headers     The request headers associated with the webhook payload
      * @param  {Object}     payload     The webhook payload received from the SCM service
+     * @param  {String}     token       The token used to authenticate to the SCM
      * @return {Promise}
      */
-    parseHook(headers, payload) {
-        return this._parseHook(headers, payload);
+    parseHook(headers, payload, token) {
+        return this._parseHook(headers, payload, token);
     }
 
     _parseHook() {

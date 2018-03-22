@@ -2,6 +2,7 @@
 
 /* eslint-disable no-underscore-dangle */
 const assert = require('chai').assert;
+const token = 'token';
 
 describe('index test', () => {
     let instance;
@@ -96,7 +97,7 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.parseHook(headers, payload)
+            instance.parseHook(headers, payload, token)
                 .then(() => {
                     assert.fail('This should not fail the test');
                 }, (err) => {
@@ -215,7 +216,7 @@ describe('index test', () => {
     describe('decorateUrl', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -260,7 +261,7 @@ describe('index test', () => {
         const config = {
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -304,7 +305,7 @@ describe('index test', () => {
     describe('decorateAuthor', () => {
         const config = {
             username: 'd2lam',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -348,7 +349,7 @@ describe('index test', () => {
     describe('getPermissons', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -392,7 +393,7 @@ describe('index test', () => {
     describe('getCommitSha', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -438,7 +439,7 @@ describe('index test', () => {
             scmUri: 'github.com:repoId:branch',
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             buildStatus: 'SUCCESS',
-            token: 'token',
+            token,
             url: 'https://foo.bar',
             pipelineId: 123,
             scmContext: 'github:github.com'
@@ -491,7 +492,7 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
             path: 'testFile',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -535,7 +536,7 @@ describe('index test', () => {
     describe('getOpenedPRs', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -603,7 +604,7 @@ describe('index test', () => {
     describe('addWebhook', () => {
         const config = {
             scmUri: 'github.com:20161206:branch',
-            token: 'token',
+            token,
             webhookUrl: 'https://bob.by/ford',
             scmContext: 'github:github.com'
         };
@@ -615,7 +616,7 @@ describe('index test', () => {
 
             return instance.addWebhook({
                 scmUri: 'github.com:20161206:branch',
-                token: 'token',
+                token,
                 webhookUrl: 'https://bob.by/ford',
                 scmContext: 'github:github.com'
             }).then((result) => {
@@ -642,7 +643,7 @@ describe('index test', () => {
     describe('getPrInfo', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             prNum: 123,
             scmContext: 'github:github.com'
         };

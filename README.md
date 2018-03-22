@@ -59,6 +59,7 @@ Required parameters:
 | :-------------   | :---- | :-------------|
 | headers        | Object | The request headers associated with the webhook payload |
 | payload        | Object | The webhook payload received from the SCM service |
+| token          | String | Access token for scm |
 
 #### Expected Outcome
 A key-map of data related to the received payload in the form of:
@@ -73,7 +74,9 @@ A key-map of data related to the received payload in the form of:
     sha: '9ff49b2d1437567cad2b5fed7a0706472131e927',
     lastCommitMessage: 'This is the last commit message', // get a message of the last one from commits object
     prNum: 3,
-    prRef: 'pull/3/merge'
+    prRef: 'pull/3/merge',
+    scmContext: 'github:github.com',
+    changedFiles: ['README.md', 'screwdriver.yaml'] // array of changed files
 }
 ```
 
