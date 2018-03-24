@@ -3,6 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 const assert = require('chai').assert;
 const token = 'token';
+const testParseHook = require('./data/parseHookOutput.json');
 
 describe('index test', () => {
     let instance;
@@ -97,7 +98,36 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.parseHook(headers, payload, token)
+            instance.parseHook(headers, payload)
+                .then(() => {
+                    assert.fail('This should not fail the test');
+                }, (err) => {
+                    assert.equal(err.message, 'Not implemented');
+                })
+        );
+    });
+
+    describe('getChangedFiles', () => {
+        const type = 'pr';
+        const payload = testParseHook;
+
+        it('returns data from underlying method', () => {
+            instance._getChangedFiles = () => Promise.resolve([
+                'README.md',
+                'folder/screwdriver.yaml'
+            ]);
+
+            return instance.getChangedFiles()
+                .then((output) => {
+                    assert.deepEqual(output, [
+                        'README.md',
+                        'folder/screwdriver.yaml'
+                    ]);
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.parseHook({ type, payload, token })
                 .then(() => {
                     assert.fail('This should not fail the test');
                 }, (err) => {

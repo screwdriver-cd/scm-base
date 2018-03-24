@@ -1,0 +1,13 @@
+{
+    "action": "opened",
+    "branch": "mynewbranch",
+    "checkoutUrl": "https://batman@bitbucket.org/batman/test.git",
+    "hookId": "81e6bd80-9a2c-11e6-939d-beaa5d9adaf3",
+    "lastCommitMessage": "This is the last commit message",
+    "prRef": "pull/3/merge",
+    "prSource": "fork",
+    "scmContext": "github:github.com",
+    "sha": "9ff49b2d1437567cad2b5fed7a0706472131e927",
+    "type": "pr",
+    "username": "robin"
+}
