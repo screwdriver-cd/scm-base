@@ -86,10 +86,31 @@ class ScmBase {
      * @return {Promise}
      */
     parseHook(headers, payload) {
-        return this._parseHook(headers, payload);
+        return this._parseHook(headers, payload)
+            .then(hook => validate(hook, dataSchema.plugins.scm.parseHookOutput));
     }
 
     _parseHook() {
+        return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
+     * Parse the webhook to get the changed files
+     * @method getChangedFiles
+     * @param  {Object}    config
+     * @param  {String}    config.type     The type of action from Git (can be 'pr' or 'repo')
+     * @param  {Object}    config.payload  The webhook payload received from the SCM service
+     * @param  {String}    config.token    The token used to authenticate to the SCM
+     * @return {Promise}                   Returns an array of changed files
+     */
+    getChangedFiles(config) {
+        return validate(config, dataSchema.plugins.scm.getChangedFilesInput)
+            .then(validInput => this._getChangedFiles(validInput))
+            .then(changedFiles => validate(changedFiles,
+                dataSchema.plugins.scm.getChangedFilesOutput));
+    }
+
+    _getChangedFiles() {
         return Promise.reject(new Error('Not implemented'));
     }
 

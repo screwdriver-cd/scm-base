@@ -2,6 +2,8 @@
 
 /* eslint-disable no-underscore-dangle */
 const assert = require('chai').assert;
+const token = 'token';
+const testParseHook = require('./data/parseHookOutput.json');
 
 describe('index test', () => {
     let instance;
@@ -79,24 +81,66 @@ describe('index test', () => {
             stuff: 'foo'
         };
         const payload = {
-            moreStuff: 'bar'
+            type: 'pr'
         };
 
         it('returns data from underlying method', () => {
-            instance._parseHook = () => Promise.resolve({
-                type: 'pr'
-            });
+            instance._parseHook = () => Promise.resolve(testParseHook);
 
             return instance.parseHook()
                 .then((output) => {
-                    assert.deepEqual(output, {
-                        type: 'pr'
-                    });
+                    assert.deepEqual(output, testParseHook);
                 });
         });
 
         it('returns not implemented', () =>
             instance.parseHook(headers, payload)
+                .then(() => {
+                    assert.fail('This should not fail the test');
+                }, (err) => {
+                    assert.equal(err.message, 'Not implemented');
+                })
+        );
+    });
+
+    describe('getChangedFiles', () => {
+        const type = 'pr';
+        const payload = {
+            type
+        };
+
+        it('returns data from underlying method', () => {
+            instance.getChangedFiles = () => Promise.resolve([
+                'README.md',
+                'folder/screwdriver.yaml'
+            ]);
+
+            return instance.getChangedFiles()
+                .then((output) => {
+                    assert.deepEqual(output, [
+                        'README.md',
+                        'folder/screwdriver.yaml'
+                    ]);
+                });
+        });
+
+        it('returns error when invalid output', () => {
+            instance._getChangedFiles = () => Promise.resolve({
+                invalid: 'object'
+            });
+
+            return instance.getChangedFiles({ type, payload, token })
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.getChangedFiles({ type, payload, token })
                 .then(() => {
                     assert.fail('This should not fail the test');
                 }, (err) => {
@@ -215,7 +259,7 @@ describe('index test', () => {
     describe('decorateUrl', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -260,7 +304,7 @@ describe('index test', () => {
         const config = {
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -304,7 +348,7 @@ describe('index test', () => {
     describe('decorateAuthor', () => {
         const config = {
             username: 'd2lam',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -348,7 +392,7 @@ describe('index test', () => {
     describe('getPermissons', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -392,7 +436,7 @@ describe('index test', () => {
     describe('getCommitSha', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -438,7 +482,7 @@ describe('index test', () => {
             scmUri: 'github.com:repoId:branch',
             sha: '0264b13de9aa293b7abc8cf36793b6458c07af38',
             buildStatus: 'SUCCESS',
-            token: 'token',
+            token,
             url: 'https://foo.bar',
             pipelineId: 123,
             scmContext: 'github:github.com'
@@ -491,7 +535,7 @@ describe('index test', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
             path: 'testFile',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -535,7 +579,7 @@ describe('index test', () => {
     describe('getOpenedPRs', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             scmContext: 'github:github.com'
         };
 
@@ -603,7 +647,7 @@ describe('index test', () => {
     describe('addWebhook', () => {
         const config = {
             scmUri: 'github.com:20161206:branch',
-            token: 'token',
+            token,
             webhookUrl: 'https://bob.by/ford',
             scmContext: 'github:github.com'
         };
@@ -615,7 +659,7 @@ describe('index test', () => {
 
             return instance.addWebhook({
                 scmUri: 'github.com:20161206:branch',
-                token: 'token',
+                token,
                 webhookUrl: 'https://bob.by/ford',
                 scmContext: 'github:github.com'
             }).then((result) => {
@@ -642,7 +686,7 @@ describe('index test', () => {
     describe('getPrInfo', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
-            token: 'token',
+            token,
             prNum: 123,
             scmContext: 'github:github.com'
         };

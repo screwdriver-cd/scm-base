@@ -64,21 +64,43 @@ Required parameters:
 A key-map of data related to the received payload in the form of:
 ```js
 {
-    type: 'pr',         // can be 'pr' or 'repo'
-    hookId: '81e6bd80-9a2c-11e6-939d-beaa5d9adaf3', // webhook event uuid
     action: 'opened',   // can be 'opened', 'reopened', 'closed', or 'synchronized' for type 'pr'; 'push' for type 'repo'
-    username: 'robin',  // should be the actor/creator of the webhook event (not necessarily the author)
-    checkoutUrl: 'https://batman@bitbucket.org/batman/test.git',
     branch: 'mynewbranch',
-    sha: '9ff49b2d1437567cad2b5fed7a0706472131e927',
+    checkoutUrl: 'https://batman@bitbucket.org/batman/test.git',
+    hookId: '81e6bd80-9a2c-11e6-939d-beaa5d9adaf3', // webhook event uuid
     lastCommitMessage: 'This is the last commit message', // get a message of the last one from commits object
     prNum: 3,
-    prRef: 'pull/3/merge'
+    prRef: 'pull/3/merge',
+    prSource: 'fork', // If type is 'pr', prSource is 'fork' or 'branch'
+    scmContext: 'github:github.com',
+    sha: '9ff49b2d1437567cad2b5fed7a0706472131e927',
+    type: 'pr',         // can be 'pr' or 'repo'
+    username: 'robin'  // should be the actor/creator of the webhook event (not necessarily the author)
 }
 ```
 
 #### Expected Promise response
 1. Resolve with a parsed hook object
+2. Reject if not able to parse hook
+
+### getChangedFiles
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config         | Object | Yes | Configuration Object |
+| config.type    | String | The type of action from Git (can be 'pr' or 'repo') |
+| config.payload | Object | The webhook payload received from the SCM service |
+| config.token   | String | Access token for scm |
+
+#### Expected Outcome
+An array of file paths that were changed:
+```js
+['README.md', 'folder/screwdriver.yaml'] // array of changed files
+```
+
+#### Expected Promise response
+1. Resolve with an array of files
 2. Reject if not able to parse hook
 
 ### getCheckoutCommand
@@ -374,6 +396,7 @@ To make use of the validation functions, the functions to override are:
 1. `_addWebhook`
 1. `_parseUrl`
 1. `_parseHook`
+1. `_getChangedFiles`
 1. `_getCheckoutCommand`
 1. `_decorateUrl`
 1. `_decorateCommit`
