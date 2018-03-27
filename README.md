@@ -1,7 +1,7 @@
 # Scm Base
 [![Version][npm-image]][npm-url] ![Downloads][downloads-image] [![Build Status][status-image]][status-url] [![Open Issues][issues-image]][issues-url] [![Dependency Status][daviddm-image]][daviddm-url] ![License][license-image]
 
-> Base class for defining the behavior between Screwdriver and source control management systems
+> Base class for defining the behavior between Screwdriver and source control management (SCM) systems
 
 ## Usage
 
