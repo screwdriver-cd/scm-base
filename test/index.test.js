@@ -81,19 +81,15 @@ describe('index test', () => {
             stuff: 'foo'
         };
         const payload = {
-            moreStuff: 'bar'
+            type: 'pr'
         };
 
         it('returns data from underlying method', () => {
-            instance._parseHook = () => Promise.resolve({
-                type: 'pr'
-            });
+            instance._parseHook = () => Promise.resolve(testParseHook);
 
             return instance.parseHook()
                 .then((output) => {
-                    assert.deepEqual(output, {
-                        type: 'pr'
-                    });
+                    assert.deepEqual(output, testParseHook);
                 });
         });
 
@@ -109,10 +105,12 @@ describe('index test', () => {
 
     describe('getChangedFiles', () => {
         const type = 'pr';
-        const payload = testParseHook;
+        const payload = {
+            type
+        };
 
         it('returns data from underlying method', () => {
-            instance._getChangedFiles = () => Promise.resolve([
+            instance.getChangedFiles = () => Promise.resolve([
                 'README.md',
                 'folder/screwdriver.yaml'
             ]);
@@ -126,8 +124,23 @@ describe('index test', () => {
                 });
         });
 
+        it('returns error when invalid output', () => {
+            instance._getChangedFiles = () => Promise.resolve({
+                invalid: 'object'
+            });
+
+            return instance.getChangedFiles({ type, payload, token })
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
         it('returns not implemented', () =>
-            instance.parseHook({ type, payload, token })
+            instance.getChangedFiles({ type, payload, token })
                 .then(() => {
                     assert.fail('This should not fail the test');
                 }, (err) => {

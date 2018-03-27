@@ -87,7 +87,7 @@ class ScmBase {
      */
     parseHook(headers, payload) {
         return this._parseHook(headers, payload)
-            .then(hook => validate(hook, dataSchema.core.scm.hook));
+            .then(hook => validate(hook, dataSchema.plugins.scm.parseHookOutput));
     }
 
     _parseHook() {
