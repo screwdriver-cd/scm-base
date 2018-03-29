@@ -101,6 +101,7 @@ class ScmBase {
      * @param  {String}    config.type     The type of action from Git (can be 'pr' or 'repo')
      * @param  {Object}    config.payload  The webhook payload received from the SCM service
      * @param  {String}    config.token    The token used to authenticate to the SCM
+     * @param  {String}    config.type     The type of action from Git (can be 'pr' or 'repo')
      * @return {Promise}                   Returns an array of changed files
      */
     getChangedFiles(config) {
