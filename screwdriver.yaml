@@ -7,6 +7,7 @@ jobs:
         steps:
             - install: npm install
             - test: npm test
+            
     publish:
         requires: main
         template: screwdriver-cd/semantic-release
@@ -15,3 +16,5 @@ jobs:
             - NPM_TOKEN
             # Pushing tags to Git
             - GH_TOKEN
+        requires:
+            - main
