@@ -21,7 +21,7 @@ class ScmBase {
     /**
      * Constructor for Scm
      * @method constructor
-     * @param  {Object}    config Configuration
+     * @param  {Object}     config      Configuration object
      * @return {ScmBase}
      */
     constructor(config) {
@@ -31,7 +31,7 @@ class ScmBase {
     /**
      * Reload configuration
      * @method configure
-     * @param  {Object}     config      Configuration
+     * @param  {Object}     config      Configuration object
      */
     configure(config) {
         this.config = config;
@@ -43,7 +43,7 @@ class ScmBase {
      * If the repository already has the desired webhook, it will instead update the webhook to
      * ensure it has all the up-to-date information and settings (e.g., events)
      * @method addWebhook
-     * @param  {Object}     config
+     * @param  {Object}     config                  Configuration
      * @param  {String}     config.scmUri           SCM URI to add the webhook to
      * @param  {String}     config.token            Service token to authenticate with the SCM service
      * @param  {String}     config.webhookUrl       The URL to use for the webhook notifications
@@ -61,8 +61,8 @@ class ScmBase {
 
     /**
      * Parse the url for a repo for the specific source control
-     * @method parseurl
-     * @param  {Object}    config
+     * @method parseUrl
+     * @param  {Object}    config                   Configuration
      * @param  {String}    config.checkoutUrl       Url to parse
      * @param  {String}    config.token             The token used to authenticate to the SCM
      * @param  {String}    [config.scmContext]      The scm context name
@@ -97,7 +97,7 @@ class ScmBase {
     /**
      * Parse the webhook to get the changed files
      * @method getChangedFiles
-     * @param  {Object}    config
+     * @param  {Object}    config          Configuration
      * @param  {String}    config.type     The type of action from Git (can be 'pr' or 'repo')
      * @param  {Object}    config.payload  The webhook payload received from the SCM service
      * @param  {String}    config.token    The token used to authenticate to the SCM
@@ -118,7 +118,7 @@ class ScmBase {
     /**
      * Checkout the source code from a repository; resolves as an object with checkout commands
      * @method getCheckoutCommand
-     * @param  {Object}    config
+     * @param  {Object}    config                 Configuration
      * @param  {String}    config.branch          Pipeline branch
      * @param  {String}    config.host            Scm host to checkout source code from
      * @param  {String}    config.org             Scm org name
@@ -169,7 +169,7 @@ class ScmBase {
     /**
      * Decorate the url for the specific source control
      * @method decorateUrl
-     * @param  {Object}    config
+     * @param  {Object}    config                Configuration
      * @param  {String}    config.scmUri         SCM uri to decorate
      * @param  {String}    config.token          The token used to authenticate to the SCM
      * @param  {String}    [config.scmContext]   The scm context name
@@ -188,7 +188,7 @@ class ScmBase {
     /**
      * Decorate the commit for the specific source control
      * @method decorateCommit
-     * @param  {Object}    config
+     * @param  {Object}    config                 Configuration
      * @param  {String}    config.sha             Commit sha to decorate
      * @param  {String}    config.scmUri          SCM uri
      * @param  {String}    config.token           The token used to authenticate to the SCM
@@ -313,7 +313,7 @@ class ScmBase {
      * @return {Promise}
      */
     getOpenedPRs(config) {
-        return validate(config, dataSchema.plugins.scm.getCommitSha)       // includes scmUri, token and scmContext
+        return validate(config, dataSchema.plugins.scm.getCommitSha) // includes scmUri, token and scmContext
             .then(validConfig => this._getOpenedPRs(validConfig))
             .then(jobList =>
                 validate(jobList, Joi.array().items(
@@ -322,7 +322,7 @@ class ScmBase {
                         ref: Joi.string().required()
                     })
                 ))
-        );
+            );
     }
 
     _getOpenedPRs() {
@@ -353,14 +353,13 @@ class ScmBase {
      * @return {Promise}
      */
     getPrInfo(config) {
-        return validate(config, dataSchema.plugins.scm.getCommitSha)       // includes scmUri, token and scmContext
-             .then(validConfig => this._getPrInfo(validConfig))
-             .then(pr => validate(pr, Joi.object().keys({
-                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
-                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
-                 ref: Joi.string().required()
-             }))
-         );
+        return validate(config, dataSchema.plugins.scm.getCommitSha) // includes scmUri, token and scmContext
+            .then(validConfig => this._getPrInfo(validConfig))
+            .then(pr => validate(pr, Joi.object().keys({
+                name: Joi.reach(dataSchema.models.job.base, 'name').required(),
+                sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
+                ref: Joi.string().required()
+            })));
     }
 
     _getPrInfo() {

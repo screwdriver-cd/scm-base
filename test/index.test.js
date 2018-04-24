@@ -677,9 +677,9 @@ describe('index test', () => {
 
         it('rejects when not implemented', () =>
             instance.addWebhook(config)
-               .then(assert.fail, (err) => {
-                   assert.strictEqual(err.message, 'Not implemented');
-               })
+                .then(assert.fail, (err) => {
+                    assert.strictEqual(err.message, 'Not implemented');
+                })
         );
     });
 

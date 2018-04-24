@@ -1,21 +1,18 @@
 shared:
-    image: node:6
+    image: node:8
 
 jobs:
     main:
+        requires: [~pr, ~commit]
         steps:
             - install: npm install
             - test: npm test
-        requires:
-            - ~pr
-            - ~commit
 
     publish:
-        template: screwdriver-cd/semantic-release 
+        requires: main
+        template: screwdriver-cd/semantic-release
         secrets:
             # Publishing to NPM
             - NPM_TOKEN
             # Pushing tags to Git
             - GH_TOKEN
-        requires:
-            - main
