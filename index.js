@@ -226,7 +226,7 @@ class ScmBase {
 
     /**
      * Decorate the author for the specific source control
-     * @method decorateAuthor
+     * @method decoratePR
      * @param  {Object}    config
      * @param  {String}    config.username        Author to decorate
      * @param  {String}    config.token           The token used to authenticate to the SCM
