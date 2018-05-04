@@ -224,7 +224,7 @@ class ScmBase {
         return Promise.reject(new Error('Not implemented'));
     }
 
-     /**
+    /**
      * Decorate the author for the specific source control
      * @method decorateAuthor
      * @param  {Object}    config
