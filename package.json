@@ -8,6 +8,11 @@
     "test": "jenkins-mocha -R mocha-sonar-reporter --recursive --timeout 3000",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
+  "config": {
+    "mocha-sonar-reporter": {
+        "outputfile": "sonar/test.xml"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:screwdriver-cd/scm-base.git"
