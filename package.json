@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "eslint .",
-    "test": "jenkins-mocha --recursive --timeout 3000",
+    "test": "jenkins-mocha -R mocha-sonar-reporter --recursive --timeout 3000",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
