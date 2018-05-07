@@ -359,7 +359,7 @@ class ScmBase {
                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
                 ref: Joi.string().required(),
-                url: Joi.string().url()
+                url: Joi.string().uri()
             })));
     }
 
