@@ -225,25 +225,6 @@ class ScmBase {
     }
 
     /**
-     * Decorate the author for the specific source control
-     * @method decoratePR
-     * @param  {Object}    config
-     * @param  {String}    config.username        Author to decorate
-     * @param  {String}    config.token           The token used to authenticate to the SCM
-     * @param  {String}    [config.scmContext]    The scm context name
-     * @return {Promise}
-     */
-    decoratePR(config) {
-        return validate(config, dataSchema.plugins.scm.decoratePR)
-            .then(validPR => this._decoratePR(validPR))
-            .then(decoratePR => validate(decoratePR, dataSchema.core.scm.pr));
-    }
-
-    _decoratePR() {
-        return Promise.reject(new Error('Not implemented'));
-    }
-
-    /**
      * Get a users permissions on a repository
      * @method getPermissions
      * @param  {Object}   config                  Configuration
@@ -377,7 +358,8 @@ class ScmBase {
             .then(pr => validate(pr, Joi.object().keys({
                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
-                ref: Joi.string().required()
+                ref: Joi.string().required(),
+                url: Joi.string().url()
             })));
     }
 
