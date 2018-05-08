@@ -358,7 +358,8 @@ class ScmBase {
             .then(pr => validate(pr, Joi.object().keys({
                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
-                ref: Joi.string().required()
+                ref: Joi.string().required(),
+                url: Joi.reach(dataSchema.core.scm.pr, 'url')
             })));
     }
 

@@ -347,10 +347,10 @@ The parameters required are:
 | config.scmContext | String | No | The name of scm context |
 
 #### Expected Outcome
-The object consists of PR name, sha and ref for the pipeline.
+The object consists of PR name, sha, ref, and url for the pipeline.
 
 #### Expected Promise Response
-1. Resolve with the object consists of PR name, sha and ref
+1. Resolve with the object consists of PR name, sha, ref, and url
 2. Reject if the input or output is not valid
 
 ### getScmContexts
