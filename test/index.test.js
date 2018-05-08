@@ -785,7 +785,6 @@ describe('index test', () => {
         it('returns empty display name if no configuration', () => {
             instance.configure({});
             assert.equal(instance.getDisplayName(), '');
-            throw new Error('fail it');
         });
 
         it('returns valid display name', () => {
