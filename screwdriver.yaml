@@ -4,7 +4,7 @@ shared:
 jobs:
     main:
         requires: [~pr, ~commit]
-        environments:
+        environment:
             SONAR_OPTS: "-Dsonar.sources=index.js"
         steps:
             - echo: echo $SONAR_OPTS
