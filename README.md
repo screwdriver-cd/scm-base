@@ -111,6 +111,7 @@ Required parameters:
 | config        | Object | Yes | Configuration Object |
 | config.branch | String | Yes | Pipeline branch |
 | config.host | String | Yes | Scm host (ex: github.com) |
+| config.manifest | String | No | Repo Manifest URL |
 | config.org | String | Yes | Scm org (ex: screwdriver-cd) |
 | config.prRef | String | No | PR branch or reference |
 | config.repo | String | Yes | Scm repo (ex: guide) |
@@ -139,7 +140,8 @@ Required Parameters:
 | :-------------   | :---- | :--------| :---- |
 | config        | Object | Yes | Configuration Object |
 | config.pipeline | PipelineModel | Yes | Pipeline model |
-| config.build | Object | Yes | build config with sha and possibly prRef |
+| config.job | Object | Yes |Job config with repoManifest annotation
+| config.build | Object | Yes | Build config with sha and possibly prRef |
 
 ### decorateUrl
 Required parameters:

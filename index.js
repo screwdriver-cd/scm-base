@@ -3,6 +3,9 @@
 /* eslint-disable no-underscore-dangle */
 const Joi = require('joi');
 const dataSchema = require('screwdriver-data-schema');
+const { getAnnotations } = require('./lib/helper');
+
+const repoManifestAnnotation = 'screwdriver.cd/repoManifest';
 
 /**
  * Validate the config using the schema
@@ -126,6 +129,7 @@ class ScmBase {
      * @param  {String}    config.sha             Commit sha
      * @param  {String}    [config.scmContext]    The scm context name
      * @param  {String}    [config.prRef]         PR reference (can be a PR branch or reference)
+     * @param  {String}    [config.manifest]      Repo manifest URL (only defined if `screwdriver.cd/repoManifest` annotation is)
      * @return {Promise}
      */
     getCheckoutCommand(config) {
@@ -144,6 +148,7 @@ class ScmBase {
      * @method getSetupCommand
      * @param  {Object}         o           Information about the environment for setup
      * @param  {PipelineModel}  o.pipeline  Pipeline model for the build
+     * @param  {Object}         o.job       Job configuration for the build
      * @param  {Object}         o.build     Build configuration for the build (before creation)
      * @return {Promise}
      */
@@ -161,6 +166,12 @@ class ScmBase {
 
         if (o.build.prRef) {
             checkoutConfig.prRef = o.build.prRef;
+        }
+
+        const manifest = getAnnotations(o.job.permutations[0], repoManifestAnnotation);
+
+        if (manifest) {
+            checkoutConfig.manifest = manifest;
         }
 
         return this.getCheckoutCommand(checkoutConfig).then(c => c.command);

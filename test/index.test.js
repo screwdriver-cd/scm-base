@@ -206,7 +206,9 @@ describe('index test', () => {
                     scmRepo: { name: 'screwdriver-cd/guide' },
                     scmContext: 'github:github.com'
                 },
-                job: {},
+                job: {
+                    permutations: [{}]
+                },
                 build: {
                     sha: '12345'
                 }
@@ -248,6 +250,32 @@ describe('index test', () => {
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
             };
             config.build.prRef = 'abcd';
+
+            return instance.getSetupCommand(config)
+                .then((command) => {
+                    assert.equal(command, 'stuff');
+                });
+        });
+
+        it('returns a command for manifest', () => {
+            instance._getCheckoutCommand = (o) => {
+                assert.deepEqual(o, {
+                    branch: 'branch',
+                    host: 'github.com',
+                    manifest: 'git@github.com:org/repo.git/default.xml',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    sha: '12345',
+                    scmContext: 'github:github.com'
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+            config.job.permutations[0] = {
+                annotations: {
+                    'screwdriver.cd/repoManifest': 'git@github.com:org/repo.git/default.xml'
+                }
+            };
 
             return instance.getSetupCommand(config)
                 .then((command) => {
