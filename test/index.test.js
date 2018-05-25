@@ -819,4 +819,39 @@ describe('index test', () => {
             assert.equal(instance.getDisplayName(), 'github.com');
         });
     });
+
+    describe('getBranchList', () => {
+        const config = {
+            scmUri: 'github.com:20180525:branch',
+            token
+        };
+
+        it('returns data from underlying method', () => {
+            instance._getBranchList = () => Promise.resolve({
+                real: 'config'
+            });
+
+            return instance.getBranchList(config)
+                .then((output) => {
+                    assert.deepEqual(output, {
+                        real: 'config'
+                    });
+                });
+        });
+
+        it('rejects when given an invalid config object', () =>
+            instance.getBranchList({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('rejects when not implemented', () =>
+            instance.getBranchList(config)
+                .then(assert.fail, (err) => {
+                    assert.strictEqual(err.message, 'Not implemented');
+                })
+        );
+    });
 });
