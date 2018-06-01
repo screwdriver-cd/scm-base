@@ -379,6 +379,21 @@ The received webhook is available or not as boolean.
 1. Resolve with the received webhook is available or not.
 2. Reject if the input or output is not valid
 
+### getBranchList
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | Yes | Configuration Object |
+| config.scmUri | String | Yes | The scm uri (ex: `github.com:1234:branchName`) |
+| config.token | String | Yes | Access token for scm |
+
+#### Expected Outcome
+The array of object consists of branch name.
+
+#### Expected Promise Response
+1. Resolve with the array of object consists of branch name.
+
 ### getDisplayName (overriding needs only the case of `scm-router`)
 The parameters required are:
 
@@ -413,6 +428,7 @@ To make use of the validation functions, the functions to override are:
 1. `stats` 
 1. `_getScmContexts` 
 1. `_canHandleWebhook` 
+1. `_getBranchList`
 1. `getDisplayName` (overriding needs only the case of `scm-router`) 
 
 ```js
