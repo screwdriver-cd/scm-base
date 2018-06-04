@@ -98,7 +98,7 @@ class ScmBase {
     }
 
     /**
-     * Get the branch list which related the repository
+     * Get the branch list related to the repository
      * @method getBranchList
      * @param  {Object}     config              Configuration
      * @param  {String}     config.token        Service token to authenticate with the SCM service

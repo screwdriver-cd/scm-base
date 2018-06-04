@@ -392,7 +392,7 @@ The parameters required are:
 The array of object consists of branch name.
 
 #### Expected Promise Response
-1. Resolve with the array of object consists of branch name.
+1. Resolve with an array of objects consisting of branch name.
 
 ### getDisplayName (overriding needs only the case of `scm-router`)
 The parameters required are:
