@@ -389,10 +389,10 @@ The parameters required are:
 | config.token | String | Yes | Access token for scm |
 
 #### Expected Outcome
-The array of object consists of branch name.
+The array of objects consisting of branch names.
 
 #### Expected Promise Response
-1. Resolve with an array of objects consisting of branch name.
+1. Resolve with an array of objects consisting of branch names.
 
 ### getDisplayName (overriding needs only the case of `scm-router`)
 The parameters required are:
