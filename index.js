@@ -98,6 +98,23 @@ class ScmBase {
     }
 
     /**
+     * Get the branch list related to the repository
+     * @method getBranchList
+     * @param  {Object}     config              Configuration
+     * @param  {String}     config.token        Service token to authenticate with the SCM service
+     * @param  {String}     config.scmUri       SCM URI to get the branch list
+     * @return {Promise}
+     */
+    getBranchList(config) {
+        return validate(config, dataSchema.plugins.scm.getBranchList)
+            .then(() => this._getBranchList(config));
+    }
+
+    _getBranchList() {
+        return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
      * Parse the webhook to get the changed files
      * @method getChangedFiles
      * @param  {Object}    config          Configuration
