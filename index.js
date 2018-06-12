@@ -168,6 +168,10 @@ class ScmBase {
             checkoutConfig.prRef = o.build.prRef;
         }
 
+        if (o.build.commitBranch) {
+            checkoutConfig.commitBranch = o.build.commitBranch;
+        }
+
         const manifest = getAnnotations(o.job.permutations[0], repoManifestAnnotation);
 
         if (manifest) {
