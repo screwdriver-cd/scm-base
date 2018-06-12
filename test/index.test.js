@@ -282,6 +282,28 @@ describe('index test', () => {
                     assert.equal(command, 'stuff');
                 });
         });
+
+        it('returns a command for commit branch', () => {
+            instance._getCheckoutCommand = (o) => {
+                assert.deepEqual(o, {
+                    branch: 'branch',
+                    host: 'github.com',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    sha: '12345',
+                    commitBranch: 'cm-branch',
+                    scmContext: 'github:github.com'
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+            config.build.commitBranch = 'cm-branch';
+
+            return instance.getSetupCommand(config)
+                .then((command) => {
+                    assert.equal(command, 'stuff');
+                });
+        });
     });
 
     describe('decorateUrl', () => {
