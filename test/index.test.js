@@ -304,6 +304,39 @@ describe('index test', () => {
                     assert.equal(command, 'stuff');
                 });
         });
+
+        it('returns a command for parent config', () => {
+            instance._getCheckoutCommand = (o) => {
+                assert.deepEqual(o, {
+                    branch: 'branch',
+                    host: 'github.com',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    sha: '12345',
+                    scmContext: 'github:github.com',
+                    parentConfig: {
+                        branch: 'master',
+                        host: 'github.com',
+                        org: 'screwdriver-cd',
+                        repo: 'parent-to-guide',
+                        sha: '54321'
+                    }
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+            config.configPipeline = {
+                scmUri: 'github.com:12344567:master',
+                scmRepo: { name: 'screwdriver-cd/parent-to-guide' },
+                scmContext: 'github:github.com'
+            };
+            config.configPipelineSha = '54321';
+
+            return instance.getSetupCommand(config)
+                .then((command) => {
+                    assert.equal(command, 'stuff');
+                });
+        });
     });
 
     describe('decorateUrl', () => {
