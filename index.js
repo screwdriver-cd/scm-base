@@ -172,6 +172,15 @@ class ScmBase {
             checkoutConfig.commitBranch = o.build.commitBranch;
         }
 
+        if (o.configPipeline) {
+            const parentConfig = { sha: o.configPipelineSha };
+
+            [parentConfig.host, , parentConfig.branch] = o.configPipeline.scmUri.split(':');
+            [parentConfig.org, parentConfig.repo] = o.configPipeline.scmRepo.name.split('/');
+
+            checkoutConfig.parentConfig = parentConfig;
+        }
+
         const manifest = getAnnotations(o.job.permutations[0], repoManifestAnnotation);
 
         if (manifest) {
