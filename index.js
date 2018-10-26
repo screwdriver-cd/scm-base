@@ -267,6 +267,25 @@ class ScmBase {
     }
 
     /**
+     * Get a users permissions on an organization
+     * @method getOrgPermissions
+     * @param  {Object}   config                  Configuration
+     * @param  {String}   config.organization     The organization to get permissions on
+     * @param  {String}   config.username         The user to check against
+     * @param  {String}   config.token            The token used to authenticate to the SCM
+     * @param  {String}   [config.scmContext]     The scm context name
+     * @return {Promise}
+     */
+    getOrgPermissions(config) {
+        return validate(config, dataSchema.plugins.scm.getOrgPermissions)
+            .then(validConfig => this._getOrgPermissions(validConfig));
+    }
+
+    _getOrgPermissions() {
+        return Promise.reject('Not implemented');
+    }
+
+    /**
      * Get a commit sha for a specific repo#branch or pull request
      * @method getCommitSha
      * @param  {Object}   config                  Configuration
