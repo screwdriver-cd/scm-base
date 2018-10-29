@@ -246,6 +246,30 @@ Permissions for a given token on a repository in the form of:
 1. Resolve with a permissions object for the repository
 2. Reject if not able to get permissions
 
+### getOrgPermissions
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config        | Object | Configuration Object |
+| config.organization | String | The scm organization to get permissions on (ex: `screwdriver-cd`) |
+| config.username | String | The user to get permissions on (ex: `foo`) |
+| config.token | String | Access token for scm |
+| config.scmContext | String | (optional) The name of scm context |
+
+#### Expected Outcome
+Permissions for a given user on a organization in the form of:
+```js
+{
+    admin: false,
+    member: true
+}
+```
+
+#### Expected Promise response
+1. Resolve with a permissions object for the organization
+2. Reject if not able to get permissions
+
 ### getCommitSha
 Required parameters:
 
@@ -419,6 +443,7 @@ To make use of the validation functions, the functions to override are:
 1. `_decorateCommit`
 1. `_decorateAuthor`
 1. `_getPermissions`
+1. `_getOrgPermissions`
 1. `_getCommitSha`
 1. `_updateCommitStatus`
 1. `_getFile`
