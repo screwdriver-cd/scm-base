@@ -516,6 +516,51 @@ describe('index test', () => {
         );
     });
 
+    describe('getOrgPermissions', () => {
+        const config = {
+            organization: 'screwdriver',
+            token: 'token',
+            username: 'foo',
+            scmContext: 'github:github.com'
+        };
+
+        it('returns error when invalid config object', () =>
+            instance.getOrgPermissions({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._getOrgPermissions = () => Promise.resolve({
+                invalid: 'object'
+            });
+
+            return instance.getOrgPermissions(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'AssertionError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.getOrgPermissions(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err, 'Not implemented');
+                })
+        );
+    });
+
     describe('getCommitSha', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
