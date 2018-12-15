@@ -379,6 +379,25 @@ The object consists of PR name, sha, ref, and url for the pipeline.
 1. Resolve with the object consists of PR name, sha, ref, and url
 2. Reject if the input or output is not valid
 
+### addPrComment
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | Yes | Configuration Object |
+| config.scmUri | String | Yes | The scm uri (ex: `github.com:1234:branchName`) |
+| config.token | String | Yes | Access token for scm |
+| config.prNum | Integer | Yes | The PR number used to fetch the PR |
+| config.comment | String | Yes | The PR comment |
+| config.scmContext | String | No | The name of scm context |
+
+#### Expected Outcome
+The object consisting of PR comment ID, create time, and username.
+
+#### Expected Promise Response
+1. Resolve with the object consists of PR comment ID, create time, and username
+2. Reject if the input or output is not valid
+
 ### getScmContexts
 No parameters are required.
 
@@ -445,6 +464,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getPermissions`
 1. `_getOrgPermissions`
 1. `_getCommitSha`
+1. `_addPrComment`
 1. `_updateCommitStatus`
 1. `_getFile`
 1. `_getOpenedPRs`
