@@ -402,12 +402,42 @@ class ScmBase {
                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
                 ref: Joi.string().required(),
-                url: Joi.reach(dataSchema.core.scm.pr, 'url')
+                url: Joi.reach(dataSchema.core.scm.pr, 'url'),
+                username: Joi.reach(dataSchema.core.scm.user, 'username')
             })));
     }
 
     _getPrInfo() {
         return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
+     * Resolve a pull request comment object based on config
+     * @method addPrComment
+     * @param  {Object}   config                    Configuration
+     * @param  {String}   config.scmUri             The scmUri
+     * @param  {String}   config.token              The token used to authenticate to the SCM
+     * @param  {Integer}  config.prNum              The PR number used to fetch the PR
+     * @param  {String}   config.comment            The PR comment
+     * @param  {String}   [config.scmContext]       The scm context name
+     * @return {Promise}
+     */
+    addPrComment(config) {
+        return validate(config, dataSchema.plugins.scm.addPrComment) // includes scmUri, token and scmContext
+            .then(validConfig => this._addPrComment(validConfig))
+            .then(prComment => validate(prComment, Joi.alternatives().try(
+                Joi.object().keys({
+                    commentId: Joi.reach(dataSchema.models.job.base, 'id').required(),
+                    createTime: Joi.reach(dataSchema.models.build.base, 'createTime').required(),
+                    username: Joi.reach(dataSchema.core.scm.user, 'username').required()
+                }),
+                Joi.string().allow(null)
+            )));
+    }
+
+    // Default to not fail since we will always call it in models
+    _addPrComment() {
+        return Promise.resolve(null);
     }
 
     /**

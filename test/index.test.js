@@ -850,6 +850,43 @@ describe('index test', () => {
         );
     });
 
+    describe('addPrComment', () => {
+        const config = {
+            scmUri: 'github.com:repoId:branch',
+            token,
+            prNum: 123,
+            comment: 'my, what a fine PR',
+            scmContext: 'github:github.com'
+        };
+
+        it('returns error when invalid input', () =>
+            instance.addPrComment({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._addPrComment = () => Promise.resolve({
+                invalid: 'stuff'
+            });
+
+            return instance.addPrComment(config)
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                });
+        });
+
+        it('returns null if not implemented', () =>
+            instance.addPrComment(config)
+                .then((result) => {
+                    assert.isNull(result);
+                })
+        );
+    });
+
     describe('getScmContexts', () => {
         it('returns error when invalid output', () => {
             instance._getScmContexts = () => 'invalid';
