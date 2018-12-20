@@ -879,13 +879,10 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () =>
+        it('returns null if not implemented', () =>
             instance.addPrComment(config)
-                .then(() => {
-                    assert.fail('you will never get dis');
-                })
-                .catch((err) => {
-                    assert.equal(err.message, 'Not implemented');
+                .then((result) => {
+                    assert.isNull(result);
                 })
         );
     });

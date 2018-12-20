@@ -425,15 +425,19 @@ class ScmBase {
     addPrComment(config) {
         return validate(config, dataSchema.plugins.scm.addPrComment) // includes scmUri, token and scmContext
             .then(validConfig => this._addPrComment(validConfig))
-            .then(prComment => validate(prComment, Joi.object().keys({
-                commentId: Joi.reach(dataSchema.models.job.base, 'id').required(),
-                createTime: Joi.reach(dataSchema.models.build.base, 'createTime').required(),
-                username: Joi.reach(dataSchema.core.scm.user, 'username').required()
-            })));
+            .then(prComment => validate(prComment, Joi.alternatives().try(
+                Joi.object().keys({
+                    commentId: Joi.reach(dataSchema.models.job.base, 'id').required(),
+                    createTime: Joi.reach(dataSchema.models.build.base, 'createTime').required(),
+                    username: Joi.reach(dataSchema.core.scm.user, 'username').required()
+                }),
+                Joi.string().allow(null)
+            )));
     }
 
+    // Default to not fail since we will always call it in models
     _addPrComment() {
-        return Promise.reject(new Error('Not implemented'));
+        return Promise.resolve(null);
     }
 
     /**
