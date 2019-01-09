@@ -362,7 +362,10 @@ class ScmBase {
                 validate(jobList, Joi.array().items(
                     Joi.object().keys({
                         name: Joi.reach(dataSchema.models.job.base, 'name').required(),
-                        ref: Joi.string().required()
+                        ref: Joi.string().required(),
+                        username: Joi.reach(dataSchema.core.scm.pr, 'username'),
+                        title: Joi.reach(dataSchema.core.scm.pr, 'title'),
+                        createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime')
                     })
                 ))
             );
@@ -403,7 +406,9 @@ class ScmBase {
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
                 ref: Joi.string().required(),
                 url: Joi.reach(dataSchema.core.scm.pr, 'url'),
-                username: Joi.reach(dataSchema.core.scm.user, 'username')
+                username: Joi.reach(dataSchema.core.scm.user, 'username'),
+                title: Joi.reach(dataSchema.core.scm.pr, 'title'),
+                createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime')
             })));
     }
 

@@ -739,10 +739,22 @@ describe('index test', () => {
         );
 
         it('returns job list when no errors', () => {
-            instance._getOpenedPRs = () => Promise.resolve([{ name: 'PR-1', ref: 'pull/1/merge' }]);
+            instance._getOpenedPRs = () => Promise.resolve([{
+                name: 'PR-1',
+                ref: 'pull/1/merge',
+                title: 'Test ref abc',
+                username: 'janedoe',
+                createTime: '2018-10-10T21:35:31Z'
+            }]);
 
             return instance.getOpenedPRs(config).then(
-                jobs => assert.deepEqual(jobs, [{ name: 'PR-1', ref: 'pull/1/merge' }]),
+                jobs => assert.deepEqual(jobs, [{
+                    name: 'PR-1',
+                    ref: 'pull/1/merge',
+                    title: 'Test ref abc',
+                    username: 'janedoe',
+                    createTime: '2018-10-10T21:35:31Z'
+                }]),
                 assert.fail);
         });
     });
