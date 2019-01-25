@@ -294,13 +294,15 @@ The parameters required are:
 | :-------------   | :---- | :------- | :-------------|
 | config        | Object | Yes | Configuration Object |
 | config.buildStatus | String | Yes | The screwdriver build status to translate into scm commit status |
+| config.context | String | No | The status context |
+| config.description | String | No | The status description |
 | config.jobName | String | No | Optional name of the job that finished |
+| config.pipelineId | Number | No | The pipeline id |
+| config.scmContext | String | No | The name of scm context |
 | config.scmUri | String | Yes | The scm uri (ex: `github.com:1234:branchName`) |
 | config.sha | String | Yes | The scm sha to update a status for |
 | config.token | String | Yes | Access token for scm |
 | config.url | String | No | The target url for setting up details |
-| config.pipelineId | Number | No | The pipeline id |
-| config.scmContext | String | No | The name of scm context |
 
 #### Expected Outcome
 Update the commit status for a given repository and sha.
