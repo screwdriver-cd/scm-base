@@ -315,7 +315,9 @@ class ScmBase {
      * @param  {String}   [config.jobName]        Optional name of the job that finished
      * @param  {String}   config.url              Target url
      * @param  {Number}   [config.pipelineId]     Pipeline ID
-     * @param  {String}   [config.scmContext]     The scm context name
+     * @param  {String}   [config.scmContext]     The SCM context name
+     * @param  {String}   [config.context]        The context of the status
+     * @param  {String}   [config.description]    The description of the status
      * @return {Promise}
      */
     updateCommitStatus(config) {
