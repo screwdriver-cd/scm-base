@@ -744,7 +744,9 @@ describe('index test', () => {
                 ref: 'pull/1/merge',
                 title: 'Test ref abc',
                 username: 'janedoe',
-                createTime: '2018-10-10T21:35:31Z'
+                createTime: '2018-10-10T21:35:31Z',
+                url: 'https://example.com/pr-1',
+                userProfile: 'https://example.com/janedoe'
             }]);
 
             return instance.getOpenedPRs(config).then(
@@ -753,7 +755,9 @@ describe('index test', () => {
                     ref: 'pull/1/merge',
                     title: 'Test ref abc',
                     username: 'janedoe',
-                    createTime: '2018-10-10T21:35:31Z'
+                    createTime: '2018-10-10T21:35:31Z',
+                    url: 'https://example.com/pr-1',
+                    userProfile: 'https://example.com/janedoe'
                 }]),
                 assert.fail);
         });
