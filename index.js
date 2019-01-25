@@ -365,7 +365,9 @@ class ScmBase {
                         ref: Joi.string().required(),
                         username: Joi.reach(dataSchema.core.scm.pr, 'username'),
                         title: Joi.reach(dataSchema.core.scm.pr, 'title'),
-                        createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime')
+                        createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime'),
+                        url: Joi.reach(dataSchema.core.scm.pr, 'url'),
+                        userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile')
                     })
                 ))
             );
@@ -405,10 +407,11 @@ class ScmBase {
                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
                 ref: Joi.string().required(),
-                url: Joi.reach(dataSchema.core.scm.pr, 'url'),
                 username: Joi.reach(dataSchema.core.scm.user, 'username'),
                 title: Joi.reach(dataSchema.core.scm.pr, 'title'),
-                createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime')
+                createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime'),
+                url: Joi.reach(dataSchema.core.scm.pr, 'url'),
+                userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile')
             })));
     }
 
