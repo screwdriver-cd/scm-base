@@ -605,6 +605,50 @@ describe('index test', () => {
         );
     });
 
+    describe('getCommitRefSha', () => {
+        const config = {
+            token,
+            owner: 'owner',
+            repo: 'repo',
+            ref: 'master'
+        };
+
+        it('returns error when invalid config object', () =>
+            instance.getCommitRefSha({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('returns error when invalid output', () => {
+            instance._getCommitRefSha = () => Promise.resolve({
+                invalid: 'object'
+            });
+
+            return instance.getCommitRefSha(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'AssertionError');
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.getCommitRefSha(config)
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.equal(err.message, 'Not implemented');
+                })
+        );
+    });
     describe('updateCommitStatus', () => {
         const config = {
             scmUri: 'github.com:repoId:branch',
