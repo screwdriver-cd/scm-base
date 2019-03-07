@@ -610,7 +610,8 @@ describe('index test', () => {
             token,
             owner: 'owner',
             repo: 'repo',
-            ref: 'master'
+            ref: 'master',
+            scmContext: 'github:github.com'
         };
 
         it('returns error when invalid config object', () =>
