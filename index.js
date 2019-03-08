@@ -305,6 +305,26 @@ class ScmBase {
     }
 
     /**
+     * Get a commit sha from a reference
+     * @method getCommitRefSha
+     * @param  {Object}   config
+     * @param  {String}   config.token         The token used to authenticate to the SCM
+     * @param  {String}   config.owner         The owner of the target repository
+     * @param  {String}   config.repo          The target repository name
+     * @param  {String}   config.ref           The reference which we want
+     * @param  {String}   [config.scmContext]  The scm context name
+     * @return {Promise}                       Resolves to the commit sha
+     */
+    getCommitRefSha(config) {
+        return validate(config, dataSchema.plugins.scm.getCommitRefSha)
+            .then(validConfig => this._getCommitRefSha(validConfig));
+    }
+
+    _getCommitRefSha() {
+        return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
      * Update the commit status for a given repo and sha
      * @method updateCommitStatus
      * @param  {Object}   config                  Configuration
