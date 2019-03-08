@@ -287,6 +287,25 @@ The commit sha for a given branch on a repository.
 1. Resolve with a commit sha string for the given `scmUri`
 2. Reject if not able to get a sha
 
+### getCommitRefSha
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config        | Object | Configuration Object |
+| config.token | String | Access token for scm |
+| config.owner | String | Owner of target repository |
+| config.repo | String | Target repository |
+| config.ref | String | Reference of the commit |
+| config.scmContext | String | (optional) The name of scm context |
+
+#### Expected Outcome
+The commit sha for a ref on a repository.
+
+#### Expected Promise response
+1. Resolve with a commit sha string for the given `owner`, `repo` and `ref`
+2. Reject if not able to get a sha
+
 ### updateCommitStatus
 The parameters required are:
 
