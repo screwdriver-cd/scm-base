@@ -42,14 +42,15 @@ Required parameters:
 | :-------------   | :---- | :-------------|
 | config             | Object | Configuration Object |
 | config.checkoutUrl | String | Checkout url for a repo to parse |
-| config.token  | String | Access token for scm |
+| config.rootDir | String | (optional) Root directory where source code lives (ex: src/app/component) |
 | config.scmContext | String | (optional) The name of scm context |
+| config.token  | String | Access token for scm |
 
 #### Expected Outcome
 An scmUri (ex: `github.com:1234:branchName`, where 1234 is a repo ID number), which will be a unique identifier for the repo and branch in Screwdriver.
 
 #### Expected Promise response
-1. Resolve with an scm uri for the repository
+1. Resolve with an scm uri for the repository (e.g.: github.com:12345:master:src/app/component)
 2. Reject if not able to parse url
 
 ### parseHook
@@ -115,6 +116,7 @@ Required parameters:
 | config.org | String | Yes | Scm org (ex: screwdriver-cd) |
 | config.prRef | String | No | PR branch or reference |
 | config.repo | String | Yes | Scm repo (ex: guide) |
+| config.rootDir | String | No | Root directory where source code lives (ex: src/app/component) |
 | config.sha | String | Yes | Scm sha |
 | config.scmContext | String | No | The name of scm context |
 
