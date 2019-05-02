@@ -69,6 +69,7 @@ class ScmBase {
      * @param  {String}    config.checkoutUrl       Url to parse
      * @param  {String}    config.token             The token used to authenticate to the SCM
      * @param  {String}    [config.scmContext]      The scm context name
+     * @param  {String}    [config.rootDir]         Root directory where source code is
      * @return {Promise}
      */
     parseUrl(config) {
@@ -130,6 +131,7 @@ class ScmBase {
      * @param  {String}    [config.scmContext]    The scm context name
      * @param  {String}    [config.prRef]         PR reference (can be a PR branch or reference)
      * @param  {String}    [config.manifest]      Repo manifest URL (only defined if `screwdriver.cd/repoManifest` annotation is)
+     * @param  {String}    [config.rootDir]       Root directory of source code
      * @return {Promise}
      */
     getCheckoutCommand(config) {
@@ -153,7 +155,7 @@ class ScmBase {
      * @return {Promise}
      */
     getSetupCommand(o) {
-        const [host, , branch] = o.pipeline.scmUri.split(':');
+        const [host, , branch, rootDir] = o.pipeline.scmUri.split(':');
         const [org, repo] = o.pipeline.scmRepo.name.split('/');
         const checkoutConfig = {
             branch,
@@ -163,6 +165,10 @@ class ScmBase {
             sha: o.build.sha,
             scmContext: o.pipeline.scmContext
         };
+
+        if (rootDir) {
+            checkoutConfig.rootDir = rootDir;
+        }
 
         if (o.build.prRef) {
             checkoutConfig.prRef = o.build.prRef;
