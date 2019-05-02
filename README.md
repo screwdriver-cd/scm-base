@@ -50,7 +50,7 @@ Required parameters:
 An scmUri (ex: `github.com:1234:branchName`, where 1234 is a repo ID number), which will be a unique identifier for the repo and branch in Screwdriver.
 
 #### Expected Promise response
-1. Resolve with an scm uri for the repository (e.g.: github.com:12345:master:src/app/component)
+1. Resolve with an scm uri for the repository (e.g.: github.com:12345:master or github.com:12345:master:src/app/component)
 2. Reject if not able to parse url
 
 ### parseHook
