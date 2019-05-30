@@ -439,7 +439,8 @@ class ScmBase {
                 title: Joi.reach(dataSchema.core.scm.pr, 'title'),
                 createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime'),
                 url: Joi.reach(dataSchema.core.scm.pr, 'url'),
-                userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile')
+                userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile'),
+                baseBranch: Joi.reach(dataSchema.core.scm.pr, 'baseBranch')
             })));
     }
 
