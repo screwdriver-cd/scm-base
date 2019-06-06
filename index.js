@@ -157,6 +157,7 @@ class ScmBase {
     getSetupCommand(o) {
         const [host, , branch, rootDir] = o.pipeline.scmUri.split(':');
         const [org, repo] = o.pipeline.scmRepo.name.split('/');
+        const prBranchRegex = /^~pr:(.*)$/;
         const checkoutConfig = {
             branch,
             host,
@@ -171,7 +172,15 @@ class ScmBase {
         }
 
         if (o.build.prRef) {
+            const match = prBranchRegex.exec(o.build.startFrom);
+
             checkoutConfig.prRef = o.build.prRef;
+
+            if (match !== null) {
+                // Overwrite base branch by pr specific branch if specified.
+                // prRef needs to be merged into the branch specified in startFrom not main branch.
+                checkoutConfig.branch = match[1];
+            }
         }
 
         if (o.build.commitBranch) {

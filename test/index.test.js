@@ -279,6 +279,29 @@ describe('index test', () => {
                 });
         });
 
+        it('returns a command for pr branch specific build', () => {
+            instance._getCheckoutCommand = (o) => {
+                assert.deepEqual(o, {
+                    branch: 'prSpecificBranch',
+                    host: 'github.com',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    sha: '12345',
+                    prRef: 'abcd',
+                    scmContext: 'github:github.com'
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+            config.build.prRef = 'abcd';
+            config.build.startFrom = '~pr:prSpecificBranch';
+
+            return instance.getSetupCommand(config)
+                .then((command) => {
+                    assert.equal(command, 'stuff');
+                });
+        });
+
         it('returns a command for manifest', () => {
             instance._getCheckoutCommand = (o) => {
                 assert.deepEqual(o, {
