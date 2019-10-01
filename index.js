@@ -183,8 +183,8 @@ class ScmBase {
             }
         }
 
-        if (o.build.commitBranch) {
-            checkoutConfig.commitBranch = o.build.commitBranch;
+        if (o.build.baseBranch) {
+            checkoutConfig.commitBranch = o.build.baseBranch;
         }
 
         if (o.configPipeline) {
