@@ -342,7 +342,7 @@ describe('index test', () => {
 
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
             };
-            config.build.commitBranch = 'cm-branch';
+            config.build.baseBranch = 'cm-branch';
 
             return instance.getSetupCommand(config)
                 .then((command) => {
@@ -656,7 +656,8 @@ describe('index test', () => {
             owner: 'owner',
             repo: 'repo',
             ref: 'master',
-            scmContext: 'github:github.com'
+            scmContext: 'github:github.com',
+            refType: 'heads'
         };
 
         it('returns error when invalid config object', () =>
