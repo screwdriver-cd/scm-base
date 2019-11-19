@@ -450,7 +450,7 @@ class ScmBase {
                 url: Joi.reach(dataSchema.core.scm.pr, 'url'),
                 userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile'),
                 baseBranch: Joi.reach(dataSchema.core.scm.pr, 'baseBranch'),
-                mergeable: Joi.boolean().optional()
+                mergeable: Joi.boolean().allow(null)
             })));
     }
 
