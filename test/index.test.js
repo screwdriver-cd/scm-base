@@ -210,7 +210,11 @@ describe('index test', () => {
                     permutations: [{}]
                 },
                 build: {
-                    sha: '12345'
+                    sha: '12345',
+                    prRef: 'prRef',
+                    prInfo: {
+                        prBranchName: 'prBranchName'
+                    }
                 }
             };
         });
@@ -263,6 +267,7 @@ describe('index test', () => {
                     branch: 'branch',
                     host: 'github.com',
                     org: 'screwdriver-cd',
+                    prBranchName: 'prBranchName',
                     repo: 'guide',
                     sha: '12345',
                     prRef: 'abcd',
