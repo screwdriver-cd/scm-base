@@ -672,7 +672,8 @@ describe('index test', () => {
             owner: 'owner',
             repo: 'repo',
             ref: 'master',
-            scmContext: 'github:github.com'
+            scmContext: 'github:github.com',
+            refType: 'heads'
         };
 
         it('returns error when invalid config object', () =>
@@ -697,7 +698,7 @@ describe('index test', () => {
                 })
                 .catch((err) => {
                     assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
+                    assert.equal(err.name, 'AssertionError');
                 });
         });
 
@@ -707,7 +708,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err.message, 'AssertionError');
+                    assert.equal(err.message, 'Not implemented');
                 })
         );
     });
