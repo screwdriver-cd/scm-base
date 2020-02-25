@@ -227,6 +227,8 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
+                    prRef: 'prRef',
                     scmContext: 'github:github.com'
                 });
 
@@ -249,6 +251,8 @@ describe('index test', () => {
                     repo: 'guide',
                     rootDir: 'src/app/component',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
+                    prRef: 'prRef',
                     scmContext: 'github:github.com'
                 });
 
@@ -267,9 +271,9 @@ describe('index test', () => {
                     branch: 'branch',
                     host: 'github.com',
                     org: 'screwdriver-cd',
-                    prBranchName: 'prBranchName',
                     repo: 'guide',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
                     prRef: 'abcd',
                     scmContext: 'github:github.com'
                 });
@@ -292,6 +296,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
                     prRef: 'abcd',
                     scmContext: 'github:github.com'
                 });
@@ -316,6 +321,8 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
+                    prRef: 'prRef',
                     scmContext: 'github:github.com'
                 });
 
@@ -341,6 +348,8 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
+                    prRef: 'prRef',
                     commitBranch: 'cm-branch',
                     scmContext: 'github:github.com'
                 });
@@ -363,6 +372,8 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prBranchName: 'prBranchName',
+                    prRef: 'prRef',
                     scmContext: 'github:github.com',
                     parentConfig: {
                         branch: 'master',
@@ -686,7 +697,7 @@ describe('index test', () => {
                 })
                 .catch((err) => {
                     assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'AssertionError');
+                    assert.equal(err.name, 'ValidationError');
                 });
         });
 
@@ -696,7 +707,7 @@ describe('index test', () => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
-                    assert.equal(err.message, 'Not implemented');
+                    assert.equal(err.message, 'AssertionError');
                 })
         );
     });
