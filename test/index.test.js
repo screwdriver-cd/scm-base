@@ -212,6 +212,7 @@ describe('index test', () => {
                 build: {
                     sha: '12345',
                     prRef: 'prRef',
+                    prSource: 'branch',
                     prInfo: {
                         prBranchName: 'prBranchName'
                     }
@@ -227,6 +228,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'prRef',
                     scmContext: 'github:github.com'
@@ -251,6 +253,7 @@ describe('index test', () => {
                     repo: 'guide',
                     rootDir: 'src/app/component',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'prRef',
                     scmContext: 'github:github.com'
@@ -273,6 +276,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'abcd',
                     scmContext: 'github:github.com'
@@ -296,6 +300,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'abcd',
                     scmContext: 'github:github.com'
@@ -321,6 +326,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'prRef',
                     scmContext: 'github:github.com'
@@ -348,6 +354,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'prRef',
                     commitBranch: 'cm-branch',
@@ -372,6 +379,7 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    prSource: 'branch',
                     prBranchName: 'prBranchName',
                     prRef: 'prRef',
                     scmContext: 'github:github.com',

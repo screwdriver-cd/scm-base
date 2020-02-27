@@ -181,6 +181,7 @@ class ScmBase {
                 // prRef needs to be merged into the branch specified in startFrom not main branch.
                 checkoutConfig.branch = match[1];
             }
+            checkoutConfig.prSource = o.build.prSource;
             checkoutConfig.prBranchName = o.build.prInfo.prBranchName;
         }
 
