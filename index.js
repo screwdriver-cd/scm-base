@@ -181,6 +181,8 @@ class ScmBase {
                 // prRef needs to be merged into the branch specified in startFrom not main branch.
                 checkoutConfig.branch = match[1];
             }
+            checkoutConfig.prSource = o.build.prSource;
+            checkoutConfig.prBranchName = o.build.prInfo.prBranchName;
         }
 
         if (o.build.baseBranch) {
@@ -444,6 +446,7 @@ class ScmBase {
                 name: Joi.reach(dataSchema.models.job.base, 'name').required(),
                 sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
                 ref: Joi.string().required(),
+                prBranchName: Joi.string().optional(),
                 username: Joi.reach(dataSchema.core.scm.user, 'username'),
                 title: Joi.reach(dataSchema.core.scm.pr, 'title'),
                 createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime'),
