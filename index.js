@@ -182,7 +182,9 @@ class ScmBase {
                 checkoutConfig.branch = match[1];
             }
             checkoutConfig.prSource = o.build.prSource;
-            checkoutConfig.prBranchName = o.build.prInfo.prBranchName;
+            if (o.build.prInfo) {
+                checkoutConfig.prBranchName = o.build.prInfo.prBranchName;
+            }
         }
 
         if (o.build.baseBranch) {
