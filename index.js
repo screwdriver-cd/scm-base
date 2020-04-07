@@ -561,6 +561,26 @@ class ScmBase {
     _getBranchList() {
         return Promise.reject(new Error('Not implemented'));
     }
+
+    /**
+     * Open a pull request on the repository with given file change
+     *
+     * @method addWebhook
+     * @param  {Object}     config                  Configuration
+     * @param  {String}     config.scmUri           SCM URI to open pull request on
+     * @param  {String}     config.token            Service token to authenticate with the SCM service
+     * @param  {String}     config.file             Files to open pull request with
+     * @param  {String}     [config.scmContext]     The scm context name
+     * @return {Promise}                            Resolves when operation completed without failure
+     */
+    openPr(config) {
+        return validate(config, dataSchema.plugins.scm.openPr)
+            .then(() => this._openPr(config));
+    }
+
+    _openPr() {
+        return Promise.reject(new Error('Not implemented'));
+    }
 }
 
 module.exports = ScmBase;
