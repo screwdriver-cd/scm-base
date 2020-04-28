@@ -565,7 +565,7 @@ class ScmBase {
     /**
      * Open a pull request on the repository with given file change
      *
-     * @method addWebhook
+     * @method openPr
      * @param  {Object}     config                  Configuration
      * @param  {String}     config.scmUri           SCM URI to open pull request on
      * @param  {String}     config.token            Service token to authenticate with the SCM service

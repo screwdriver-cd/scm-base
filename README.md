@@ -473,6 +473,19 @@ The display name of scm context
 #### Expected Response
 1. The display name of scm context
 
+### openPr
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config           | Object | Yes | Configuration Object |
+| config.scmUri    | String | Yes | The scm uri (ex: `github.com:1234:branchName`) |
+| config.token     | String | Yes | Access token for scm |
+
+#### Expected Outcome
+The array of scm context name (e.g. [github:github.com, gitlab:my-gitlab])
+
+#### Expected Response
+1. Pull request object
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 
