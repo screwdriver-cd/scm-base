@@ -1125,7 +1125,14 @@ describe('index test', () => {
 
     describe('openPr', () => {
         const config = {
-            scmUri: 'github.com:20180525:branch'
+            checkoutUrl: 'git@github.com:screwdriver-cd/data-model.git#master',
+            token: 'thisisashinytoken',
+            files: [{
+                name: 'file',
+                content: 'content'
+            }],
+            title: 'update file',
+            message: 'update file'
         };
 
         it('returns data from underlying method', () => {
