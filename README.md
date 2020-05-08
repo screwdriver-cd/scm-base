@@ -474,11 +474,13 @@ The display name of scm context
 1. The display name of scm context
 
 ### openPr
-| Parameter        | Type  | Required | Description |
-| :-------------   | :---- | :------- | :-------------|
-| config           | Object | Yes | Configuration Object |
-| config.scmUri    | String | Yes | The scm uri (ex: `github.com:1234:branchName`) |
-| config.token     | String | Yes | Access token for scm |
+| Parameter          | Type  | Required | Description |
+| :-------------     | :---- | :------- | :-------------|
+| config             | Object | Yes | Configuration Object |
+| config.checkoutUrl | String | Yes | Checkout url for a repo|
+| config.token       | String | Yes | Access token for scm |
+| config.title       | String | Yes | Pullrequest title   |
+| config.message     | String | Yes | Pullrequest message |
 
 #### Expected Outcome
 The array of scm context name (e.g. [github:github.com, gitlab:my-gitlab])

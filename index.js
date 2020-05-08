@@ -567,9 +567,11 @@ class ScmBase {
      *
      * @method openPr
      * @param  {Object}     config                  Configuration
-     * @param  {String}     config.scmUri           SCM URI to open pull request on
+     * @param  {String}     config.checkoutUrl      Checkout url to the repo
      * @param  {String}     config.token            Service token to authenticate with the SCM service
-     * @param  {String}     config.files             Files to open pull request with
+     * @param  {String}     config.files            Files to open pull request with
+     * @param  {String}     config.title            Pullrequest title
+     * @param  {String}     config.message          Pullrequest message
      * @param  {String}     [config.scmContext]     The scm context name
      * @return {Promise}                            Resolves when operation completed without failure
      */
