@@ -479,11 +479,11 @@ The display name of scm context
 | config             | Object | Yes | Configuration Object |
 | config.checkoutUrl | String | Yes | Checkout url for a repo|
 | config.token       | String | Yes | Access token for scm |
-| config.title       | String | Yes | Pullrequest title   |
-| config.message     | String | Yes | Pullrequest message |
+| config.title       | String | Yes | Pull request title   |
+| config.message     | String | Yes | Pull request message |
 
 #### Expected Outcome
-The array of scm context name (e.g. [github:github.com, gitlab:my-gitlab])
+An object containing information of new pull request
 
 #### Expected Response
 1. Pull request object
@@ -512,6 +512,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getScmContexts` 
 1. `_canHandleWebhook` 
 1. `_getBranchList`
+1. `_openPr`
 1. `getDisplayName` (overriding needs only the case of `scm-router`) 
 
 ```js
