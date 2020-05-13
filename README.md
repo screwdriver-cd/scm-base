@@ -473,6 +473,21 @@ The display name of scm context
 #### Expected Response
 1. The display name of scm context
 
+### openPr
+| Parameter          | Type  | Required | Description |
+| :-------------     | :---- | :------- | :-------------|
+| config             | Object | Yes | Configuration Object |
+| config.checkoutUrl | String | Yes | Checkout url for a repo|
+| config.token       | String | Yes | Access token for scm |
+| config.title       | String | Yes | Pull request title   |
+| config.message     | String | Yes | Pull request message |
+
+#### Expected Outcome
+An object containing information of new pull request
+
+#### Expected Response
+1. Pull request object
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 
@@ -497,6 +512,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getScmContexts` 
 1. `_canHandleWebhook` 
 1. `_getBranchList`
+1. `_openPr`
 1. `getDisplayName` (overriding needs only the case of `scm-router`) 
 
 ```js

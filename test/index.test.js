@@ -1122,4 +1122,45 @@ describe('index test', () => {
                 })
         );
     });
+
+    describe('openPr', () => {
+        const config = {
+            checkoutUrl: 'git@github.com:screwdriver-cd/data-model.git#master',
+            token: 'thisisashinytoken',
+            files: [{
+                name: 'file',
+                content: 'content'
+            }],
+            title: 'update file',
+            message: 'update file'
+        };
+
+        it('returns data from underlying method', () => {
+            instance._openPr = () => Promise.resolve({
+                real: 'config'
+            });
+
+            return instance.openPr(config)
+                .then((output) => {
+                    assert.deepEqual(output, {
+                        real: 'config'
+                    });
+                });
+        });
+
+        it('rejects when given an invalid config object', () =>
+            instance.openPr({})
+                .then(assert.fail, (err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
+
+        it('rejects when not implemented', () =>
+            instance.openPr(config)
+                .then(assert.fail, (err) => {
+                    assert.strictEqual(err.message, 'Not implemented');
+                })
+        );
+    });
 });
