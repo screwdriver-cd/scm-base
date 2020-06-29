@@ -99,29 +99,6 @@ describe('index test', () => {
         );
     });
 
-    describe('autoDeployKeyGenerationEnabled', () => {
-        const autoDeployKeyGeneration = true;
-
-        it('returns data from underlying method', () => {
-            instance._autoDeployKeyGenerationEnabled = () =>
-                Promise.resolve(autoDeployKeyGeneration);
-
-            return instance.autoDeployKeyGenerationEnabled()
-                .then((output) => {
-                    assert.isBoolean(output, autoDeployKeyGeneration);
-                });
-        });
-
-        it('returns not implemented', () =>
-            instance.autoDeployKeyGenerationEnabled()
-                .then(() => {
-                    assert.fail('This should not fail the test');
-                }, (err) => {
-                    assert.equal(err.message, 'Not implemented');
-                })
-        );
-    });
-
     describe('parseHook', () => {
         const headers = {
             stuff: 'foo'
