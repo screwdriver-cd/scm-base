@@ -76,6 +76,29 @@ describe('index test', () => {
         );
     });
 
+    describe('addDeployKey', () => {
+        const privKey = 'fakePrivateKey';
+        const checkoutUrl = 'git@github.com:screwdriver-cd/data-model.git#master';
+
+        it('returns data from underlying method', () => {
+            instance._addDeployKey = () => Promise.resolve(privKey);
+
+            return instance.addDeployKey()
+                .then((output) => {
+                    assert.isString(output, privKey);
+                });
+        });
+
+        it('returns not implemented', () =>
+            instance.addDeployKey({ token, checkoutUrl })
+                .then(() => {
+                    assert.fail('This should not fail the test');
+                }, (err) => {
+                    assert.equal(err.message, 'Not implemented');
+                })
+        );
+    });
+
     describe('parseHook', () => {
         const headers = {
             stuff: 'foo'
