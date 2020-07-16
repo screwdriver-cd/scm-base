@@ -63,6 +63,21 @@ class ScmBase {
     }
 
     /**
+     * Checks whether auto deploy key generation is switched on or not
+     * @method checkAutoDeployKeyGeneration
+     * @param  {Object}    config                   Configuration
+     * @param  {String}    [config.scmContext]      The scm context name
+     * @return {Promise}
+     */
+    checkAutoDeployKeyGeneration(config) {
+        return this._checkAutoDeployKeyGeneration(config);
+    }
+
+    _checkAutoDeployKeyGeneration() {
+        return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
      * Parse the url for a repo for the specific source control
      * @method addDeployKey
      * @param  {Object}    config                   Configuration
