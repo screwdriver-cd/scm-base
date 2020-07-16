@@ -97,23 +97,6 @@ class ScmBase {
 
     /**
      * Parse the url for a repo for the specific source control
-     * @method addDeployKey
-     * @param  {Object}    config                   Configuration
-     * @param  {String}    config.checkoutUrl       Url to parse
-     * @param  {String}    config.token             The token used to authenticate to the SCM
-     * @param  {String}    [config.scmContext]      The scm context name
-     * @return {Promise}
-     */
-    addDeployKey(config) {
-        return this._addDeployKey(config);
-    }
-
-    _addDeployKey() {
-        return Promise.reject(new Error('Not implemented'));
-    }
-
-    /**
-     * Parse the url for a repo for the specific source control
      * @method parseUrl
      * @param  {Object}    config                   Configuration
      * @param  {String}    config.checkoutUrl       Url to parse
