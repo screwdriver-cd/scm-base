@@ -35,6 +35,25 @@ Update the repository with the desired webhook configuration.
 1. Resolves when the webhook is correctly attached to the repository
 1. Rejects when the repository was unable to be updated with the webhook configuration
 
+### addDeployKey
+Required parameters:
+
+| Parameter              | Type  |  Description |
+| :-------------         | :---- | :-------------|
+| config                 | Object | Configuration Object |
+| config.checkoutUrl     | String | Checkout url for a repo to parse |
+| config.token           | String | Access token for SCM |
+| config.scmContext      | String | (optional) The name of scm context |
+
+#### Expected Outcome
+
+Add deploy public key counterpart to the repository.
+
+#### Expected Promise response
+
+1. Resolves when the deploy key is successfully generated and added
+1. Rejects when the deploy key fails to generate or add
+
 ### parseUrl
 Required parameters:
 
@@ -492,6 +511,7 @@ An object containing information of new pull request
 To make use of the validation functions, the functions to override are:
 
 1. `_addWebhook`
+1. `_addDeployKey`
 1. `_parseUrl`
 1. `_parseHook`
 1. `_getChangedFiles`
