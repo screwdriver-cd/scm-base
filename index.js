@@ -87,7 +87,8 @@ class ScmBase {
      * @return {Promise}
      */
     addDeployKey(config) {
-        return this._addDeployKey(config);
+        return validate(config, dataSchema.plugins.scm.addDeployKey)
+            .then(() => this._addDeployKey(config));
     }
 
     _addDeployKey() {
