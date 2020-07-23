@@ -54,6 +54,22 @@ Add deploy public key counterpart to the repository.
 1. Resolves when the deploy key is successfully generated and added
 1. Rejects when the deploy key fails to generate or add
 
+### autoDeployKeyGenerationEnabled
+Required parameters:
+
+| Parameter              | Type  |  Description |
+| :-------------         | :---- | :-------------|
+| config                 | Object | Configuration Object |
+| config.scmContext      | String | (optional) The name of scm context |
+
+#### Expected Outcome
+
+Returns whether auto deploy key generation is enabled or not.
+
+#### Expected Promise response
+
+1. Resolves to true/false corresponding to the flag status
+
 ### parseUrl
 Required parameters:
 
