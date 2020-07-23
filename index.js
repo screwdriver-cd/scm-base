@@ -73,7 +73,7 @@ class ScmBase {
         return this._autoDeployKeyGenerationEnabled(config);
     }
 
-    _autoDeployKeyGenerationEnabledn() {
+    _autoDeployKeyGenerationEnabled() {
         return Promise.reject(new Error('Not implemented'));
     }
 

@@ -103,7 +103,8 @@ describe('index test', () => {
         const autoDeployKeyGeneration = true;
 
         it('returns data from underlying method', () => {
-            instance._autoDeployKeyGenerationEnabled = () => Promise.resolve(autoDeployKeyGeneration);
+            instance._autoDeployKeyGenerationEnabled = () =>
+                Promise.resolve(autoDeployKeyGeneration);
 
             return instance.autoDeployKeyGenerationEnabled()
                 .then((output) => {
