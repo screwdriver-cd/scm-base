@@ -99,20 +99,20 @@ describe('index test', () => {
         );
     });
 
-    describe('checkAutoDeployKeyGeneration', () => {
+    describe('autoDeployKeyGenerationEnabled', () => {
         const autoDeployKeyGeneration = true;
 
         it('returns data from underlying method', () => {
-            instance._checkAutoDeployKeyGeneration = () => Promise.resolve(autoDeployKeyGeneration);
+            instance._autoDeployKeyGenerationEnabled = () => Promise.resolve(autoDeployKeyGeneration);
 
-            return instance.checkAutoDeployKeyGeneration()
+            return instance.autoDeployKeyGenerationEnabled()
                 .then((output) => {
                     assert.isBoolean(output, autoDeployKeyGeneration);
                 });
         });
 
         it('returns not implemented', () =>
-            instance.checkAutoDeployKeyGeneration()
+            instance.autoDeployKeyGenerationEnabled()
                 .then(() => {
                     assert.fail('This should not fail the test');
                 }, (err) => {
