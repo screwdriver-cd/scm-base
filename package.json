@@ -43,7 +43,7 @@
     "jenkins-mocha": "^7.0.0"
   },
   "dependencies": {
-    "joi": "^13.4.0",
-    "screwdriver-data-schema": "^19.10.0"
+    "@hapi/joi": "^17.1.1",
+    "screwdriver-data-schema": "git://github.com/screwdriver-cd/data-schema.git#hapi-v19"
   }
 }
