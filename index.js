@@ -63,6 +63,39 @@ class ScmBase {
     }
 
     /**
+     * Returns whether auto deploy key generation is enabled on or not
+     * @method autoDeployKeyGenerationEnabled
+     * @param  {Object}    config                   Configuration
+     * @param  {String}    [config.scmContext]      The scm context name
+     * @return {Promise}
+     */
+    autoDeployKeyGenerationEnabled(config) {
+        return this._autoDeployKeyGenerationEnabled(config);
+    }
+
+    _autoDeployKeyGenerationEnabled() {
+        return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
+     * Parse the url for a repo for the specific source control
+     * @method addDeployKey
+     * @param  {Object}    config                   Configuration
+     * @param  {String}    config.checkoutUrl       Url to parse
+     * @param  {String}    config.token             The token used to authenticate to the SCM
+     * @param  {String}    [config.scmContext]      The scm context name
+     * @return {Promise}
+     */
+    addDeployKey(config) {
+        return validate(config, dataSchema.plugins.scm.addDeployKey)
+            .then(() => this._addDeployKey(config));
+    }
+
+    _addDeployKey() {
+        return Promise.reject(new Error('Not implemented'));
+    }
+
+    /**
      * Parse the url for a repo for the specific source control
      * @method parseUrl
      * @param  {Object}    config                   Configuration
