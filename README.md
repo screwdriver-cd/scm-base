@@ -528,6 +528,7 @@ To make use of the validation functions, the functions to override are:
 
 1. `_addWebhook`
 1. `_addDeployKey`
+1. `_autoDeployKeyGenerationEnabled`
 1. `_parseUrl`
 1. `_parseHook`
 1. `_getChangedFiles`
