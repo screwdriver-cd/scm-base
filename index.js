@@ -74,7 +74,7 @@ class ScmBase {
     }
 
     /**
-     * Parse the url for a repo for the specific source control
+     * Generate and add the public deploy key to the specific scm
      * @method addDeployKey
      * @param  {Object}    config                   Configuration
      * @param  {String}    config.checkoutUrl       Url to parse
