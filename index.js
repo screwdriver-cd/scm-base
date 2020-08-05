@@ -67,18 +67,14 @@ class ScmBase {
      * @method autoDeployKeyGenerationEnabled
      * @param  {Object}    config                   Configuration
      * @param  {String}    [config.scmContext]      The scm context name
-     * @return {Promise}
+     * @return {Boolean}
      */
-    autoDeployKeyGenerationEnabled(config) {
-        return this._autoDeployKeyGenerationEnabled(config);
-    }
-
-    _autoDeployKeyGenerationEnabled() {
-        return Promise.reject(new Error('Not implemented'));
+    autoDeployKeyGenerationEnabled() {
+        return this.config.autoDeployKeyGeneration || false;
     }
 
     /**
-     * Parse the url for a repo for the specific source control
+     * Generate and add the public deploy key to the specific scm
      * @method addDeployKey
      * @param  {Object}    config                   Configuration
      * @param  {String}    config.checkoutUrl       Url to parse
