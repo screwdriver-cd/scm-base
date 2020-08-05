@@ -99,29 +99,6 @@ describe('index test', () => {
         );
     });
 
-    describe('autoDeployKeyGenerationEnabled', () => {
-        const autoDeployKeyGeneration = true;
-
-        it('returns data from underlying method', () => {
-            instance._autoDeployKeyGenerationEnabled = () =>
-                Promise.resolve(autoDeployKeyGeneration);
-
-            return instance.autoDeployKeyGenerationEnabled()
-                .then((output) => {
-                    assert.isBoolean(output, autoDeployKeyGeneration);
-                });
-        });
-
-        it('returns not implemented', () =>
-            instance.autoDeployKeyGenerationEnabled()
-                .then(() => {
-                    assert.fail('This should not fail the test');
-                }, (err) => {
-                    assert.equal(err.message, 'Not implemented');
-                })
-        );
-    });
-
     describe('parseHook', () => {
         const headers = {
             stuff: 'foo'
@@ -1131,6 +1108,25 @@ describe('index test', () => {
 
         it('returns valid display name', () => {
             assert.equal(instance.getDisplayName(), 'github.com');
+        });
+    });
+
+    describe('autoDeployKeyGenerationEnabled', () => {
+        const config = {
+            autoDeployKeyGeneration: true
+        };
+
+        beforeEach(() => {
+            instance.configure(config);
+        });
+
+        it('returns false if no configuration', () => {
+            instance.configure({});
+            assert.equal(instance.autoDeployKeyGenerationEnabled(), false);
+        });
+
+        it('returns valid autoDeployKeyGenerationEnabled flag', () => {
+            assert.equal(instance.autoDeployKeyGenerationEnabled(), true);
         });
     });
 

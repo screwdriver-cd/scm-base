@@ -67,14 +67,10 @@ class ScmBase {
      * @method autoDeployKeyGenerationEnabled
      * @param  {Object}    config                   Configuration
      * @param  {String}    [config.scmContext]      The scm context name
-     * @return {Promise}
+     * @return {Boolean}
      */
-    autoDeployKeyGenerationEnabled(config) {
-        return this._autoDeployKeyGenerationEnabled(config);
-    }
-
-    _autoDeployKeyGenerationEnabled() {
-        return Promise.reject(new Error('Not implemented'));
+    autoDeployKeyGenerationEnabled() {
+        return this.config.autoDeployKeyGeneration || false;
     }
 
     /**
