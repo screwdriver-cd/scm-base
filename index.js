@@ -15,7 +15,7 @@ const repoManifestAnnotation = 'screwdriver.cd/repoManifest';
  * @return {Promise}
  */
 function validate(config, schema) {
-    const result = Joi.validate(config, schema);
+    const result = schema.validate(config);
 
     return result.error ? Promise.reject(result.error) : Promise.resolve(config);
 }
@@ -104,7 +104,7 @@ class ScmBase {
     parseUrl(config) {
         return validate(config, dataSchema.plugins.scm.parseUrl)
             .then(validUrl => this._parseUrl(validUrl))
-            .then(uri => validate(uri, Joi.reach(dataSchema.models.pipeline.base, 'scmUri')));
+            .then(uri => validate(uri, dataSchema.models.pipeline.base.extract('scmUri')));
     }
 
     _parseUrl() {
@@ -431,13 +431,13 @@ class ScmBase {
             .then(jobList =>
                 validate(jobList, Joi.array().items(
                     Joi.object().keys({
-                        name: Joi.reach(dataSchema.models.job.base, 'name').required(),
+                        name: dataSchema.models.job.base.extract('name').required(),
                         ref: Joi.string().required(),
-                        username: Joi.reach(dataSchema.core.scm.pr, 'username'),
-                        title: Joi.reach(dataSchema.core.scm.pr, 'title'),
-                        createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime'),
-                        url: Joi.reach(dataSchema.core.scm.pr, 'url'),
-                        userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile')
+                        username: dataSchema.core.scm.pr.extract('username'),
+                        title: dataSchema.core.scm.pr.extract('title'),
+                        createTime: dataSchema.core.scm.pr.extract('createTime'),
+                        url: dataSchema.core.scm.pr.extract('url'),
+                        userProfile: dataSchema.core.scm.pr.extract('userProfile')
                     })
                 ))
             );
@@ -474,16 +474,16 @@ class ScmBase {
         return validate(config, dataSchema.plugins.scm.getCommitSha) // includes scmUri, token and scmContext
             .then(validConfig => this._getPrInfo(validConfig))
             .then(pr => validate(pr, Joi.object().keys({
-                name: Joi.reach(dataSchema.models.job.base, 'name').required(),
-                sha: Joi.reach(dataSchema.models.build.base, 'sha').required(),
+                name: dataSchema.models.job.base.extract('name').required(),
+                sha: dataSchema.models.build.base.extract('sha').required(),
                 ref: Joi.string().required(),
                 prBranchName: Joi.string().optional(),
-                username: Joi.reach(dataSchema.core.scm.user, 'username'),
-                title: Joi.reach(dataSchema.core.scm.pr, 'title'),
-                createTime: Joi.reach(dataSchema.core.scm.pr, 'createTime'),
-                url: Joi.reach(dataSchema.core.scm.pr, 'url'),
-                userProfile: Joi.reach(dataSchema.core.scm.pr, 'userProfile'),
-                baseBranch: Joi.reach(dataSchema.core.scm.pr, 'baseBranch'),
+                username: dataSchema.core.scm.user.extract('username'),
+                title: dataSchema.core.scm.pr.extract('title'),
+                createTime: dataSchema.core.scm.pr.extract('createTime'),
+                url: dataSchema.core.scm.pr.extract('url'),
+                userProfile: dataSchema.core.scm.pr.extract('userProfile'),
+                baseBranch: dataSchema.core.scm.pr.extract('baseBranch'),
                 mergeable: Joi.boolean().allow(null),
                 prSource: Joi.string().optional()
             })));
@@ -509,9 +509,9 @@ class ScmBase {
             .then(validConfig => this._addPrComment(validConfig))
             .then(prComment => validate(prComment, Joi.alternatives().try(
                 Joi.object().keys({
-                    commentId: Joi.reach(dataSchema.models.job.base, 'id').required(),
-                    createTime: Joi.reach(dataSchema.models.build.base, 'createTime').required(),
-                    username: Joi.reach(dataSchema.core.scm.user, 'username').required()
+                    commentId: dataSchema.models.job.base.extract('id').required(),
+                    createTime: dataSchema.models.build.base.extract('createTime').required(),
+                    username: dataSchema.core.scm.user.extract('username').required()
                 }),
                 Joi.string().allow(null)
             )));
@@ -538,9 +538,10 @@ class ScmBase {
      */
     getScmContexts() {
         const result = this._getScmContexts();
-        const validateResult = Joi.validate(result, Joi.array().items(
-            Joi.reach(dataSchema.models.pipeline.base, 'scmContext').required()
-        ));
+        const schema = Joi.array().items(
+            dataSchema.models.pipeline.base.extract('scmContext').required()
+        );
+        const validateResult = schema.validate(result);
 
         return validateResult.error || result;
     }
