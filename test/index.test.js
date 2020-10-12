@@ -1130,6 +1130,16 @@ describe('index test', () => {
         });
     });
 
+    describe('getWebhookEventsMapping', () => {
+        it('returns not implemented', () => {
+            try {
+                instance.getScmContexts();
+            } catch (err) {
+                assert.equal(err.message, 'Not implemented');
+            }
+        });
+    });
+
     describe('getBranchList', () => {
         const config = {
             scmUri: 'github.com:20180525:branch',
