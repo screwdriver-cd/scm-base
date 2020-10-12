@@ -63,6 +63,19 @@ class ScmBase {
     }
 
     /**
+     * Get the webhook events mapping of screwdriver events and scm events
+     * @method getWebhookEventsMapping
+     * @return {Object}     Returns a mapping of the events
+     */
+    getWebhookEventsMapping() {
+        return this._getWebhookEventsMapping();
+    }
+
+    _getWebhookEventsMapping() {
+        return new Error('Not implemented');
+    }
+
+    /**
      * Returns whether auto deploy key generation is enabled on or not
      * @method autoDeployKeyGenerationEnabled
      * @param  {Object}    config                   Configuration
