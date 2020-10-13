@@ -65,10 +65,12 @@ class ScmBase {
     /**
      * Get the webhook events mapping of screwdriver events and scm events
      * @method getWebhookEventsMapping
+     * @param  {Object}    config                   Configuration
+     * @param  {String}    [config.scmContext]      The scm context name
      * @return {Object}     Returns a mapping of the events
      */
-    getWebhookEventsMapping() {
-        return this._getWebhookEventsMapping();
+    getWebhookEventsMapping(config) {
+        return this._getWebhookEventsMapping(config);
     }
 
     _getWebhookEventsMapping() {
