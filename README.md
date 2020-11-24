@@ -1,5 +1,5 @@
 # Scm Base
-[![Version][npm-image]][npm-url] ![Downloads][downloads-image] [![Build Status][status-image]][status-url] [![Open Issues][issues-image]][issues-url] [![Dependency Status][daviddm-image]][daviddm-url] ![License][license-image]
+[![Version][npm-image]][npm-url] ![Downloads][downloads-image] [![Build Status][status-image]][status-url] [![Open Issues][issues-image]][issues-url] ![License][license-image]
 
 > Base class for defining the behavior between Screwdriver and source control management (SCM) systems
 
@@ -589,6 +589,4 @@ Code licensed under the BSD 3-Clause license. See LICENSE file for terms.
 [issues-url]: https://github.com/screwdriver-cd/screwdriver/issues
 [status-image]: https://cd.screwdriver.cd/pipelines/10/badge
 [status-url]: https://cd.screwdriver.cd/pipelines/10
-[daviddm-image]: https://david-dm.org/screwdriver-cd/scm-base.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/screwdriver-cd/scm-base
 [bell]: https://www.npmjs.com/package/bell
