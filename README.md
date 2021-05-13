@@ -508,6 +508,19 @@ The display name of scm context
 #### Expected Response
 1. The display name of scm context
 
+### readOnlyEnabled (overriding needs only the case of `scm-router`)
+The parameters required are:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| scmContext        | String | Whether the SCM is read-only or not (default: `false`) |
+
+#### Expected Outcome
+Whether SCM is read-only or not
+
+#### Expected Response
+1. Whether SCM is read-only or not
+
 ### openPr
 | Parameter          | Type  | Required | Description |
 | :-------------     | :---- | :------- | :-------------|

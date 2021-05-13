@@ -590,6 +590,15 @@ class ScmBase {
     }
 
     /**
+     * Whether SCM is read-only or not
+     * @method readOnlyEnabled
+     * @return {Boolean}
+     */
+    readOnlyEnabled() {
+        return this.config.readOnly || false;
+    }
+
+    /**
      * Get the branch list related to the repository
      * @method getBranchList
      * @param  {Object}     config              Configuration

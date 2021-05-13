@@ -1111,6 +1111,25 @@ describe('index test', () => {
         });
     });
 
+    describe('readOnlyEnabled', () => {
+        const config = {
+            readOnly: true
+        };
+
+        beforeEach(() => {
+            instance.configure(config);
+        });
+
+        it('returns false if no configuration', () => {
+            instance.configure({});
+            assert.equal(instance.readOnlyEnabled(), false);
+        });
+
+        it('returns actual boolean when set', () => {
+            assert.equal(instance.readOnlyEnabled(), true);
+        });
+    });
+
     describe('autoDeployKeyGenerationEnabled', () => {
         const config = {
             autoDeployKeyGeneration: true
@@ -1131,9 +1150,23 @@ describe('index test', () => {
     });
 
     describe('getWebhookEventsMapping', () => {
+        const webhookEventsMapping = {
+            pr: 'merge_requests_events',
+            commit: 'push_events'
+        };
+
+        it('returns data from underlying method', () => {
+            instance._getWebhookEventsMapping = () => Promise.resolve(webhookEventsMapping);
+
+            return instance.getWebhookEventsMapping()
+                .then((output) => {
+                    assert.deepEqual(output, webhookEventsMapping);
+                });
+        });
+
         it('returns not implemented', () => {
             try {
-                instance.getScmContexts();
+                instance.getWebhookEventsMapping({ scmContext: 'gitlab:gitlab.com' });
             } catch (err) {
                 assert.equal(err.message, 'Not implemented');
             }
