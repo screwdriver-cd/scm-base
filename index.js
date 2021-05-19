@@ -566,6 +566,26 @@ class ScmBase {
     }
 
     /**
+     * Get a scm context matching given hostname
+     * @method getScmContext
+     * @param  {Object} config
+     * @param  {String} config.hostname Scm hostname (e.g. github.com or GHE.com)
+     * @return {String}                 Returns scm context (e.g. github:github.com
+     *                                  or github:GHE.com)
+     */
+    getScmContext(config) {
+        const result = this._getScmContext(config);
+        const schema = dataSchema.models.pipeline.base.extract('scmContext').required();
+        const validateResult = schema.validate(result);
+
+        return validateResult.error || result;
+    }
+
+    _getScmContext() {
+        throw new Error('Not implemented');
+    }
+
+    /**
      * Determine a scm module can handle the received webhook
      * @method canHandleWebhook
      * @param  {Object}     headers     The request headers associated with the webhook payload

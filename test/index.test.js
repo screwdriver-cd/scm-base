@@ -1060,6 +1060,25 @@ describe('index test', () => {
         });
     });
 
+    describe('getScmContext', () => {
+        it('returns error when invalid output', () => {
+            instance._getScmContext = () => 'invalid';
+
+            const result = instance.getScmContext({ hostname: 'github.com' });
+
+            assert.instanceOf(result, Error);
+            assert.equal(result.name, 'ValidationError');
+        });
+
+        it('returns not implemented', () => {
+            try {
+                instance.getScmContext({ hostname: 'github.com' });
+            } catch (err) {
+                assert.equal(err.message, 'Not implemented');
+            }
+        });
+    });
+
     describe('canHandleWebhook', () => {
         const headers = {
             stuff: 'foo'
