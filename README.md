@@ -457,6 +457,20 @@ The object consisting of PR comment ID, create time, and username.
 2. Reject if the input or output is not valid
 
 ### getScmContexts
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | Yes | Configuration Object |
+| config.hostname | String | Yes | The scm host name (ex: `github.com`) |
+
+#### Expected Outcome
+The matching scm context name string (e.g. github:github.com)
+
+#### Expected Response
+1. The matching scm context name
+
+### getScmContext
 No parameters are required.
 
 #### Expected Outcome
@@ -559,11 +573,14 @@ To make use of the validation functions, the functions to override are:
 1. `_getBellConfiguration`
 1. `_getPrInfo`
 1. `stats` 
-1. `_getScmContexts` 
+1. `_getScmContexts`
+1. `_getScmContext`
 1. `_canHandleWebhook` 
 1. `_getBranchList`
 1. `_openPr`
-1. `getDisplayName` (overriding needs only the case of `scm-router`) 
+1. `getDisplayName` (overriding needs only the case of `scm-router`)
+1. `readOnlyEnabled` (overriding needs only the case of `scm-router`) 
+
 
 ```js
 class MyScm extends ScmBase {
