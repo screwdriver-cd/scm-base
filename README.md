@@ -522,6 +522,19 @@ The display name of scm context
 #### Expected Response
 1. The display name of scm context
 
+### getUsername (overriding needs only the case of `scm-router`)
+The parameters required are:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| scmContext        | String | The name of scm context |
+
+#### Expected Outcome
+The username of scm context
+
+#### Expected Response
+1. The username of scm context
+
 ### readOnlyEnabled (overriding needs only the case of `scm-router`)
 The parameters required are:
 
@@ -579,6 +592,7 @@ To make use of the validation functions, the functions to override are:
 1. `_getBranchList`
 1. `_openPr`
 1. `getDisplayName` (overriding needs only the case of `scm-router`)
+1. `getUsername` (overriding needs only the case of `scm-router`)
 1. `readOnlyEnabled` (overriding needs only the case of `scm-router`) 
 
 

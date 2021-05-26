@@ -610,6 +610,15 @@ class ScmBase {
     }
 
     /**
+     * Get a username of scm context
+     * @method getUsername
+     * @return {String}
+     */
+    getUsername() {
+        return this.config.username || '';
+    }
+
+    /**
      * Whether SCM is read-only or not
      * @method readOnlyEnabled
      * @return {Boolean}

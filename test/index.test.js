@@ -1130,6 +1130,25 @@ describe('index test', () => {
         });
     });
 
+    describe('getUsername', () => {
+        const config = {
+            username: 'sd-buildbot'
+        };
+
+        beforeEach(() => {
+            instance.configure(config);
+        });
+
+        it('returns empty display name if no configuration', () => {
+            instance.configure({});
+            assert.equal(instance.getUsername(), '');
+        });
+
+        it('returns valid display name', () => {
+            assert.equal(instance.getUsername(), 'sd-buildbot');
+        });
+    });
+
     describe('readOnlyEnabled', () => {
         const config = {
             readOnly: true
