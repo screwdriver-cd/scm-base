@@ -457,6 +457,15 @@ The object consisting of PR comment ID, create time, and username.
 2. Reject if the input or output is not valid
 
 ### getScmContexts
+No parameters are required.
+
+#### Expected Outcome
+The array of scm context names (e.g. [github:github.com, gitlab:my-gitlab])
+
+#### Expected Response
+1. The array of scm context names
+
+### getScmContext
 The parameters required are:
 
 | Parameter        | Type  | Required | Description |
@@ -469,15 +478,6 @@ The matching scm context name string (e.g. github:github.com)
 
 #### Expected Response
 1. The matching scm context name
-
-### getScmContext
-No parameters are required.
-
-#### Expected Outcome
-The array of scm context name (e.g. [github:github.com, gitlab:my-gitlab])
-
-#### Expected Response
-1. The array of scm context name
 
 ### canHandleWebhook
 The parameters required are:
