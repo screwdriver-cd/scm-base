@@ -235,11 +235,19 @@ class ScmBase {
             checkoutConfig.commitBranch = o.build.baseBranch;
         }
 
+        // Set parentConfig info
         if (o.configPipeline) {
             const parentConfig = { sha: o.configPipelineSha };
 
             [parentConfig.host, , parentConfig.branch] = o.configPipeline.scmUri.split(':');
             [parentConfig.org, parentConfig.repo] = o.configPipeline.scmRepo.name.split('/');
+
+            const readOnly = this.config.readOnly;
+
+            if (readOnly && Object.keys(readOnly).length !== 0) {
+                parentConfig.username = readOnly.username;
+                parentConfig.accessToken = readOnly.accessToken;
+            }
 
             checkoutConfig.parentConfig = parentConfig;
         }
@@ -610,21 +618,12 @@ class ScmBase {
     }
 
     /**
-     * Get a username of scm context
-     * @method getUsername
-     * @return {String}
+     * Get readOnly object
+     * @method getReadOnlyInfo
+     * @return {Object}
      */
-    getUsername() {
-        return this.config.username || '';
-    }
-
-    /**
-     * Whether SCM is read-only or not
-     * @method readOnlyEnabled
-     * @return {Boolean}
-     */
-    readOnlyEnabled() {
-        return this.config.readOnly || false;
+    getReadOnlyInfo() {
+        return this.config.readOnly || {};
     }
 
     /**

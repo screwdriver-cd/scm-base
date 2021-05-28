@@ -4,6 +4,11 @@
 const assert = require('chai').assert;
 const token = 'token';
 const testParseHook = require('./data/parseHookOutput.json');
+const readOnlyConfig = {
+    enabled: true,
+    username: 'headlessbot',
+    accessToken: 'sometoken'
+};
 
 describe('index test', () => {
     let instance;
@@ -14,7 +19,7 @@ describe('index test', () => {
         ScmBase = require('../index');
         /* eslint-enable global-require */
 
-        instance = new ScmBase({ foo: 'bar' });
+        instance = new ScmBase({ foo: 'bar', readOnly: readOnlyConfig });
     });
 
     afterEach(() => {
@@ -402,16 +407,18 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    scmContext: 'github:github.com',
+                    prRef: 'prRef',
                     prSource: 'branch',
                     prBranchName: 'prBranchName',
-                    prRef: 'prRef',
-                    scmContext: 'github:github.com',
                     parentConfig: {
-                        branch: 'master',
+                        sha: '54321',
                         host: 'github.com',
+                        branch: 'master',
                         org: 'screwdriver-cd',
                         repo: 'parent-to-guide',
-                        sha: '54321'
+                        username: 'headlessbot',
+                        accessToken: 'sometoken'
                     }
                 });
 
@@ -1130,28 +1137,9 @@ describe('index test', () => {
         });
     });
 
-    describe('getUsername', () => {
+    describe('getReadOnlyInfo', () => {
         const config = {
-            username: 'sd-buildbot'
-        };
-
-        beforeEach(() => {
-            instance.configure(config);
-        });
-
-        it('returns empty display name if no configuration', () => {
-            instance.configure({});
-            assert.equal(instance.getUsername(), '');
-        });
-
-        it('returns valid display name', () => {
-            assert.equal(instance.getUsername(), 'sd-buildbot');
-        });
-    });
-
-    describe('readOnlyEnabled', () => {
-        const config = {
-            readOnly: true
+            readOnly: readOnlyConfig
         };
 
         beforeEach(() => {
@@ -1160,11 +1148,11 @@ describe('index test', () => {
 
         it('returns false if no configuration', () => {
             instance.configure({});
-            assert.equal(instance.readOnlyEnabled(), false);
+            assert.deepEqual(instance.getReadOnlyInfo(), {});
         });
 
         it('returns actual boolean when set', () => {
-            assert.equal(instance.readOnlyEnabled(), true);
+            assert.deepEqual(instance.getReadOnlyInfo(), config.readOnly);
         });
     });
 
