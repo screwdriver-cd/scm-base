@@ -262,13 +262,6 @@ class ScmBase {
             [parentConfig.host, , parentConfig.branch] = o.configPipeline.scmUri.split(':');
             [parentConfig.org, parentConfig.repo] = o.configPipeline.scmRepo.name.split('/');
 
-            const readOnly = this.config.readOnly;
-
-            if (readOnly && Object.keys(readOnly).length !== 0) {
-                parentConfig.username = readOnly.username;
-                parentConfig.accessToken = readOnly.accessToken;
-            }
-
             checkoutConfig.parentConfig = parentConfig;
         }
 
