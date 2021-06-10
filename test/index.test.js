@@ -429,9 +429,7 @@ describe('index test', () => {
                         host: 'github.com',
                         branch: 'master',
                         org: 'screwdriver-cd',
-                        repo: 'parent-to-guide',
-                        username: 'headlessbot',
-                        accessToken: 'sometoken'
+                        repo: 'parent-to-guide'
                     }
                 });
 

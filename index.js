@@ -44,15 +44,14 @@ class ScmBase {
     /**
      * Set token correctly if is read-only SCM
      * @param  {Object} config
-     * @param  {String} [token]   SCM token
      * @return {Object}           Config with proper token
      */
     getConfig(config) {
         const newConfig = config;
-        const readOnlyToken = Hoek.reach(this.config, 'readOnly.accessToken');
+        const { accessToken, enabled } = Hoek.reach(this.config, 'readOnly', { default: {} });
 
-        if (newConfig && Hoek.reach(this.config, 'readOnly.enabled') && readOnlyToken) {
-            newConfig.token = readOnlyToken;
+        if (newConfig && enabled && accessToken) {
+            newConfig.token = accessToken;
 
             return newConfig;
         }
