@@ -46,7 +46,8 @@
     "nyc": "^15.0.0"
   },
   "dependencies": {
+    "@hapi/hoek": "^9.1.0",
     "joi": "^17.2.0",
-    "screwdriver-data-schema": "^21.0.0"
+    "screwdriver-data-schema": "^21.3.1"
   }
 }

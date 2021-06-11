@@ -460,10 +460,24 @@ The object consisting of PR comment ID, create time, and username.
 No parameters are required.
 
 #### Expected Outcome
-The array of scm context name (e.g. [github:github.com, gitlab:my-gitlab])
+The array of scm context names (e.g. [github:github.com, gitlab:my-gitlab])
 
 #### Expected Response
-1. The array of scm context name
+1. The array of scm context names
+
+### getScmContext
+The parameters required are:
+
+| Parameter        | Type  | Required | Description |
+| :-------------   | :---- | :------- | :-------------|
+| config        | Object | Yes | Configuration Object |
+| config.hostname | String | Yes | The scm host name (ex: `github.com`) |
+
+#### Expected Outcome
+The matching scm context name string (e.g. github:github.com)
+
+#### Expected Response
+1. The matching scm context name
 
 ### canHandleWebhook
 The parameters required are:
@@ -508,6 +522,19 @@ The display name of scm context
 #### Expected Response
 1. The display name of scm context
 
+### getReadOnlyInfo (overriding needs only the case of `scm-router`)
+The parameters required are:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| scmContext        | String | The name of scm context |
+
+#### Expected Outcome
+Read-only SCM config
+
+#### Expected Response
+1. Read-only SCM config
+
 ### openPr
 | Parameter          | Type  | Required | Description |
 | :-------------     | :---- | :------- | :-------------|
@@ -546,11 +573,14 @@ To make use of the validation functions, the functions to override are:
 1. `_getBellConfiguration`
 1. `_getPrInfo`
 1. `stats` 
-1. `_getScmContexts` 
+1. `_getScmContexts`
+1. `_getScmContext`
 1. `_canHandleWebhook` 
 1. `_getBranchList`
 1. `_openPr`
-1. `getDisplayName` (overriding needs only the case of `scm-router`) 
+1. `getDisplayName` (overriding needs only the case of `scm-router`)
+1. `getReadOnlyInfo` (overriding needs only the case of `scm-router`) 
+
 
 ```js
 class MyScm extends ScmBase {

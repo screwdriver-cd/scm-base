@@ -4,6 +4,11 @@
 const assert = require('chai').assert;
 const token = 'token';
 const testParseHook = require('./data/parseHookOutput.json');
+const readOnlyConfig = {
+    enabled: true,
+    username: 'headlessbot',
+    accessToken: 'sometoken'
+};
 
 describe('index test', () => {
     let instance;
@@ -14,7 +19,7 @@ describe('index test', () => {
         ScmBase = require('../index');
         /* eslint-enable global-require */
 
-        instance = new ScmBase({ foo: 'bar' });
+        instance = new ScmBase({ foo: 'bar', readOnly: readOnlyConfig });
     });
 
     afterEach(() => {
@@ -79,6 +84,18 @@ describe('index test', () => {
     describe('addDeployKey', () => {
         const privKey = 'fakePrivateKey';
         const checkoutUrl = 'git@github.com:screwdriver-cd/data-model.git#master';
+        const config = { token, checkoutUrl };
+
+        it('returns error when invalid config object', () =>
+            instance.addDeployKey({})
+                .then(() => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
+                    assert.instanceOf(err, Error);
+                    assert.equal(err.name, 'ValidationError');
+                })
+        );
 
         it('returns data from underlying method', () => {
             instance._addDeployKey = () => Promise.resolve(privKey);
@@ -90,10 +107,11 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.addDeployKey({ token, checkoutUrl })
+            instance.addDeployKey(config)
                 .then(() => {
-                    assert.fail('This should not fail the test');
-                }, (err) => {
+                    assert.fail('you will never get dis');
+                })
+                .catch((err) => {
                     assert.equal(err.message, 'Not implemented');
                 })
         );
@@ -402,16 +420,16 @@ describe('index test', () => {
                     org: 'screwdriver-cd',
                     repo: 'guide',
                     sha: '12345',
+                    scmContext: 'github:github.com',
+                    prRef: 'prRef',
                     prSource: 'branch',
                     prBranchName: 'prBranchName',
-                    prRef: 'prRef',
-                    scmContext: 'github:github.com',
                     parentConfig: {
-                        branch: 'master',
+                        sha: '54321',
                         host: 'github.com',
+                        branch: 'master',
                         org: 'screwdriver-cd',
-                        repo: 'parent-to-guide',
-                        sha: '54321'
+                        repo: 'parent-to-guide'
                     }
                 });
 
@@ -565,11 +583,18 @@ describe('index test', () => {
     });
 
     describe('getPermissons', () => {
-        const config = {
+        const permConfig = {
             scmUri: 'github.com:repoId:branch',
             token,
             scmContext: 'github:github.com'
         };
+        const config = {
+            readOnly: readOnlyConfig
+        };
+
+        beforeEach(() => {
+            instance.configure(config);
+        });
 
         it('returns error when invalid config object', () =>
             instance.getPermissions({})
@@ -587,7 +612,7 @@ describe('index test', () => {
                 invalid: 'object'
             });
 
-            return instance.getPermissions(config)
+            return instance.getPermissions(permConfig)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -597,15 +622,28 @@ describe('index test', () => {
                 });
         });
 
-        it('returns not implemented', () =>
-            instance.getPermissions(config)
+        it('returns true permissions for read-only SCM', () =>
+            instance.getPermissions(permConfig)
+                .then((result) => {
+                    assert.deepEqual(result, {
+                        admin: true,
+                        push: true,
+                        pull: true
+                    });
+                })
+        );
+
+        it('returns not implemented', () => {
+            instance.configure({});
+
+            return instance.getPermissions(permConfig)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
                 .catch((err) => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                });
+        });
     });
 
     describe('getOrgPermissions', () => {
@@ -1060,6 +1098,25 @@ describe('index test', () => {
         });
     });
 
+    describe('getScmContext', () => {
+        it('returns error when invalid output', () => {
+            instance._getScmContext = () => 'invalid';
+
+            const result = instance.getScmContext({ hostname: 'github.com' });
+
+            assert.instanceOf(result, Error);
+            assert.equal(result.name, 'ValidationError');
+        });
+
+        it('returns not implemented', () => {
+            try {
+                instance.getScmContext({ hostname: 'github.com' });
+            } catch (err) {
+                assert.equal(err.message, 'Not implemented');
+            }
+        });
+    });
+
     describe('canHandleWebhook', () => {
         const headers = {
             stuff: 'foo'
@@ -1111,6 +1168,25 @@ describe('index test', () => {
         });
     });
 
+    describe('getReadOnlyInfo', () => {
+        const config = {
+            readOnly: readOnlyConfig
+        };
+
+        beforeEach(() => {
+            instance.configure(config);
+        });
+
+        it('returns false if no configuration', () => {
+            instance.configure({});
+            assert.deepEqual(instance.getReadOnlyInfo(), {});
+        });
+
+        it('returns actual boolean when set', () => {
+            assert.deepEqual(instance.getReadOnlyInfo(), config.readOnly);
+        });
+    });
+
     describe('autoDeployKeyGenerationEnabled', () => {
         const config = {
             autoDeployKeyGeneration: true
@@ -1131,9 +1207,23 @@ describe('index test', () => {
     });
 
     describe('getWebhookEventsMapping', () => {
+        const webhookEventsMapping = {
+            pr: 'merge_requests_events',
+            commit: 'push_events'
+        };
+
+        it('returns data from underlying method', () => {
+            instance._getWebhookEventsMapping = () => Promise.resolve(webhookEventsMapping);
+
+            return instance.getWebhookEventsMapping()
+                .then((output) => {
+                    assert.deepEqual(output, webhookEventsMapping);
+                });
+        });
+
         it('returns not implemented', () => {
             try {
-                instance.getScmContexts();
+                instance.getWebhookEventsMapping({ scmContext: 'gitlab:gitlab.com' });
             } catch (err) {
                 assert.equal(err.message, 'Not implemented');
             }
