@@ -42,16 +42,22 @@ class ScmBase {
     }
 
     /**
-     * Set token correctly if is read-only SCM
-     * @param  {Object} config
+     * Set token and username correctly if is read-only SCM
+     * @param  {Object} config    Config to be passed into scm plugin
      * @return {Object}           Config with proper token
      */
     getConfig(config) {
         const newConfig = config;
-        const { accessToken, enabled } = Hoek.reach(this.config, 'readOnly', { default: {} });
+        const { accessToken, enabled, username } =
+            Hoek.reach(this.config, 'readOnly', { default: {} });
 
-        if (newConfig && enabled && accessToken) {
-            newConfig.token = accessToken;
+        if (newConfig && enabled) {
+            if (newConfig.token && accessToken) {
+                newConfig.token = accessToken;
+            }
+            if (newConfig.username && username) {
+                newConfig.username = username;
+            }
 
             return newConfig;
         }
