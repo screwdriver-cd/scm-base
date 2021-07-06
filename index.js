@@ -48,8 +48,7 @@ class ScmBase {
      */
     getConfig(config) {
         const newConfig = config;
-        const { accessToken, enabled, username } =
-            Hoek.reach(this.config, 'readOnly', { default: {} });
+        const { accessToken, enabled, username } = Hoek.reach(this.config, 'readOnly', { default: {} });
 
         if (newConfig && enabled) {
             if (newConfig.token && accessToken) {
@@ -79,8 +78,7 @@ class ScmBase {
      * @return {Promise}                            Resolves when operation completed without failure
      */
     addWebhook(config) {
-        return validate(config, dataSchema.plugins.scm.addWebhook)
-            .then(() => this._addWebhook(this.getConfig(config)));
+        return validate(config, dataSchema.plugins.scm.addWebhook).then(() => this._addWebhook(this.getConfig(config)));
     }
 
     _addWebhook() {
@@ -123,8 +121,9 @@ class ScmBase {
      * @return {Promise}
      */
     addDeployKey(config) {
-        return validate(config, dataSchema.plugins.scm.addDeployKey)
-            .then(() => this._addDeployKey(this.getConfig(config)));
+        return validate(config, dataSchema.plugins.scm.addDeployKey).then(() =>
+            this._addDeployKey(this.getConfig(config))
+        );
     }
 
     _addDeployKey() {
@@ -159,8 +158,7 @@ class ScmBase {
      * @return {Promise}
      */
     parseHook(headers, payload) {
-        return this._parseHook(headers, payload)
-            .then(hook => validate(hook, dataSchema.plugins.scm.parseHookOutput));
+        return this._parseHook(headers, payload).then(hook => validate(hook, dataSchema.plugins.scm.parseHookOutput));
     }
 
     _parseHook() {
@@ -180,8 +178,7 @@ class ScmBase {
     getChangedFiles(config) {
         return validate(config, dataSchema.plugins.scm.getChangedFilesInput)
             .then(validInput => this._getChangedFiles(this.getConfig(validInput)))
-            .then(changedFiles => validate(changedFiles,
-                dataSchema.plugins.scm.getChangedFilesOutput));
+            .then(changedFiles => validate(changedFiles, dataSchema.plugins.scm.getChangedFilesOutput));
     }
 
     _getChangedFiles() {
@@ -206,8 +203,7 @@ class ScmBase {
     getCheckoutCommand(config) {
         return validate(config, dataSchema.plugins.scm.getCheckoutCommand)
             .then(validCheckout => this._getCheckoutCommand(validCheckout))
-            .then(checkoutCommand => validate(checkoutCommand,
-                dataSchema.core.scm.command));
+            .then(checkoutCommand => validate(checkoutCommand, dataSchema.core.scm.command));
     }
 
     _getCheckoutCommand() {
@@ -248,7 +244,7 @@ class ScmBase {
             if (match !== null) {
                 // Overwrite base branch by pr specific branch if specified.
                 // prRef needs to be merged into the branch specified in startFrom not main branch.
-                checkoutConfig.branch = match[1];
+                [, checkoutConfig.branch] = match;
             }
             checkoutConfig.prSource = o.build.prSource;
             if (o.build.prInfo) {
@@ -347,18 +343,17 @@ class ScmBase {
      * @return {Promise}
      */
     getPermissions(config) {
-        return validate(config, dataSchema.plugins.scm.getPermissions)
-            .then((validConfig) => {
-                if (Hoek.reach(this.config, 'readOnly.enabled')) {
-                    return Promise.resolve({
-                        admin: true,
-                        push: true,
-                        pull: true
-                    });
-                }
+        return validate(config, dataSchema.plugins.scm.getPermissions).then(validConfig => {
+            if (Hoek.reach(this.config, 'readOnly.enabled')) {
+                return Promise.resolve({
+                    admin: true,
+                    push: true,
+                    pull: true
+                });
+            }
 
-                return this._getPermissions(validConfig);
-            });
+            return this._getPermissions(validConfig);
+        });
     }
 
     _getPermissions() {
@@ -376,12 +371,13 @@ class ScmBase {
      * @return {Promise}
      */
     getOrgPermissions(config) {
-        return validate(config, dataSchema.plugins.scm.getOrgPermissions)
-            .then(validConfig => this._getOrgPermissions(this.getConfig(validConfig)));
+        return validate(config, dataSchema.plugins.scm.getOrgPermissions).then(validConfig =>
+            this._getOrgPermissions(this.getConfig(validConfig))
+        );
     }
 
     _getOrgPermissions() {
-        return Promise.reject('Not implemented');
+        return Promise.reject(new Error('Not implemented'));
     }
 
     /**
@@ -395,8 +391,9 @@ class ScmBase {
      * @return {Promise}
      */
     getCommitSha(config) {
-        return validate(config, dataSchema.plugins.scm.getCommitSha)
-            .then(validConfig => this._getCommitSha(this.getConfig(validConfig)));
+        return validate(config, dataSchema.plugins.scm.getCommitSha).then(validConfig =>
+            this._getCommitSha(this.getConfig(validConfig))
+        );
     }
 
     _getCommitSha() {
@@ -415,8 +412,9 @@ class ScmBase {
      * @return {Promise}                       Resolves to the commit sha
      */
     getCommitRefSha(config) {
-        return validate(config, dataSchema.plugins.scm.getCommitRefSha)
-            .then(validConfig => this._getCommitRefSha(this.getConfig(validConfig)));
+        return validate(config, dataSchema.plugins.scm.getCommitRefSha).then(validConfig =>
+            this._getCommitRefSha(this.getConfig(validConfig))
+        );
     }
 
     _getCommitRefSha() {
@@ -440,8 +438,9 @@ class ScmBase {
      * @return {Promise}
      */
     updateCommitStatus(config) {
-        return validate(config, dataSchema.plugins.scm.updateCommitStatus)
-            .then(validConfig => this._updateCommitStatus(this.getConfig(validConfig)));
+        return validate(config, dataSchema.plugins.scm.updateCommitStatus).then(validConfig =>
+            this._updateCommitStatus(this.getConfig(validConfig))
+        );
     }
 
     _updateCommitStatus() {
@@ -459,8 +458,9 @@ class ScmBase {
      * @return {Promise}
      */
     getFile(config) {
-        return validate(config, dataSchema.plugins.scm.getFile)
-            .then(validConfig => this._getFile(this.getConfig(validConfig)));
+        return validate(config, dataSchema.plugins.scm.getFile).then(validConfig =>
+            this._getFile(this.getConfig(validConfig))
+        );
     }
 
     _getFile() {
@@ -480,17 +480,20 @@ class ScmBase {
         return validate(config, dataSchema.plugins.scm.getCommitSha) // includes scmUri, token and scmContext
             .then(validConfig => this._getOpenedPRs(this.getConfig(validConfig)))
             .then(jobList =>
-                validate(jobList, Joi.array().items(
-                    Joi.object().keys({
-                        name: dataSchema.models.job.base.extract('name').required(),
-                        ref: Joi.string().required(),
-                        username: dataSchema.core.scm.pr.extract('username'),
-                        title: dataSchema.core.scm.pr.extract('title'),
-                        createTime: dataSchema.core.scm.pr.extract('createTime'),
-                        url: dataSchema.core.scm.pr.extract('url'),
-                        userProfile: dataSchema.core.scm.pr.extract('userProfile')
-                    })
-                ))
+                validate(
+                    jobList,
+                    Joi.array().items(
+                        Joi.object().keys({
+                            name: dataSchema.models.job.base.extract('name').required(),
+                            ref: Joi.string().required(),
+                            username: dataSchema.core.scm.pr.extract('username'),
+                            title: dataSchema.core.scm.pr.extract('title'),
+                            createTime: dataSchema.core.scm.pr.extract('createTime'),
+                            url: dataSchema.core.scm.pr.extract('url'),
+                            userProfile: dataSchema.core.scm.pr.extract('userProfile')
+                        })
+                    )
+                )
             );
     }
 
@@ -524,20 +527,25 @@ class ScmBase {
     getPrInfo(config) {
         return validate(config, dataSchema.plugins.scm.getCommitSha) // includes scmUri, token and scmContext
             .then(validConfig => this._getPrInfo(this.getConfig(validConfig)))
-            .then(pr => validate(pr, Joi.object().keys({
-                name: dataSchema.models.job.base.extract('name').required(),
-                sha: dataSchema.models.build.base.extract('sha').required(),
-                ref: Joi.string().required(),
-                prBranchName: Joi.string().optional(),
-                username: dataSchema.core.scm.user.extract('username'),
-                title: dataSchema.core.scm.pr.extract('title'),
-                createTime: dataSchema.core.scm.pr.extract('createTime'),
-                url: dataSchema.core.scm.pr.extract('url'),
-                userProfile: dataSchema.core.scm.pr.extract('userProfile'),
-                baseBranch: dataSchema.core.scm.pr.extract('baseBranch'),
-                mergeable: Joi.boolean().allow(null),
-                prSource: Joi.string().optional()
-            })));
+            .then(pr =>
+                validate(
+                    pr,
+                    Joi.object().keys({
+                        name: dataSchema.models.job.base.extract('name').required(),
+                        sha: dataSchema.models.build.base.extract('sha').required(),
+                        ref: Joi.string().required(),
+                        prBranchName: Joi.string().optional(),
+                        username: dataSchema.core.scm.user.extract('username'),
+                        title: dataSchema.core.scm.pr.extract('title'),
+                        createTime: dataSchema.core.scm.pr.extract('createTime'),
+                        url: dataSchema.core.scm.pr.extract('url'),
+                        userProfile: dataSchema.core.scm.pr.extract('userProfile'),
+                        baseBranch: dataSchema.core.scm.pr.extract('baseBranch'),
+                        mergeable: Joi.boolean().allow(null),
+                        prSource: Joi.string().optional()
+                    })
+                )
+            );
     }
 
     _getPrInfo() {
@@ -558,14 +566,19 @@ class ScmBase {
     addPrComment(config) {
         return validate(config, dataSchema.plugins.scm.addPrComment) // includes scmUri, token and scmContext
             .then(validConfig => this._addPrComment(this.getConfig(validConfig)))
-            .then(prComment => validate(prComment, Joi.alternatives().try(
-                Joi.object().keys({
-                    commentId: dataSchema.models.job.base.extract('id').required(),
-                    createTime: dataSchema.models.build.base.extract('createTime').required(),
-                    username: dataSchema.core.scm.user.extract('username').required()
-                }),
-                Joi.string().allow(null)
-            )));
+            .then(prComment =>
+                validate(
+                    prComment,
+                    Joi.alternatives().try(
+                        Joi.object().keys({
+                            commentId: dataSchema.models.job.base.extract('id').required(),
+                            createTime: dataSchema.models.build.base.extract('createTime').required(),
+                            username: dataSchema.core.scm.user.extract('username').required()
+                        }),
+                        Joi.string().allow(null)
+                    )
+                )
+            );
     }
 
     // Default to not fail since we will always call it in models
@@ -589,9 +602,7 @@ class ScmBase {
      */
     getScmContexts() {
         const result = this._getScmContexts();
-        const schema = Joi.array().items(
-            dataSchema.models.pipeline.base.extract('scmContext').required()
-        );
+        const schema = Joi.array().items(dataSchema.models.pipeline.base.extract('scmContext').required());
         const validateResult = schema.validate(result);
 
         return validateResult.error || result;
@@ -664,8 +675,9 @@ class ScmBase {
      * @return {Promise}
      */
     getBranchList(config) {
-        return validate(config, dataSchema.plugins.scm.getBranchList)
-            .then(() => this._getBranchList(this.getConfig(config)));
+        return validate(config, dataSchema.plugins.scm.getBranchList).then(() =>
+            this._getBranchList(this.getConfig(config))
+        );
     }
 
     _getBranchList() {
@@ -686,8 +698,7 @@ class ScmBase {
      * @return {Promise}                            Resolves when operation completed without failure
      */
     openPr(config) {
-        return validate(config, dataSchema.plugins.scm.openPr)
-            .then(() => this._openPr(this.getConfig(config)));
+        return validate(config, dataSchema.plugins.scm.openPr).then(() => this._openPr(this.getConfig(config)));
     }
 
     _openPr() {
