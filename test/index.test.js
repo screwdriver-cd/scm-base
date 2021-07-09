@@ -1,7 +1,7 @@
 'use strict';
 
 /* eslint-disable no-underscore-dangle */
-const assert = require('chai').assert;
+const { assert } = require('chai');
 const token = 'token';
 const testParseHook = require('./data/parseHookOutput.json');
 const readOnlyConfig = {
@@ -45,40 +45,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.parseUrl({})
+            instance
+                .parseUrl({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._parseUrl = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._parseUrl = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.parseUrl(config)
+            return instance
+                .parseUrl(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.parseUrl(config)
+            instance
+                .parseUrl(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('addDeployKey', () => {
@@ -87,34 +89,33 @@ describe('index test', () => {
         const config = { token, checkoutUrl };
 
         it('returns error when invalid config object', () =>
-            instance.addDeployKey({})
+            instance
+                .addDeployKey({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns data from underlying method', () => {
             instance._addDeployKey = () => Promise.resolve(privKey);
 
-            return instance.addDeployKey()
-                .then((output) => {
-                    assert.isString(output, privKey);
-                });
+            return instance.addDeployKey().then(output => {
+                assert.isString(output, privKey);
+            });
         });
 
         it('returns not implemented', () =>
-            instance.addDeployKey(config)
+            instance
+                .addDeployKey(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('parseHook', () => {
@@ -128,20 +129,20 @@ describe('index test', () => {
         it('returns data from underlying method', () => {
             instance._parseHook = () => Promise.resolve(testParseHook);
 
-            return instance.parseHook()
-                .then((output) => {
-                    assert.deepEqual(output, testParseHook);
-                });
+            return instance.parseHook().then(output => {
+                assert.deepEqual(output, testParseHook);
+            });
         });
 
         it('returns not implemented', () =>
-            instance.parseHook(headers, payload)
-                .then(() => {
+            instance.parseHook(headers, payload).then(
+                () => {
                     assert.fail('This should not fail the test');
-                }, (err) => {
+                },
+                err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }
+            ));
     });
 
     describe('getChangedFiles', () => {
@@ -151,43 +152,39 @@ describe('index test', () => {
         };
 
         it('returns data from underlying method', () => {
-            instance.getChangedFiles = () => Promise.resolve([
-                'README.md',
-                'folder/screwdriver.yaml'
-            ]);
+            instance.getChangedFiles = () => Promise.resolve(['README.md', 'folder/screwdriver.yaml']);
 
-            return instance.getChangedFiles()
-                .then((output) => {
-                    assert.deepEqual(output, [
-                        'README.md',
-                        'folder/screwdriver.yaml'
-                    ]);
-                });
+            return instance.getChangedFiles().then(output => {
+                assert.deepEqual(output, ['README.md', 'folder/screwdriver.yaml']);
+            });
         });
 
         it('returns error when invalid output', () => {
-            instance._getChangedFiles = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getChangedFiles = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getChangedFiles({ type, payload, token })
+            return instance
+                .getChangedFiles({ type, payload, token })
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.getChangedFiles({ type, payload, token })
-                .then(() => {
+            instance.getChangedFiles({ type, payload, token }).then(
+                () => {
                     assert.fail('This should not fail the test');
-                }, (err) => {
+                },
+                err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }
+            ));
     });
 
     describe('getCheckoutCommand', () => {
@@ -201,40 +198,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.getCheckoutCommand({})
+            instance
+                .getCheckoutCommand({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._getCheckoutCommand = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getCheckoutCommand = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getCheckoutCommand(config)
+            return instance
+                .getCheckoutCommand(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.getCheckoutCommand(config)
+            instance
+                .getCheckoutCommand(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('getSetupCommand', () => {
@@ -262,7 +261,7 @@ describe('index test', () => {
         });
 
         it('returns a command', () => {
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'branch',
                     host: 'github.com',
@@ -278,15 +277,14 @@ describe('index test', () => {
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
             };
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
 
         it('returns a command when rootDir exists', () => {
             config.pipeline.scmUri = 'github.com:12344567:branch:src/app/component';
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'branch',
                     host: 'github.com',
@@ -303,14 +301,13 @@ describe('index test', () => {
                 return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
             };
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
 
         it('returns a command for pr', () => {
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'branch',
                     host: 'github.com',
@@ -327,14 +324,13 @@ describe('index test', () => {
             };
             config.build.prRef = 'abcd';
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
 
         it('returns a command for pr branch specific build', () => {
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'prSpecificBranch',
                     host: 'github.com',
@@ -352,14 +348,13 @@ describe('index test', () => {
             config.build.prRef = 'abcd';
             config.build.startFrom = '~pr:prSpecificBranch';
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
 
         it('returns a command for manifest', () => {
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'branch',
                     host: 'github.com',
@@ -381,14 +376,13 @@ describe('index test', () => {
                 }
             };
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
 
         it('returns a command for commit branch', () => {
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'branch',
                     host: 'github.com',
@@ -406,14 +400,13 @@ describe('index test', () => {
             };
             config.build.baseBranch = 'cm-branch';
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
 
         it('returns a command for parent config', () => {
-            instance._getCheckoutCommand = (o) => {
+            instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {
                     branch: 'branch',
                     host: 'github.com',
@@ -442,10 +435,9 @@ describe('index test', () => {
             };
             config.configPipelineSha = '54321';
 
-            return instance.getSetupCommand(config)
-                .then((command) => {
-                    assert.equal(command, 'stuff');
-                });
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
         });
     });
 
@@ -457,40 +449,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.decorateUrl({})
+            instance
+                .decorateUrl({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._decorateUrl = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._decorateUrl = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.decorateUrl(config)
+            return instance
+                .decorateUrl(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.decorateUrl(config)
+            instance
+                .decorateUrl(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('decorateCommit', () => {
@@ -502,40 +496,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.decorateCommit({})
+            instance
+                .decorateCommit({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._decorateCommit = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._decorateCommit = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.decorateCommit(config)
+            return instance
+                .decorateCommit(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.decorateCommit(config)
+            instance
+                .decorateCommit(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('decorateAuthor', () => {
@@ -546,40 +542,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.decorateAuthor({})
+            instance
+                .decorateAuthor({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._decorateAuthor = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._decorateAuthor = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.decorateAuthor(config)
+            return instance
+                .decorateAuthor(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.decorateAuthor(config)
+            instance
+                .decorateAuthor(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('getPermissons', () => {
@@ -597,50 +595,51 @@ describe('index test', () => {
         });
 
         it('returns error when invalid config object', () =>
-            instance.getPermissions({})
+            instance
+                .getPermissions({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._getPermissions = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getPermissions = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getPermissions(permConfig)
+            return instance
+                .getPermissions(permConfig)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'AssertionError');
                 });
         });
 
         it('returns true permissions for read-only SCM', () =>
-            instance.getPermissions(permConfig)
-                .then((result) => {
-                    assert.deepEqual(result, {
-                        admin: true,
-                        push: true,
-                        pull: true
-                    });
-                })
-        );
+            instance.getPermissions(permConfig).then(result => {
+                assert.deepEqual(result, {
+                    admin: true,
+                    push: true,
+                    pull: true
+                });
+            }));
 
         it('returns not implemented', () => {
             instance.configure({});
 
-            return instance.getPermissions(permConfig)
+            return instance
+                .getPermissions(permConfig)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
                 });
         });
@@ -655,40 +654,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.getOrgPermissions({})
+            instance
+                .getOrgPermissions({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._getOrgPermissions = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getOrgPermissions = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getOrgPermissions(config)
+            return instance
+                .getOrgPermissions(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'AssertionError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.getOrgPermissions(config)
+            instance
+                .getOrgPermissions(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
-                    assert.equal(err, 'Not implemented');
-                })
-        );
+                .catch(err => {
+                    assert.equal(err.message, 'Not implemented');
+                }));
     });
 
     describe('getCommitSha', () => {
@@ -699,40 +700,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.getCommitSha({})
+            instance
+                .getCommitSha({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._getCommitSha = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getCommitSha = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getCommitSha(config)
+            return instance
+                .getCommitSha(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'AssertionError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.getCommitSha(config)
+            instance
+                .getCommitSha(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('getCommitRefSha', () => {
@@ -746,40 +749,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.getCommitRefSha({})
+            instance
+                .getCommitRefSha({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._getCommitRefSha = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getCommitRefSha = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getCommitRefSha(config)
+            return instance
+                .getCommitRefSha(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'AssertionError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.getCommitRefSha(config)
+            instance
+                .getCommitRefSha(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
     describe('updateCommitStatus', () => {
         const config = {
@@ -793,40 +798,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.updateCommitStatus({})
+            instance
+                .updateCommitStatus({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._updateCommitStatus = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._updateCommitStatus = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.updateCommitStatus(config)
+            return instance
+                .updateCommitStatus(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'AssertionError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.updateCommitStatus(config)
+            instance
+                .updateCommitStatus(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('stats', () => {
@@ -844,40 +851,42 @@ describe('index test', () => {
         };
 
         it('returns error when invalid config object', () =>
-            instance.getFile({})
+            instance
+                .getFile({})
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'ValidationError');
-                })
-        );
+                }));
 
         it('returns error when invalid output', () => {
-            instance._getFile = () => Promise.resolve({
-                invalid: 'object'
-            });
+            instance._getFile = () =>
+                Promise.resolve({
+                    invalid: 'object'
+                });
 
-            return instance.getFile(config)
+            return instance
+                .getFile(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.instanceOf(err, Error);
                     assert.equal(err.name, 'AssertionError');
                 });
         });
 
         it('returns not implemented', () =>
-            instance.getFile(config)
+            instance
+                .getFile(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('getOpenedPRs', () => {
@@ -888,80 +897,83 @@ describe('index test', () => {
         };
 
         it('returns error when invalid input', () =>
-            instance.getOpenedPRs({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
+            instance.getOpenedPRs({}).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            }));
 
         it('returns error when invalid output', () => {
-            instance._getOpenedPRs = () => Promise.resolve({
-                invalid: 'stuff'
-            });
-
-            return instance.getOpenedPRs(config)
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
+            instance._getOpenedPRs = () =>
+                Promise.resolve({
+                    invalid: 'stuff'
                 });
+
+            return instance.getOpenedPRs(config).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            });
         });
 
         it('returns not implemented', () =>
-            instance.getOpenedPRs(config)
-                .then(assert.fail, (err) => {
-                    assert.equal(err.message, 'Not implemented');
-                })
-        );
+            instance.getOpenedPRs(config).then(assert.fail, err => {
+                assert.equal(err.message, 'Not implemented');
+            }));
 
         it('returns job list when no errors', () => {
-            instance._getOpenedPRs = () => Promise.resolve([{
-                name: 'PR-1',
-                ref: 'pull/1/merge',
-                title: 'Test ref abc',
-                username: 'janedoe',
-                createTime: '2018-10-10T21:35:31Z',
-                url: 'https://example.com/pr-1',
-                userProfile: 'https://example.com/janedoe'
-            }]);
+            instance._getOpenedPRs = () =>
+                Promise.resolve([
+                    {
+                        name: 'PR-1',
+                        ref: 'pull/1/merge',
+                        title: 'Test ref abc',
+                        username: 'janedoe',
+                        createTime: '2018-10-10T21:35:31Z',
+                        url: 'https://example.com/pr-1',
+                        userProfile: 'https://example.com/janedoe'
+                    }
+                ]);
 
             return instance.getOpenedPRs(config).then(
-                jobs => assert.deepEqual(jobs, [{
-                    name: 'PR-1',
-                    ref: 'pull/1/merge',
-                    title: 'Test ref abc',
-                    username: 'janedoe',
-                    createTime: '2018-10-10T21:35:31Z',
-                    url: 'https://example.com/pr-1',
-                    userProfile: 'https://example.com/janedoe'
-                }]),
-                assert.fail);
+                jobs =>
+                    assert.deepEqual(jobs, [
+                        {
+                            name: 'PR-1',
+                            ref: 'pull/1/merge',
+                            title: 'Test ref abc',
+                            username: 'janedoe',
+                            createTime: '2018-10-10T21:35:31Z',
+                            url: 'https://example.com/pr-1',
+                            userProfile: 'https://example.com/janedoe'
+                        }
+                    ]),
+                assert.fail
+            );
         });
     });
 
     describe('getBellConfiguration', () => {
         it('returns data from underlying method', () => {
-            instance._getBellConfiguration = () => Promise.resolve({
-                real: 'config'
-            });
-
-            return instance.getBellConfiguration()
-                .then((output) => {
-                    assert.deepEqual(output, {
-                        real: 'config'
-                    });
+            instance._getBellConfiguration = () =>
+                Promise.resolve({
+                    real: 'config'
                 });
+
+            return instance.getBellConfiguration().then(output => {
+                assert.deepEqual(output, {
+                    real: 'config'
+                });
+            });
         });
 
         it('returns not implemented', () =>
-            instance.getBellConfiguration()
+            instance
+                .getBellConfiguration()
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('addWebhook', () => {
@@ -977,30 +989,28 @@ describe('index test', () => {
 
             instance._addWebhook = () => Promise.resolve(expectedOutput);
 
-            return instance.addWebhook({
-                scmUri: 'github.com:20161206:branch',
-                token,
-                webhookUrl: 'https://bob.by/ford',
-                scmContext: 'github:github.com'
-            }).then((result) => {
-                assert.strictEqual(result, expectedOutput);
-            });
+            return instance
+                .addWebhook({
+                    scmUri: 'github.com:20161206:branch',
+                    token,
+                    webhookUrl: 'https://bob.by/ford',
+                    scmContext: 'github:github.com'
+                })
+                .then(result => {
+                    assert.strictEqual(result, expectedOutput);
+                });
         });
 
         it('rejects when given an invalid config object', () =>
-            instance.addWebhook({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
+            instance.addWebhook({}).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            }));
 
         it('rejects when not implemented', () =>
-            instance.addWebhook(config)
-                .then(assert.fail, (err) => {
-                    assert.strictEqual(err.message, 'Not implemented');
-                })
-        );
+            instance.addWebhook(config).then(assert.fail, err => {
+                assert.strictEqual(err.message, 'Not implemented');
+            }));
     });
 
     describe('getPrInfo', () => {
@@ -1012,34 +1022,32 @@ describe('index test', () => {
         };
 
         it('returns error when invalid input', () =>
-            instance.getPrInfo({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
+            instance.getPrInfo({}).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            }));
 
         it('returns error when invalid output', () => {
-            instance._getPrInfo = () => Promise.resolve({
-                invalid: 'stuff'
-            });
-
-            return instance.getPrInfo(config)
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
+            instance._getPrInfo = () =>
+                Promise.resolve({
+                    invalid: 'stuff'
                 });
+
+            return instance.getPrInfo(config).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            });
         });
 
         it('returns not implemented', () =>
-            instance.getPrInfo(config)
+            instance
+                .getPrInfo(config)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('addPrComment', () => {
@@ -1052,31 +1060,27 @@ describe('index test', () => {
         };
 
         it('returns error when invalid input', () =>
-            instance.addPrComment({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
+            instance.addPrComment({}).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            }));
 
         it('returns error when invalid output', () => {
-            instance._addPrComment = () => Promise.resolve({
-                invalid: 'stuff'
-            });
-
-            return instance.addPrComment(config)
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
+            instance._addPrComment = () =>
+                Promise.resolve({
+                    invalid: 'stuff'
                 });
+
+            return instance.addPrComment(config).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            });
         });
 
         it('returns null if not implemented', () =>
-            instance.addPrComment(config)
-                .then((result) => {
-                    assert.isNull(result);
-                })
-        );
+            instance.addPrComment(config).then(result => {
+                assert.isNull(result);
+            }));
     });
 
     describe('getScmContexts', () => {
@@ -1126,27 +1130,27 @@ describe('index test', () => {
         };
 
         it('returns data from underlying method', () => {
-            instance._canHandleWebhook = () => Promise.resolve({
-                type: 'pr'
-            });
-
-            return instance.canHandleWebhook()
-                .then((output) => {
-                    assert.deepEqual(output, {
-                        type: 'pr'
-                    });
+            instance._canHandleWebhook = () =>
+                Promise.resolve({
+                    type: 'pr'
                 });
+
+            return instance.canHandleWebhook().then(output => {
+                assert.deepEqual(output, {
+                    type: 'pr'
+                });
+            });
         });
 
         it('returns not implemented', () =>
-            instance.canHandleWebhook(headers, payload)
+            instance
+                .canHandleWebhook(headers, payload)
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
-                .catch((err) => {
+                .catch(err => {
                     assert.equal(err.message, 'Not implemented');
-                })
-        );
+                }));
     });
 
     describe('getDisplayName', () => {
@@ -1215,10 +1219,9 @@ describe('index test', () => {
         it('returns data from underlying method', () => {
             instance._getWebhookEventsMapping = () => Promise.resolve(webhookEventsMapping);
 
-            return instance.getWebhookEventsMapping()
-                .then((output) => {
-                    assert.deepEqual(output, webhookEventsMapping);
-                });
+            return instance.getWebhookEventsMapping().then(output => {
+                assert.deepEqual(output, webhookEventsMapping);
+            });
         });
 
         it('returns not implemented', () => {
@@ -1237,72 +1240,66 @@ describe('index test', () => {
         };
 
         it('returns data from underlying method', () => {
-            instance._getBranchList = () => Promise.resolve({
-                real: 'config'
-            });
-
-            return instance.getBranchList(config)
-                .then((output) => {
-                    assert.deepEqual(output, {
-                        real: 'config'
-                    });
+            instance._getBranchList = () =>
+                Promise.resolve({
+                    real: 'config'
                 });
+
+            return instance.getBranchList(config).then(output => {
+                assert.deepEqual(output, {
+                    real: 'config'
+                });
+            });
         });
 
         it('rejects when given an invalid config object', () =>
-            instance.getBranchList({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
+            instance.getBranchList({}).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            }));
 
         it('rejects when not implemented', () =>
-            instance.getBranchList(config)
-                .then(assert.fail, (err) => {
-                    assert.strictEqual(err.message, 'Not implemented');
-                })
-        );
+            instance.getBranchList(config).then(assert.fail, err => {
+                assert.strictEqual(err.message, 'Not implemented');
+            }));
     });
 
     describe('openPr', () => {
         const config = {
             checkoutUrl: 'git@github.com:screwdriver-cd/data-model.git#master',
             token: 'thisisashinytoken',
-            files: [{
-                name: 'file',
-                content: 'content'
-            }],
+            files: [
+                {
+                    name: 'file',
+                    content: 'content'
+                }
+            ],
             title: 'update file',
             message: 'update file'
         };
 
         it('returns data from underlying method', () => {
-            instance._openPr = () => Promise.resolve({
-                real: 'config'
-            });
-
-            return instance.openPr(config)
-                .then((output) => {
-                    assert.deepEqual(output, {
-                        real: 'config'
-                    });
+            instance._openPr = () =>
+                Promise.resolve({
+                    real: 'config'
                 });
+
+            return instance.openPr(config).then(output => {
+                assert.deepEqual(output, {
+                    real: 'config'
+                });
+            });
         });
 
         it('rejects when given an invalid config object', () =>
-            instance.openPr({})
-                .then(assert.fail, (err) => {
-                    assert.instanceOf(err, Error);
-                    assert.equal(err.name, 'ValidationError');
-                })
-        );
+            instance.openPr({}).then(assert.fail, err => {
+                assert.instanceOf(err, Error);
+                assert.equal(err.name, 'ValidationError');
+            }));
 
         it('rejects when not implemented', () =>
-            instance.openPr(config)
-                .then(assert.fail, (err) => {
-                    assert.strictEqual(err.message, 'Not implemented');
-                })
-        );
+            instance.openPr(config).then(assert.fail, err => {
+                assert.strictEqual(err.message, 'Not implemented');
+            }));
     });
 });
