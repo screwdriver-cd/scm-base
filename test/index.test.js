@@ -147,7 +147,7 @@ describe('index test', () => {
 
     describe('getChangedFiles', () => {
         const type = 'pr';
-        const payload = {
+        const webhookConfig = {
             type
         };
 
@@ -166,7 +166,7 @@ describe('index test', () => {
                 });
 
             return instance
-                .getChangedFiles({ type, payload, token })
+                .getChangedFiles({ type, webhookConfig, token })
                 .then(() => {
                     assert.fail('you will never get dis');
                 })
@@ -177,7 +177,7 @@ describe('index test', () => {
         });
 
         it('returns not implemented', () =>
-            instance.getChangedFiles({ type, payload, token }).then(
+            instance.getChangedFiles({ type, webhookConfig, token }).then(
                 () => {
                     assert.fail('This should not fail the test');
                 },
