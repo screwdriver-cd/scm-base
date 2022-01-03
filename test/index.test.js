@@ -147,7 +147,7 @@ describe('index test', () => {
 
     describe('getChangedFiles', () => {
         const type = 'pr';
-        const payload = {
+        const webhookConfig = {
             type
         };
 
