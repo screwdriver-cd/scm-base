@@ -168,12 +168,12 @@ class ScmBase {
     /**
      * Parse the webhook to get the changed files
      * @method getChangedFiles
-     * @param  {Object}    config          Configuration
-     * @param  {String}    config.type     The type of action from Git (can be 'pr' or 'repo')
-     * @param  {Object}    config.payload  The webhook payload received from the SCM service
-     * @param  {String}    config.token    The token used to authenticate to the SCM
-     * @param  {String}    [config.scmContext]      The scm context name
-     * @return {Promise}                   Returns an array of changed files
+     * @param  {Object}    config               Configuration
+     * @param  {String}    config.type          The type of action from Git (can be 'pr' or 'repo')
+     * @param  {Object}    config.webhookConfig The webhook payload received from the SCM service
+     * @param  {String}    config.token         The token used to authenticate to the SCM
+     * @param  {String}    [config.scmContext]  The scm context name
+     * @return {Promise}                        Returns an array of changed files
      */
     getChangedFiles(config) {
         return validate(config, dataSchema.plugins.scm.getChangedFilesInput)
