@@ -1,6 +1,6 @@
 {
   "name": "screwdriver-scm-base",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "description": "Base class for defining the behavior between screwdriver and source control management systems",
   "main": "index.js",
   "scripts": {
@@ -36,17 +36,17 @@
     "debug": false
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^7.5.0",
-    "eslint-config-screwdriver": "^5.0.1",
-    "mocha": "^8.2.1",
+    "chai": "^4.3.7",
+    "eslint": "^8.28.0",
+    "eslint-config-screwdriver": "^7.0.0",
+    "mocha": "^10.1.0",
     "mocha-multi-reporters": "^1.5.1",
     "mocha-sonarqube-reporter": "^1.0.2",
-    "nyc": "^15.0.0"
+    "nyc": "^15.1.0"
   },
   "dependencies": {
-    "@hapi/hoek": "^9.1.0",
-    "joi": "^17.2.0",
-    "screwdriver-data-schema": "^21.3.2"
+    "@hapi/hoek": "^10.0.1",
+    "joi": "^17.7.0",
+    "screwdriver-data-schema": "^22.0.1"
   }
 }
