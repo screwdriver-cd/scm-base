@@ -12,7 +12,7 @@
     "url": "git+https://github.com/screwdriver-cd/scm-base.git"
   },
   "homepage": "https://github.com/screwdriver-cd/scm-base",
-  "bugs": "https://github.com/screwdriver-cd/scm-base/issues",
+  "bugs": "https://github.com/screwdriver-cd/screwdriver/issues",
   "keywords": [
     "screwdriver",
     "yahoo"
