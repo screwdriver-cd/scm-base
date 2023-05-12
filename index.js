@@ -559,7 +559,7 @@ class ScmBase {
      * @param  {String}   config.scmUri             The scmUri
      * @param  {String}   config.token              The token used to authenticate to the SCM
      * @param  {Integer}  config.prNum              The PR number used to fetch the PR
-     * @param  {String}   config.comment            The PR comment
+     * @param  {Array}    config.comments           Array of PR comments
      * @param  {String}   [config.scmContext]       The scm context name
      * @return {Promise}
      */
