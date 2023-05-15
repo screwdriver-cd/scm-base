@@ -559,7 +559,7 @@ class ScmBase {
      * @param  {String}   config.scmUri             The scmUri
      * @param  {String}   config.token              The token used to authenticate to the SCM
      * @param  {Integer}  config.prNum              The PR number used to fetch the PR
-     * @param  {String}   config.comment            The PR comment
+     * @param  {Array}    config.comments           Array of PR comment
      * @param  {String}   [config.scmContext]       The scm context name
      * @return {Promise}
      */
@@ -569,13 +569,15 @@ class ScmBase {
             .then(prComment =>
                 validate(
                     prComment,
-                    Joi.alternatives().try(
-                        Joi.object().keys({
-                            commentId: dataSchema.models.job.base.extract('id').required(),
-                            createTime: dataSchema.models.build.base.extract('createTime').required(),
-                            username: dataSchema.core.scm.user.extract('username').required()
-                        }),
-                        Joi.string().allow(null)
+                    Joi.array().items(
+                        Joi.alternatives().try(
+                            Joi.object().keys({
+                                commentId: dataSchema.models.job.base.extract('id').required(),
+                                createTime: dataSchema.models.build.base.extract('createTime').required(),
+                                username: dataSchema.core.scm.user.extract('username').required()
+                            }),
+                            Joi.string().allow(null)
+                        )
                     )
                 )
             );
@@ -583,7 +585,7 @@ class ScmBase {
 
     // Default to not fail since we will always call it in models
     _addPrComment() {
-        return Promise.resolve(null);
+        return Promise.resolve([]);
     }
 
     /**

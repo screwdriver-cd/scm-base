@@ -1055,7 +1055,7 @@ describe('index test', () => {
             scmUri: 'github.com:repoId:branch',
             token,
             prNum: 123,
-            comment: 'my, what a fine PR',
+            comments: [{ text: 'my, what a fine PR' }],
             scmContext: 'github:github.com'
         };
 
@@ -1077,9 +1077,9 @@ describe('index test', () => {
             });
         });
 
-        it('returns null if not implemented', () =>
+        it('returns empty array if not implemented', () =>
             instance.addPrComment(config).then(result => {
-                assert.isNull(result);
+                assert.isEmpty(result);
             }));
     });
 
