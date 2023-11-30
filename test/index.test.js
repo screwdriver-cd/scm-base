@@ -306,6 +306,30 @@ describe('index test', () => {
             });
         });
 
+        it('returns a command when rootDir with a colon exists', () => {
+            config.pipeline.scmUri = 'github.com:12344567:branch:colon:colon';
+            instance._getCheckoutCommand = o => {
+                assert.deepEqual(o, {
+                    branch: 'branch',
+                    host: 'github.com',
+                    org: 'screwdriver-cd',
+                    repo: 'guide',
+                    rootDir: 'colon:colon',
+                    sha: '12345',
+                    prSource: 'branch',
+                    prBranchName: 'prBranchName',
+                    prRef: 'prRef',
+                    scmContext: 'github:github.com'
+                });
+
+                return Promise.resolve({ name: 'sd-checkout-code', command: 'stuff' });
+            };
+
+            return instance.getSetupCommand(config).then(command => {
+                assert.equal(command, 'stuff');
+            });
+        });
+
         it('returns a command for pr', () => {
             instance._getCheckoutCommand = o => {
                 assert.deepEqual(o, {

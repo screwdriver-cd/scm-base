@@ -220,7 +220,10 @@ class ScmBase {
      * @return {Promise}
      */
     getSetupCommand(o) {
-        const [host, , branch, rootDir] = o.pipeline.scmUri.split(':');
+        const parts = o.pipeline.scmUri.split(':');
+        const [host, , branch, ...rootDirParts] = parts;
+        const rootDir = rootDirParts.join(':');
+
         const [org, repo] = o.pipeline.scmRepo.name.split('/');
         const prBranchRegex = /^~pr:(.*)$/;
         const checkoutConfig = {
