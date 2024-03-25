@@ -1326,4 +1326,31 @@ describe('index test', () => {
                 assert.strictEqual(err.message, 'Not implemented');
             }));
     });
+
+    describe('isEnterpriseUser', () => {
+        const config = {
+            scmContext: 'github:github.com',
+            token
+        };
+
+        it('returns data from underlying method', () => {
+            instance._isEnterpriseUser = () => Promise.resolve(true);
+
+            return instance.isEnterpriseUser(config).then(output => {
+                assert.deepEqual(output, true);
+            });
+        });
+
+        it('does not throw error when not implemented', () => {
+            instance
+                .isEnterpriseUser(config)
+                .then(output => {
+                    assert.equal(output, false);
+                })
+                .catch(err => {
+                    // does not reach here
+                    assert.strictEqual(err.message, 'Not implemented');
+                });
+        });
+    });
 });

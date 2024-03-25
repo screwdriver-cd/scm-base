@@ -709,6 +709,29 @@ class ScmBase {
     _openPr() {
         return Promise.reject(new Error('Not implemented'));
     }
+
+    /**
+     * check if scm user is a member of an enterprise
+     * @method isEnterpriseUser
+     * @param  {Object} config       The configuration object
+     * @param {String} config.token  The token used to authenticate to the SCM
+     * @param {String} config.slug   The slug of the enterprise
+     * @param {String} config.login  The login of the Github user
+     * @return {Promise}             Resolves when operation completed without failure
+     * @return {Boolean}             True if user is a member of an enterprise
+     *                               False if user is not a member of an enterprise
+     */
+    isEnterpriseUser(config) {
+        return this._isEnterpriseUser(config);
+    }
+
+    /**
+     * Abstract method to return false for non enterprise scm users
+     * @returns False
+     */
+    _isEnterpriseUser() {
+        return Promise.resolve(false);
+    }
 }
 
 module.exports = ScmBase;
