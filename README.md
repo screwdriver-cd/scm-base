@@ -550,6 +550,19 @@ An object containing information of new pull request
 #### Expected Response
 1. Pull request object
 
+#### isEnterpriseUser
+Required parameters:
+
+| Parameter        | Type  |  Description |
+| :-------------   | :---- | :-------------|
+| config     | Object | The config object |
+| config.token | String | The github token to interact with the graphql api |
+| config.slug     | String | The github enterprise slug |
+| config.login    | String | The github user's login name |
+
+#### Expected Outcome
+1. Returns True or False
+
 ## Extending
 To make use of the validation functions, the functions to override are:
 
@@ -579,7 +592,8 @@ To make use of the validation functions, the functions to override are:
 1. `_getBranchList`
 1. `_openPr`
 1. `getDisplayName` (overriding needs only the case of `scm-router`)
-1. `getReadOnlyInfo` (overriding needs only the case of `scm-router`) 
+1. `getReadOnlyInfo` (overriding needs only the case of `scm-router`)
+1. `_isEnterpriseUser`
 
 
 ```js
