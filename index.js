@@ -3,10 +3,19 @@
 /* eslint-disable no-underscore-dangle */
 const Hoek = require('@hapi/hoek');
 const Joi = require('joi');
+const logger = require('screwdriver-logger');
 const dataSchema = require('screwdriver-data-schema');
 const { getAnnotations } = require('./lib/helper');
 
 const repoManifestAnnotation = 'screwdriver.cd/repoManifest';
+
+const DEFAULT_AUTHOR = {
+    id: '',
+    avatar: 'https://cd.screwdriver.cd/assets/unknown_user.png',
+    name: 'n/a',
+    username: 'n/a',
+    url: 'https://cd.screwdriver.cd/'
+};
 
 /**
  * Validate the config using the schema
@@ -328,7 +337,23 @@ class ScmBase {
      */
     decorateAuthor(config) {
         return validate(config, dataSchema.plugins.scm.decorateAuthor)
-            .then(validAuthor => this._decorateAuthor(this.getConfig(validAuthor)))
+            .then(async validAuthor => {
+                let author;
+
+                try {
+                    author = await this._decorateAuthor(this.getConfig(validAuthor));
+                } catch (err) {
+                    logger.error('Failed to decorateAuthor: ', err);
+
+                    author = {
+                        ...DEFAULT_AUTHOR,
+                        name: config.username,
+                        username: config.username
+                    };
+                }
+
+                return author;
+            })
             .then(decoratedAuthor => validate(decoratedAuthor, dataSchema.core.scm.user));
     }
 
