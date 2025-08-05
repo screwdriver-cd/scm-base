@@ -596,12 +596,38 @@ describe('index test', () => {
         it('returns not implemented', () =>
             instance
                 .decorateAuthor(config)
-                .then(() => {
-                    assert.fail('you will never get dis');
+                .then(author => {
+                    assert.deepEqual(
+                        {
+                            id: '',
+                            avatar: 'https://cd.screwdriver.cd/assets/unknown_user.png',
+                            name: config.username,
+                            username: config.username,
+                            url: 'https://cd.screwdriver.cd/'
+                        },
+                        author
+                    );
                 })
                 .catch(err => {
                     assert.equal(err.message, 'Not implemented');
                 }));
+
+        it('returns default author when there is a failure get author from scm', () => {
+            instance._decorateAuthor = () => Promise.reject(new Error('User profile does not exist'));
+
+            return instance.decorateAuthor(config).then(author => {
+                assert.deepEqual(
+                    {
+                        id: '',
+                        avatar: 'https://cd.screwdriver.cd/assets/unknown_user.png',
+                        name: config.username,
+                        username: config.username,
+                        url: 'https://cd.screwdriver.cd/'
+                    },
+                    author
+                );
+            });
+        });
     });
 
     describe('getPermissons', () => {
