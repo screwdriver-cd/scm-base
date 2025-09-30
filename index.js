@@ -163,7 +163,7 @@ class ScmBase {
      * Parse the webhook for the specific source control
      * @method parseHook
      * @param  {Object}     headers     The request headers associated with the webhook payload
-     * @param  {Object}     payload     The webhook payload received from the SCM service
+     * @param  {String}     payload     The webhook payload received from the SCM service
      * @return {Promise}
      */
     parseHook(headers, payload) {
@@ -666,7 +666,7 @@ class ScmBase {
      * Determine a scm module can handle the received webhook
      * @method canHandleWebhook
      * @param  {Object}     headers     The request headers associated with the webhook payload
-     * @param  {Object}     payload     The webhook payload received from the SCM service
+     * @param  {String}     payload     The webhook payload received from the SCM service
      * @return {Promise}
      */
     canHandleWebhook(headers, payload) {
